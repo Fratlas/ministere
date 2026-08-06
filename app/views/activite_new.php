@@ -1,0 +1,136 @@
+<?php
+$title = 'Ministère des Finances - Activités';
+
+function project_excerpt_view($text, $length = 115) {
+    $text = trim((string) $text);
+    if ($text === '') {
+        return '';
+    }
+
+    if (function_exists('mb_strimwidth')) {
+        return mb_strimwidth($text, 0, $length, '...', 'UTF-8');
+    }
+
+    if (strlen($text) <= $length) {
+        return $text;
+    }
+
+    return substr($text, 0, $length - 3) . '...';
+}
+
+$extraHead = <<<'HTML'
+<style>
+.hero-static {
+    background: linear-gradient(90deg, #1182d8 0%, #0a64b5 100%);
+    color: white;
+    padding: 92px 0 110px;
+    text-align: center;
+    margin: 0 16px;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+}
+.hero-static .container {
+    position: relative;
+    z-index: 1;
+}
+</style>
+HTML;
+
+ob_start();
+?>
+
+<section class="hero-static">
+    <div class="container">
+        <h1><strong>ACTIVITÉS</strong></h1>
+        <p>Découvrez les étapes clés de la transformation financière <br> de la République Démocratique du Congo.</p>
+        <div class="hero-divider"></div>
+    </div>
+</section>
+<br><br><br><br>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="filter-box">
+            <form method="GET" action="/activite/filter">
+                <div class="row g-3 align-items-end">
+                    <div class="col-lg-7">
+                        <div class="filter-label">Rechercher une activité</div>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                            <input type="text" name="search" class="form-control bg-light border-0" placeholder="Entrez des mots clés..." value="<?php echo htmlspecialchars($_GET['search'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="filter-label">Secteur</div>
+                        <select name="category" class="form-select bg-light border-0">
+                            <option value="">Tous les secteurs</option>
+                            <?php
+                            $categories = ['Numérisation', 'Fiscalité', 'Infrastructure', 'Ressources Humaines', 'Législation', 'Transparence'];
+                            foreach ($categories as $category):
+                            ?>
+                                <option value="<?php echo htmlspecialchars($category, ENT_QUOTES, 'UTF-8'); ?>" <?php echo (($_GET['category'] ?? '') === $category) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($category, ENT_QUOTES, 'UTF-8'); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="filter-label">Statut</div>
+                        <select name="status" class="form-select bg-light border-0">
+                            <option value="">Tous les statuts</option>
+                            <?php
+                            $statuses = ['En cours', 'Terminé', 'Planifié'];
+                            foreach ($statuses as $status):
+                            ?>
+                                <option value="<?php echo htmlspecialchars($status, ENT_QUOTES, 'UTF-8'); ?>" <?php echo (($_GET['status'] ?? '') === $status) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($status, ENT_QUOTES, 'UTF-8'); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 d-grid">
+                        <button type="submit" class="btn btn-primary">OK</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row g-4">
+            <?php foreach ($projects as $project): ?>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-project">
+                    <div class="card-img-wrapper">
+                        <span class="badge-status <?php echo 'status-' . strtolower(str_replace([' ', 'é', 'è'], ['', 'e', 'e'], $project['status'])); ?>">
+                            <?php echo htmlspecialchars($project['status'], ENT_QUOTES, 'UTF-8'); ?>
+                        </span>
+                        <img src="<?php echo htmlspecialchars($project['image_url'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?>">
+                    </div>
+                    <div class="card-body">
+                        <span class="project-category"><?php echo htmlspecialchars($project['category'], ENT_QUOTES, 'UTF-8'); ?></span>
+                        <h5 class="project-title"><?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?></h5>
+                        <p class="project-desc"><?php echo htmlspecialchars(project_excerpt_view($project['description']), ENT_QUOTES, 'UTF-8'); ?></p>
+                        <div class="card-footer-custom">
+                            <span><?php echo htmlspecialchars($project['update_date'], ENT_QUOTES, 'UTF-8'); ?></span>
+                            <a href="/activite/<?php echo (int) $project['id']; ?>" class="btn-details-link">Voir détails →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center border-0">
+                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#"><i class="bi bi-chevron-left"></i></a></li>
+                <li class="page-item mx-1 active"><a class="page-link rounded-circle" href="#">1</a></li>
+                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#">2</a></li>
+                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#">3</a></li>
+                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#"><i class="bi bi-chevron-right"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<?php
+$content = ob_get_clean();
+require_once __DIR__ . '/layout.php';

@@ -1,0 +1,1233 @@
+<?php
+$title = 'Ministère des Finances - Accueil';
+
+$modelPath = __DIR__ . '/../models/ContentItem.php';
+$contentModel = null;
+if (is_file($modelPath)) {
+    require_once $modelPath;
+    if (class_exists('ContentItem')) {
+        try {
+            $contentModel = new ContentItem();
+        } catch (Throwable $e) {
+            $contentModel = null;
+        }
+    }
+}
+
+function home_h($value) {
+    return htmlspecialchars((string) ($value ?? ''), ENT_QUOTES, 'UTF-8');
+}
+
+function home_excerpt($value, $length = 120) {
+    $text = trim((string) ($value ?? ''));
+    if ($text === '') {
+        return '';
+    }
+
+    if (function_exists('mb_strimwidth')) {
+        return mb_strimwidth($text, 0, $length, '...', 'UTF-8');
+    }
+
+    if (strlen($text) <= $length) {
+        return $text;
+    }
+
+    return substr($text, 0, $length - 3) . '...';
+}
+
+function home_image($item, $fallback) {
+    if (!empty($item['image_url'])) {
+        return $item['image_url'];
+    }
+
+    return $fallback;
+}
+
+function home_link($item, $type) {
+    if (!empty($item['link_url']) && $item['link_url'] !== '#') {
+        return $item['link_url'];
+    }
+
+    if (!empty($item['id'])) {
+        return 'detail.php?type=' . rawurlencode($type) . '&id=' . rawurlencode((string) $item['id']);
+    }
+
+    return 'detail.php?type=' . rawurlencode($type);
+}
+
+function home_fetch_items($model, $type, array $fallback) {
+    if ($model) {
+        try {
+            $items = $model->getAllByType($type);
+            if (!empty($items)) {
+                return $items;
+            }
+        } catch (Throwable $e) {
+            // Fall back to local demo data below.
+        }
+    }
+
+    return $fallback;
+}
+
+$fallbackContent = [
+    'article' => [
+        [
+            'id' => 101,
+            'content_type' => 'article',
+            'section_key' => 'Actualité',
+            'badge_text' => '10.02.2025',
+            'title' => 'Lancement du recensement national des contribuables',
+            'description' => 'Mobilisation nationale pour renforcer la traçabilité et l\'équité de la collecte des recettes publiques.',
+            'image_url' => '/public/images/9fe3b95f3d4bbd9a00803da129b576653e10be87.jpg',
+            'link_url' => '#',
+            'display_order' => 1,
+        ],
+        [
+            'id' => 102,
+            'content_type' => 'article',
+            'section_key' => 'Événement',
+            'badge_text' => '08.02.2025',
+            'title' => 'Réunion de pilotage sur les réformes',
+            'description' => 'Les équipes ont fait le point sur les chantiers de digitalisation et de gouvernance financière.',
+            'image_url' => '/public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg',
+            'link_url' => '#',
+            'display_order' => 2,
+        ],
+        [
+            'id' => 103,
+            'content_type' => 'article',
+            'section_key' => 'Actualité',
+            'badge_text' => '05.02.2025',
+            'title' => 'Publication des nouveaux indicateurs de suivi',
+            'description' => 'Diffusion des indicateurs de performance pour améliorer la lecture des résultats publics.',
+            'image_url' => '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg',
+            'link_url' => '#',
+            'display_order' => 3,
+        ],
+        [
+            'id' => 104,
+            'content_type' => 'article',
+            'section_key' => 'Communiqué',
+            'badge_text' => '03.02.2025',
+            'title' => 'Point de presse sur les services numériques',
+            'description' => 'Présentation des améliorations apportées aux services digitaux pour les usagers.',
+            'image_url' => '/public/images/f5e8488f8c3a13bf3dab164a3be46274ca0f4ef6.jpg',
+            'link_url' => '#',
+            'display_order' => 4,
+        ],
+    ],
+    'realisation' => [
+        [
+            'id' => 201,
+            'content_type' => 'realisation',
+            'section_key' => 'DGI',
+            'badge_text' => '2015 - 2018',
+            'title' => 'Réalisations à la Direction Générale des Impôts (DGI)',
+            'description' => 'Montage stratégique des projets et déploiement des réseaux d\'interconnexion. Cette phase a permis de poser les bases infrastructurelles de la modernisation des régies financières sur l\'ensemble du territoire national.',
+            'image_url' => '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png',
+            'link_url' => '#',
+            'display_order' => 1,
+        ],
+        [
+            'id' => 202,
+            'content_type' => 'realisation',
+            'section_key' => 'DGDA',
+            'badge_text' => '2018 - 2024',
+            'title' => '2018 - 2024',
+            'description' => 'Lancement des plateformes ISYS-REGIES, LOGIRAD, ERP et Entrepôt des données financières.',
+            'image_url' => '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg',
+            'link_url' => '#',
+            'display_order' => 2,
+        ],
+        [
+            'id' => 203,
+            'content_type' => 'realisation',
+            'section_key' => 'Citoyen',
+            'badge_text' => '2018 - 2024',
+            'title' => '2018 - 2024',
+            'description' => 'Mise en œuvre et déploiement de la plateforme citoyenne sur l’étendue de la République.',
+            'image_url' => '/public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg',
+            'link_url' => '#',
+            'display_order' => 3,
+        ],
+    ],
+];
+
+$articles = home_fetch_items($contentModel, 'article', $fallbackContent['article']);
+$realisations = home_fetch_items($contentModel, 'realisation', $fallbackContent['realisation']);
+
+$heroItem = $realisations[0] ?? ($articles[0] ?? null);
+$featuredItem = $articles[0] ?? ($realisations[0] ?? null);
+$articleCards = array_slice($articles, 0, 4);
+$timelineCards = array_slice($realisations, 0, 3);
+
+$extraHead = <<<'HTML'
+<!-- AOS Library for animations -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<!-- Swiper JS for Carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<style>
+    .hero-section {
+        margin: 0 16px 28px;
+        min-height: 120px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 34px 34px;
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+    }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(30, 64, 175, 0.9) 0%, rgba(220, 38, 38, 0.85) 100%);
+        z-index: 1;
+        pointer-events: none;
+    }
+    .hero-glow {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, 
+            rgba(0, 30, 180, 0.2) 0%, 
+            rgba(230, 57, 70, 0.2) 100%);
+        background-blend-mode: screen;
+        z-index: 1;
+        pointer-events: none;
+    }
+    .hero-stage {
+        position: relative;
+        z-index: 2;
+        min-height: 650px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px 40px;
+    }
+    
+    /* Nouvelle disposition hero */
+    .hero-title-wrapper {
+        text-align: right;
+        margin-bottom: 80px;
+        width: 100%;
+    }
+    
+    .hero-title {
+        font-size: clamp(2rem, 4.5vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0 0 20px 0;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-underline-custom {
+        width: 96px;
+        height: 4px;
+        margin-left: auto;
+        border-radius: 999px;
+        background: #ffd400;
+        box-shadow: 0 2px 8px rgba(255, 212, 0, 0.3);
+    }
+    
+    .hero-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .hero-button-side {
+        flex: 0 0 auto;
+        width: 200px;
+    }
+    
+    .hero-btn-custom {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: #06b6d4;
+        color: #fff;
+        border-radius: 999px;
+        padding: 14px 32px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+    }
+    
+    .hero-btn-custom:hover {
+        background: #0891b2;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+    }
+    
+    .hero-btn-custom i {
+        transition: transform 0.3s ease;
+    }
+    
+    .hero-btn-custom:hover i {
+        transform: translateX(4px);
+    }
+    
+    .hero-text-side {
+        flex: 1;
+        text-align: right;
+    }
+    
+    .hero-description {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.95);
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        margin-left: auto;
+    }
+    
+    .hero-controls {
+        position: absolute;
+        right: 40px;
+        bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 3;
+    }
+    
+    .hero-controls button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 0.9rem;
+        backdrop-filter: blur(4px);
+    }
+    
+    .hero-controls button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+        border-color: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Pagination dots */
+    .hero-pagination-dots {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 12px;
+        z-index: 3;
+    }
+    
+    .hero-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .hero-dot.active {
+        background: #ffd400;
+        width: 24px;
+        border-radius: 4px;
+    }
+    
+    .hero-dot:hover {
+        background: #fff;
+        transform: scale(1.2);
+    }
+    
+    /* Carousel Styles */
+    .hero-carousel {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+    .hero-carousel .swiper-slide {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .hero-carousel .swiper-pagination-bullet {
+        background: rgba(255, 255, 255, 0.6);
+        opacity: 1;
+    }
+    .hero-carousel .swiper-pagination-bullet-active {
+        background: #ffd400;
+    }
+    
+    /* Reste des styles existants */
+    .section-shell {
+        margin: 0 16px 28px;
+        border-radius: 34px;
+        background: #fff;
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .section-shell:hover {
+        transform: translateY(-5px);
+    }
+    .governance-section {
+        padding: 84px 0;
+        background: #f8fbff;
+    }
+    .governance-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 1.3fr;
+        gap: 40px;
+        align-items: center;
+    }
+    .governance-text h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 800;
+        color: #333;
+        line-height: 1.08;
+        margin-bottom: 18px;
+    }
+    .governance-text p {
+        color: #555;
+        line-height: 1.7;
+        max-width: 420px;
+        margin-bottom: 20px;
+    }
+    .governance-links {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .governance-links a {
+        color: #0a6fd6;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .governance-links a:hover {
+        color: #e31b23;
+    }
+    .governance-card {
+        min-height: 280px;
+        border-radius: 18px;
+        background:
+            linear-gradient(135deg, rgba(25, 14, 103, 0.78), rgba(25, 14, 103, 0.92)),
+            url('/public/images/centre financier.jpg') center / cover no-repeat;
+        box-shadow: 0 18px 42px rgba(34, 18, 111, 0.28);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 28px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .governance-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 25px 50px rgba(34, 18, 111, 0.35);
+    }
+    .governance-card h3 {
+        font-size: 1.15rem;
+        margin: 0;
+    }
+    .section-header {
+        text-align: center;
+        padding: 58px 0 26px;
+    }
+    .section-header h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 800;
+        color: #333;
+        line-height: 1.1;
+        margin: 0;
+    }
+    .title-divider {
+        width: 150px;
+        height: 4px;
+        margin: 18px auto 0;
+        background: linear-gradient(to right, #0a7fe4 0 34%, #f3d100 34% 68%, #e31b23 68% 100%);
+    }
+    .timeline-section {
+        padding: 76px 0 84px;
+        position: relative;
+        background: #fff;
+        overflow: hidden;
+    }
+    .timeline-section::before,
+    .timeline-section::after {
+        content: "";
+        position: absolute;
+        top: 72px;
+        width: 320px;
+        height: 320px;
+        background: url('/public/images/logo.webp') center / contain no-repeat;
+        opacity: 0.08;
+        pointer-events: none;
+    }
+    .timeline-section::before {
+        left: -120px;
+        transform: scale(1.18);
+    }
+    .timeline-section::after {
+        right: -120px;
+        transform: scale(1.18);
+    }
+    .timeline-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr);
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        min-height: 300px;
+        margin-bottom: 64px;
+    }
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+    .timeline-marker {
+        grid-column: 2;
+        justify-self: center;
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1rem;
+        box-shadow: 0 12px 24px rgba(10, 127, 228, 0.25);
+        z-index: 3;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .timeline-marker:hover {
+        transform: scale(1.1);
+        box-shadow: 0 15px 30px rgba(10, 127, 228, 0.35);
+    }
+    .timeline-marker.is-yellow {
+        background: #ffdf00;
+        color: #111;
+    }
+    .timeline-marker.is-blue {
+        background: #0e84d7;
+    }
+    .timeline-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.08);
+        max-width: 400px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .timeline-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.12);
+    }
+    .timeline-card-media {
+        position: relative;
+        height: 236px;
+        overflow: hidden;
+    }
+    .timeline-card-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+    .timeline-card:hover .timeline-card-media img {
+        transform: scale(1.08);
+    }
+    .timeline-card-body {
+        padding: 18px 20px 20px;
+        color: #fff;
+    }
+    .timeline-card-body.is-blue {
+        background: #1187d8;
+    }
+    .timeline-card-body.is-yellow {
+        background: #ffe600;
+        color: #1f2430;
+    }
+    .timeline-desc {
+        font-size: 0.9rem;
+        line-height: 1.35;
+        margin: 0 0 10px;
+        opacity: 0.95;
+    }
+    .timeline-year {
+        display: block;
+        font-size: 1.45rem;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: 0.01em;
+    }
+    .timeline-year.is-dark {
+        color: #197fe0;
+    }
+    .timeline-year.is-light {
+        color: #fff;
+    }
+    .timeline-item.is-left .timeline-card {
+        grid-column: 1;
+        justify-self: end;
+    }
+    .timeline-item.is-right .timeline-card {
+        grid-column: 3;
+        justify-self: start;
+    }
+    .timeline-item.is-right .timeline-marker {
+        grid-column: 2;
+    }
+    .timeline-title {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #1b2a44;
+        margin: 0 0 10px;
+    }
+    .timeline-link {
+        color: #0a7fe4;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        transition: gap 0.3s ease;
+    }
+    .timeline-link:hover {
+        gap: 12px;
+    }
+    .articles-section {
+        margin: 0 16px 28px;
+        border-radius: 34px;
+        background: linear-gradient(to right, #0052a3, #003d7a);
+        color: #fff;
+        padding: 76px 0 80px;
+        position: relative;
+        overflow: hidden;
+    }
+    .articles-section h2 {
+        text-align: center;
+        font-size: clamp(2rem, 3vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 44px;
+    }
+    .article-card {
+        background: #fff;
+        color: #333;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .article-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+    .article-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.5s ease;
+    }
+    .article-card:hover img {
+        transform: scale(1.08);
+    }
+    .article-card-body {
+        padding: 18px;
+    }
+    .article-card-title {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .article-card-desc {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 10px;
+    }
+    .article-link {
+        color: #0a7fe4;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .article-link:hover {
+        color: #e31b23;
+    }
+    .articles-footer {
+        text-align: center;
+        margin-top: 34px;
+    }
+    .btn-articles {
+        background: #e31b23;
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        padding: 10px 28px;
+        font-weight: 700;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-articles:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(227, 27, 35, 0.3);
+    }
+    .stats-section {
+        margin: 0 16px 28px;
+        border-radius: 34px;
+        background: #e7e7e7;
+        padding: 56px 0;
+    }
+    .stat-item {
+        text-align: center;
+        padding: 12px 20px;
+        border-right: 1px solid rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+    }
+    .stat-item:hover {
+        transform: translateY(-5px);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: #333;
+    }
+    .stat-label {
+        color: #555;
+        margin-top: 8px;
+    }
+    .funding-section {
+        margin: 0 16px 28px;
+        border-radius: 34px;
+        background: #fff;
+        padding: 54px 0;
+    }
+    .funding-row {
+        display: grid;
+        grid-template-columns: 260px 1px 1fr 1px;
+        gap: 28px;
+        align-items: center;
+    }
+    .funding-label {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #333;
+        line-height: 1.12;
+    }
+    .funding-divider {
+        width: 1px;
+        height: 92px;
+        background: rgba(0, 0, 0, 0.25);
+    }
+    .funding-logos {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .funding-logo-block {
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+    .funding-logo-block:hover {
+        transform: translateY(-5px);
+    }
+    .funding-logo-block img {
+        height: 58px;
+        object-fit: contain;
+        display: block;
+    }
+    .funding-logo-block .eu-note {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.78rem;
+        color: #285ab2;
+        font-weight: 700;
+        line-height: 1.05;
+    }
+    .funding-partner {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    .funding-partner img {
+        height: 58px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+    .funding-partner img:hover {
+        transform: scale(1.05);
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+    
+    /* Responsive */
+    @media (max-width: 991.98px) {
+        .hero-stage {
+            padding: 40px 24px;
+            min-height: 550px;
+        }
+        
+        .hero-title-wrapper {
+            margin-bottom: 50px;
+        }
+        
+        .hero-content-wrapper {
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-button-side {
+            width: auto;
+        }
+        
+        .hero-text-side {
+            text-align: center;
+        }
+        
+        .hero-description {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-controls {
+            right: 20px;
+            bottom: 20px;
+        }
+        
+        .hero-controls button {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .governance-grid {
+            grid-template-columns: 1fr;
+        }
+        .timeline-item {
+            min-height: auto;
+            grid-template-columns: 64px minmax(0, 1fr);
+            gap: 18px;
+        }
+        .timeline-track {
+            display: none;
+        }
+        .timeline-marker { grid-column: 1; justify-self: center; }
+        .timeline-item.is-left .timeline-card,
+        .timeline-item.is-right .timeline-card {
+            grid-column: 2;
+            justify-self: start;
+        }
+    }
+    
+    @media (max-width: 575.98px) {
+        .hero-section,
+        .section-shell,
+        .articles-section,
+        .stats-section,
+        .funding-section {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+        
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .hero-description {
+            font-size: 0.95rem;
+        }
+        
+        .hero-btn-custom {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+        
+        .funding-row {
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+        .funding-divider {
+            width: 100%;
+            height: 1px;
+        }
+    }
+    
+    .fixed-image-section {
+        margin: 0 16px 28px;
+        border-radius: 34px;
+        overflow: hidden;
+        position: relative;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        transition: transform 0.3s ease;
+    }
+    .fixed-image-section:hover {
+        transform: translateY(-5px);
+    }
+    .fixed-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        transition: background 0.3s ease;
+    }
+    .fixed-image-section:hover .fixed-image-overlay {
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .fixed-image-content {
+        position: relative;
+        z-index: 2;
+        padding: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .fixed-image-content h2 {
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .fixed-image-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    .fixed-image-btn {
+        display: inline-block;
+        background: #ffd400;
+        color: #333;
+        padding: 10px 28px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.8s ease 0.4s both;
+    }
+    .fixed-image-btn:hover {
+        background: #e31b23;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .fixed-image-section {
+            background-attachment: scroll;
+        }
+        .fixed-image-content {
+            padding: 30px 20px;
+        }
+    }
+</style>
+HTML;
+
+ob_start();
+?>
+
+<section class="hero-section" data-aos="fade-in" data-aos-duration="1000">
+    <div class="hero-carousel swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image: url('/public/images/centre financier.jpg');"></div>
+            <div class="swiper-slide" style="background-image: url('/public/images/centre financier.jpg');"></div>
+            <div class="swiper-slide" style="background-image: url('/public/images/centre financier.jpg');"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="container hero-stage">
+        
+        <!-- Titre Aligné à Droite -->
+        <div class="hero-title-wrapper" data-aos="fade-right" data-aos-duration="800" data-aos-delay="200">
+            <h1 class="hero-title"><?php echo home_h($heroItem['title'] ?? 'Réalisations à la<br>Direction Générale des<br>Impôts (DGI)'); ?></h1>
+            <div class="hero-underline-custom"></div>
+        </div>
+
+        <!-- Configuration : Bouton à gauche, texte descriptif à droite -->
+        <div class="hero-content-wrapper" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+            
+            <!-- Côté Gauche : Bouton -->
+            <div class="hero-button-side">
+                <a href="<?php echo home_h(home_link($heroItem ?? [], 'realisation')); ?>" class="hero-btn-custom">
+                    <span>En savoir plus</span>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+
+            <!-- Côté Droit : Texte descriptif -->
+            <div class="hero-text-side">
+                <p class="hero-description"><?php echo home_h($heroItem['description'] ?? 'Montage stratégique des projets et déploiement des réseaux d\'interconnexion. Cette phase a permis de poser les bases infrastructurelles de la modernisation des régies financières sur l\'ensemble du territoire national.'); ?></p>
+            </div>
+
+        </div>
+
+        <div class="hero-controls">
+            <button class="hero-prev" data-aos="fade-up" data-aos-duration="600" data-aos-delay="500"><i class="bi bi-caret-left-fill"></i></button>
+            <button class="hero-next" data-aos="fade-up" data-aos-duration="600" data-aos-delay="600"><i class="bi bi-caret-right-fill"></i></button>
+        </div>
+    </div>
+</section>
+
+<section class="section-shell" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container governance-section">
+        <div class="governance-grid">
+            <div class="governance-text" data-aos="fade-right" data-aos-duration="800">
+                <h2>Visualisez le projet de<br>gouvernance financière</h2>
+                <p><?php echo home_h(home_excerpt($featuredItem['description'] ?? 'Le Directeur Général des Impôts, Monsieur Barnabé Mukadi Muamba, dresse un bilan des réalisations de la DGI en 2025.', 180)); ?></p>
+                <div class="governance-links">
+                    <a href="<?php echo home_h(home_link($featuredItem ?? [], $featuredItem['content_type'] ?? 'article')); ?>">En savoir plus</a>
+                    <a href="#"><i class="bi bi-youtube"></i> YouTube</a>
+                </div>
+            </div>
+            <div class="governance-card" style="background-image: linear-gradient(135deg, rgba(25, 14, 103, 0.78), rgba(25, 14, 103, 0.92)), url('<?php echo home_h(home_image($featuredItem ?? [], '/public/images/d6aa7c59153499f8c21f31ede2d928d8e0f9d23a.png')); ?>');" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                <h3><?php echo home_h($featuredItem['title'] ?? "En direct de l'Assemblée nationale"); ?></h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-shell timeline-section">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up" data-aos-duration="800">
+            <h2>Transformation digitale des<br>Régies financières en RDC</h2>
+            <div class="title-divider"></div>
+        </div>
+
+        <?php foreach ($timelineCards as $index => $item): ?>
+            <?php
+                $isRight = ($index % 2) === 1;
+                $bodyClass = $isRight ? ' is-yellow' : ' is-blue';
+                $markerClass = $index === 0 ? ' is-yellow' : ' is-blue';
+                $animationDelay = $index * 150;
+            ?>
+            <div class="timeline-item <?php echo $isRight ? 'is-right' : 'is-left'; ?>" data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?php echo $animationDelay; ?>">
+                <div class="timeline-card">
+                    <div class="timeline-card-media">
+                        <img src="<?php echo home_h(home_image($item, '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png')); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>">
+                    </div>
+                    <div class="timeline-card-body<?php echo $bodyClass; ?>">
+                        <p class="timeline-desc"><?php echo home_h(home_excerpt($item['description'] ?? '', 110)); ?></p>
+                        <span class="timeline-year<?php echo $isRight ? ' is-dark' : ' is-light'; ?>"><?php echo home_h($item['badge_text'] ?? $item['title'] ?? ''); ?></span>
+                    </div>
+                </div>
+                <div class="timeline-marker<?php echo $markerClass; ?> pulse-animation"><i class="bi bi-calendar2-fill"></i></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<section class="articles-section">
+    <div class="container">
+        <h2 data-aos="fade-up" data-aos-duration="800">NOS DERNIERS ARTICLES</h2>
+        <div class="row g-4">
+            <?php foreach ($articleCards as $index => $item): ?>
+                <div class="col-md-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?php echo $index * 100; ?>">
+                    <div class="article-card">
+                        <img src="<?php echo home_h(home_image($item, '/public/images/9fe3b95f3d4bbd9a00803da129b576653e10be87.jpg')); ?>" alt="<?php echo home_h($item['title'] ?? 'Article'); ?>">
+                        <div class="article-card-body">
+                            <h5 class="article-card-title"><?php echo home_h($item['title'] ?? 'Article'); ?></h5>
+                            <p class="article-card-desc"><?php echo home_h($item['badge_text'] ?? ($item['section_key'] ?? '')); ?></p>
+                            <a href="<?php echo home_h(home_link($item, 'article')); ?>" class="article-link">En savoir plus →</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="articles-footer" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+            <button class="btn-articles">Voir toutes actualités</button>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+        <div class="section-header" style="padding-top: 0;" data-aos="fade-up" data-aos-duration="800">
+            <h2>Quelques Chiffres</h2>
+            <div class="title-divider"></div>
+        </div>
+        <div class="row align-items-stretch">
+            <div class="col-md-4 stat-item" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="100">
+                <div class="stat-number">12KM</div>
+                <div class="stat-label">de réseau fibre optique</div>
+            </div>
+            <div class="col-md-4 stat-item" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="200">
+                <div class="stat-number">21000</div>
+                <div class="stat-label">utilisateurs formés</div>
+            </div>
+            <div class="col-md-4 stat-item" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="300">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">projets et services</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="funding-section" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+        <div class="funding-row">
+            <span class="funding-label" data-aos="fade-right" data-aos-duration="800">Les bailleurs de fonds</span>
+            <div class="funding-divider" aria-hidden="true"></div>
+            <div class="funding-logos">
+                <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+                    <img src="/public/images/logo.webp" alt="Ministère des Finances">
+                </div>
+                <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+                    <img src="/public/images/eu_flag.jpg" alt="Union européenne">
+                    <span class="eu-note">Financé par<br>l'Union européenne</span>
+                </div>
+                <div class="funding-partner" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+                    <img src="/public/images/republique_francaise_rvb.png" alt="République française">
+                    <img src="/public/images/afd_logo.webp" alt="AFD">
+                </div>
+            </div>
+            <div class="funding-divider" aria-hidden="true"></div>
+        </div>
+    </div>
+</section>
+
+<?php
+$content = ob_get_clean();
+
+$extraFooter = <<<'HTML'
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true,
+        offset: 100,
+        easing: 'ease-in-out'
+    });
+    
+    // Initialize Hero Carousel
+    const heroSwiper = new Swiper('.hero-carousel', {
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.hero-next',
+            prevEl: '.hero-prev',
+        }
+    });
+    
+    const animateStats = () => {
+        document.querySelectorAll('.stat-number').forEach(counter => {
+            const target = parseInt(counter.innerText);
+            if (target && !counter.classList.contains('animated')) {
+                counter.classList.add('animated');
+                let current = 0;
+                const duration = 2000;
+                const stepTime = 20;
+                const steps = duration / stepTime;
+                const increment = target / steps;
+                
+                const update = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = Math.ceil(current).toLocaleString('fr-FR') + (counter.innerText.includes('KM') ? 'KM' : '');
+                        setTimeout(update, stepTime);
+                    } else {
+                        counter.innerText = target.toLocaleString('fr-FR') + (counter.innerText.includes('KM') ? 'KM' : '');
+                    }
+                };
+                update();
+            }
+        });
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) observer.observe(statsSection);
+    
+    const heroButtons = document.querySelectorAll('.hero-controls button');
+    heroButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        });
+    });
+</script>
+HTML;
+
+$content .= $extraFooter;
+
+require_once __DIR__ . '/layout.php';
+?>

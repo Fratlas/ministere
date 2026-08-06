@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministère des Finances - Accueil</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/images/Logo blanc_Min Finance-8.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <style>
+        :root { --primary-blue: #007bff; --dark-blue: #0056b3; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg, #f5f8fc 0%, #ffffff 12%); color: #333; overflow-x: hidden; }
+        .navbar { padding: 1rem 0; background: rgba(255,255,255,0.92); box-shadow: 0 2px 24px rgba(0,0,0,0.05); backdrop-filter: blur(8px); margin: 10px 16px 0; border-radius: 22px; }
+        .navbar-brand img { height: 70px; }
+        .nav-link { font-weight: 500; color: #333 !important; font-size: 0.9rem; text-transform: uppercase; }
+        .nav-link.active { color: #007bff !important; }
+        .btn-contact { background: #007bff; color: white !important; border-radius: 50px; padding: 8px 20px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .reveal-item { opacity: 0; transform: translateY(24px) scale(0.985); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal-visible { opacity: 1; transform: translateY(0) scale(1); }
+        
+        /* Hero */
+        .hero-section {
+            color: white;
+            margin: 0 16px 28px;
+            position: relative;
+            overflow: hidden;
+            min-height: 540px;
+            border-radius: 0 0 34px 34px;
+            box-shadow: 0 18px 48px rgba(0,0,0,0.08);
+            background: #0c4f97;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(206, 17, 38, 0.75) 0%, rgba(0, 51, 153, 0.85) 100%),
+                url('public/images/filtre.png') center / cover no-repeat,
+                url('public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png') center / cover no-repeat;
+            background-blend-mode: multiply, normal, normal;
+            transform: scale(1.02);
+            pointer-events: none;
+        }
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 120px;
+            background: linear-gradient(180deg, rgba(6, 19, 44, 0), rgba(6, 19, 44, 0.18));
+            pointer-events: none;
+        }
+        .hero-stage {
+            position: relative;
+            z-index: 2;
+            min-height: 540px;
+            display: flex;
+            align-items: center;
+        }
+        .hero-top-panel {
+            position: absolute;
+            top: 36px;
+            right: 18%;
+            width: min(395px, 44vw);
+            padding: 18px 22px;
+            background: rgba(58, 92, 151, 0.74);
+            backdrop-filter: blur(4px);
+            border-radius: 2px;
+            box-shadow: 0 18px 30px rgba(0,0,0,0.16);
+        }
+        .hero-top-panel ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .hero-top-panel li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 10px;
+            font-size: 0.76rem;
+            line-height: 1.45;
+            opacity: 0.98;
+        }
+        .hero-top-panel li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            top: -1px;
+            color: #b6d0ff;
+            font-weight: 800;
+        }
+        .hero-content {
+            margin-left: auto;
+            max-width: 520px;
+            text-align: right;
+            padding: 126px 0 90px;
+            position: relative;
+            z-index: 2;
+            animation: heroSlide 1s ease both;
+        }
+        .hero-section h1 {
+            font-weight: 800;
+            font-size: clamp(2.1rem, 4vw, 3.25rem);
+            line-height: 1.08;
+            margin-bottom: 0;
+            text-shadow: 0 8px 22px rgba(0,0,0,0.22);
+        }
+        .hero-section p {
+            font-size: 1rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-top: 14px;
+            margin-bottom: 0;
+            opacity: 0.95;
+        }
+        .hero-underline {
+            width: 92px;
+            height: 5px;
+            margin: 18px 0 0 auto;
+            border-radius: 999px;
+            background: #ffd400;
+            box-shadow: 0 6px 16px rgba(255, 212, 0, 0.35);
+        }
+        .hero-btn {
+            background: #2aa2e7;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 88px;
+            box-shadow: 0 10px 28px rgba(13,139,220,0.32);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(13,139,220,0.42); }
+        .hero-controls {
+            position: absolute;
+            bottom: 38px;
+            right: 38px;
+            gap: 12px;
+            display: flex;
+        }
+        .hero-controls button {
+            width: 42px;
+            height: 42px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.7);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+        .hero-controls button:hover { transform: translateY(-2px) scale(1.05); background: rgba(255,255,255,0.18); }
+        
+        /* Governance Section */
+        .governance-section { padding: 80px 0; background: #f8fbff; border-radius: 34px; margin: 0 16px 28px; overflow: hidden; }
+        .governance-grid { display: flex; gap: 40px; align-items: center; }
+        .governance-text h2 { font-size: 2rem; font-weight: 700; color: #003a76; margin-bottom: 15px; }
+        .governance-text p { color: #555; margin-bottom: 15px; }
+        .governance-text a { color: #007bff; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .governance-card { background: linear-gradient(135deg, rgba(34,18,111,0.88) 0%, rgba(18,22,90,0.96) 100%), url('public/images/d6aa7c59153499f8c21f31ede2d928d8e0f9d23a.png') center/cover no-repeat; border-radius: 18px; padding: 30px; color: white; text-align: center; min-height: 350px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 18px 42px rgba(34,18,111,0.28); animation: floatCard 6s ease-in-out infinite; }
+        .governance-card h3 { font-size: 1.2rem; margin-bottom: 20px; }
+        
+        /* Section Titles */
+        .section-header { text-align: center; margin: 60px 0 50px; }
+        .section-header h2 { font-weight: 800; font-size: 2.2rem; color: #003a76; }
+        .title-divider { width: 150px; height: 5px; margin: 15px auto 0; background: linear-gradient(to right, #007bff 50%, #ffcc00 50%, #ffcc00 75%, #ff0000 75%); }
+        
+        /* Timeline */
+        .timeline-section { padding: 60px 0; position: relative; overflow: hidden; margin: 0 16px 28px; border-radius: 34px; background: #fff; box-shadow: 0 18px 48px rgba(0,0,0,0.05); }
+
+        .timeline-item { margin-bottom: 56px; position: relative; padding-left: 80px; opacity: 0; transform: translateY(20px); animation: riseIn 0.9s ease forwards; }
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-badge { position: absolute; left: 0; top: 0; width: 50px; height: 50px; background: linear-gradient(135deg, #ffd400, #ffb400); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #004499; font-weight: 800; font-size: 1.2rem; box-shadow: 0 10px 24px rgba(255,196,0,0.35); }
+        .timeline-year { background: #007bff; color: white; padding: 5px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(0,123,255,0.18); }
+        .timeline-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: #16233a; }
+        .timeline-desc { color: #555; line-height: 1.7; }
+        .timeline-img { margin-top: 18px; border-radius: 24px; max-width: 400px; width: 100%; box-shadow: 0 18px 36px rgba(0,0,0,0.08); transition: transform 0.5s ease, box-shadow 0.5s ease; }
+        .timeline-img:hover { transform: scale(1.02); box-shadow: 0 22px 44px rgba(0,0,0,0.12); }
+        .timeline-card { background: #fff; border-radius: 30px; padding: 16px 16px 18px; box-shadow: 0 18px 40px rgba(0,0,0,0.08); overflow: hidden; max-width: 520px; width: 100%; margin: 0 auto; }
+        .timeline-card img { width: 100%; display: block; border-radius: 22px; }
+        .timeline-content { padding: 14px 8px 6px; }
+        .timeline-link { color: #007bff; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        
+        /* Articles Section */
+        .articles-section { background: linear-gradient(to right, #0052a3, #003d7a); color: white; padding: 80px 0; position: relative; overflow: hidden; margin: 0 16px 28px; border-radius: 34px; box-shadow: 0 18px 48px rgba(0,0,0,0.08); }
+
+        .articles-section h2 { text-align: center; font-weight: 800; font-size: 2rem; margin-bottom: 50px; }
+        .article-card { background: white; color: #333; border-radius: 24px; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,0.08); transition: transform 0.35s ease, box-shadow 0.35s ease; }
+        .article-card img { width: 100%; height: 180px; object-fit: cover; display: block; border-top-left-radius: 24px; border-top-right-radius: 24px; }
+        .article-card-body { padding: 20px; }
+        .article-card-title { font-weight: 700; margin-bottom: 8px; }
+        .article-card-desc { font-size: 0.9rem; color: #666; margin-bottom: 10px; }
+        .article-link { color: #007bff; font-weight: 700; text-decoration: none; }
+        .article-card:hover { transform: translateY(-8px); box-shadow: 0 20px 42px rgba(0,0,0,0.14); }
+        .articles-footer { text-align: center; margin-top: 40px; }
+        .btn-articles { background: linear-gradient(135deg, #e31b23, #b80f2a); color: white; padding: 10px 30px; border-radius: 999px; border: none; font-weight: 700; cursor: pointer; box-shadow: 0 10px 24px rgba(227,27,35,0.28); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .btn-articles:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(227,27,35,0.36); }
+        
+        /* Stats Section */
+        .stats-section { padding: 60px 0; margin: 0 16px 28px; border-radius: 34px; background: #f0f2f5; }
+        .stat-item { text-align: center; padding: 20px; border-right: 1px solid #ddd; }
+        .stat-item:last-child { border-right: none; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: #007bff; }
+        .stat-label { color: #666; margin-top: 10px; }
+        
+        /* Funding Section */
+        .funding-section { padding: 60px 0; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 0 16px 28px; border-radius: 34px; background: #fff; position: relative; overflow: hidden; }
+
+        .funding-label { font-weight: 700; font-size: 1.3rem; margin-right: 30px; }
+        .funding-logos { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+        .funding-logos img { height: 60px; border-radius: 16px; background: rgba(255,255,255,0.8); padding: 4px 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .articles-section .container,
+        .timeline-section .container,
+        .governance-section .container,
+        .stats-section .container,
+        .funding-section .container {
+            position: relative;
+            z-index: 1;
+        }
+        .timeline-section .container,
+        .articles-section .container {
+            max-width: 1120px;
+        }
+        .timeline-section .section-header,
+        .articles-section h2 {
+            margin-bottom: 42px;
+        }
+        .timeline-item.row {
+            align-items: center;
+            min-height: 360px;
+        }
+        .timeline-item .col-lg-6:first-child {
+            display: flex;
+            justify-content: center;
+        }
+        .timeline-item .col-lg-6.text-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .timeline-item:not(:last-child) {
+            border-bottom: 1px solid rgba(8, 47, 110, 0.08);
+            padding-bottom: 42px;
+        }
+        .timeline-item + .timeline-item {
+            margin-top: 28px;
+        }
+        .timeline-card {
+            position: relative;
+        }
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #0a7fe4 0%, #0a7fe4 58%, #f3d100 58%, #f3d100 78%, #e31b23 78%, #e31b23 100%);
+        }
+        @keyframes heroSlide { from { opacity: 0; transform: translateX(18px) translateY(6px); } to { opacity: 1; transform: translateX(0) translateY(0); } }
+        @keyframes floatCard { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes riseIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === ANIMATIONS ULTRA PRO === */
+        
+        /* Curseur Liquide */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #00f2ff;
+            position: fixed; top: 0; left: 0;
+            border-radius: 50%; z-index: 10001;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+        }
+
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid #00f2ff;
+            position: fixed; top: 0; left: 0;
+            border-radius: 50%; z-index: 10000;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+        }
+
+        /* Grain Effect */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Stagger Animation */
+        .stagger { 
+            opacity: 0; 
+            transform: translateY(50px) rotateX(-10deg); 
+            transition: opacity 1s, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        
+        .stagger.active { 
+            opacity: 1; 
+            transform: translateY(0) rotateX(0); 
+        }
+
+        /* Reveal Container */
+        .reveal-container {
+            overflow: hidden;
+            display: block;
+        }
+
+        .reveal-item-ultra {
+            display: block;
+            transform: translateY(110%) skewY(7deg);
+            filter: blur(10px);
+            opacity: 0;
+            animation: revealEffect 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes revealEffect {
+            to {
+                transform: translateY(0) skewY(0);
+                filter: blur(0);
+                opacity: 1;
+            }
+        }
+
+        /* Image Reveal Box (Curtain Effect) */
+        .img-reveal-box {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            background: #1e293b;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-reveal-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0056b3;
+            z-index: 2;
+            transform: scaleX(1);
+            transform-origin: right;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .img-reveal-box.active::after {
+            transform: scaleX(0);
+        }
+
+        .img-ultra {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transform: scale(1.2);
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-reveal-box.active .img-ultra {
+            transform: scale(1);
+        }
+
+        /* Navbar Dynamic */
+        .navbar.scrolled-ultra {
+            background: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card Hover Effects */
+        .article-card,
+        .governance-card,
+        .timeline-card {
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .article-card:hover,
+        .governance-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Parallax Image */
+        .img-parallax {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Bounce Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @media (max-width: 991.98px) {
+            .hero-section { min-height: 500px; }
+            .hero-stage { min-height: 500px; }
+            .hero-top-panel {
+                right: 16px;
+                left: 16px;
+                width: auto;
+                top: 20px;
+            }
+            .hero-content {
+                max-width: 100%;
+                padding: 132px 0 88px;
+            }
+            .hero-btn { margin-top: 64px; }
+        }
+        @media (max-width: 575.98px) {
+            .hero-section { min-height: 460px; margin-left: 12px; margin-right: 12px; }
+            .hero-stage { min-height: 460px; }
+            .hero-top-panel { top: 14px; padding: 14px 16px; }
+            .hero-content { padding: 122px 0 78px; }
+            .hero-controls { right: 16px; bottom: 18px; }
+            .hero-btn { margin-top: 48px; }
+        }
+        
+        /* Footer */
+        .main-footer { background: linear-gradient(to right, #0052a3, #003d7a); color: white; padding: 80px 0 40px; }
+        .footer-menu h5 { font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
+        .footer-link { color: rgba(255,255,255,0.8); text-decoration: none; display: block; margin-bottom: 10px; }
+        .footer-link:hover { color: white; }
+        .footer-logo img { height: 40px; }
+        .social-icons { display: flex; gap: 15px; margin-bottom: 20px; }
+        .social-icons a { color: white; font-size: 1.2rem; opacity: 0.8; }
+    </style>
+        
+        /* Footer */
+        .main-footer { background: linear-gradient(to right, #0052a3, #003d7a); color: white; padding: 80px 0 40px; }
+        .footer-menu h5 { font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
+        .footer-link { color: rgba(255,255,255,0.8); text-decoration: none; display: block; margin-bottom: 10px; }
+        .footer-link:hover { color: white; }
+        .footer-logo img { height: 40px; }
+        .social-icons { display: flex; gap: 15px; margin-bottom: 20px; }
+        .social-icons a { color: white; font-size: 1.2rem; opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <!-- Curseur Liquide Ultra Pro -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navbar -->
+    <!-- Overlay de transition de page -->
+    <div class="page-transition">
+        <div class="transition-spinner"></div>
+    </div>
+    
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="public/images/logo.webp" alt="Logo" class="me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">À Propos</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">ACTIVITÉS</a>
+                        <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
+                            <li><a class="dropdown-item" href="/projects">Toutes les activités</a></li>
+                            <li><a class="dropdown-item" href="/projects/filter?status=encours">En cours</a></li>
+                            <li><a class="dropdown-item" href="/projects/filter?status=termine">Terminées</a></li>
+                            <li><a class="dropdown-item" href="/projects/filter?status=planifie">Planifiées</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="realisations.html">Réalisations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="documents.html">Documents</a></li>
+                </ul>
+                <a href="/contact" class="btn btn-contact">Nous Contacter</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-stage">
+            <div class="hero-top-panel" aria-label="Points clés">
+                <ul>
+                    <li>Renforcer la transparence et la modernisation des régies financières.</li>
+                    <li>Accélérer la digitalisation des services au public.</li>
+                    <li>Améliorer la collecte et le suivi des recettes.</li>
+                    <li>Coordonner les réformes avec les administrations concernées.</li>
+                </ul>
+            </div>
+            <div class="hero-content">
+                <h1>Mise en place de la chaîne informatisée<br>de la recette publique</h1>
+                <p>Transformation numérique pour une gestion transparente et efficace des finances publiques.</p>
+                <div class="hero-underline"></div>
+                <a href="detail.php?type=realisation" class="hero-btn">En savoir plus</a>
+                <div class="hero-controls">
+                    <button><i class="bi bi-caret-left-fill"></i></button>
+                    <button><i class="bi bi-caret-right-fill"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Governance Section -->
+    <section class="governance-section">
+        <div class="container">
+            <div class="governance-grid">
+                <div class="governance-text stagger">
+                    <h2>Visualisez le projet de<br>gouvernance financière</h2>
+                    <p>Le Directeur général des finances et ses équipes présentent la stratégie 2024-2025 de modernisation des régies financières.</p>
+                    <a href="#">En savoir plus <i class="bi bi-youtube"></i></a>
+                </div>
+                <div class="governance-card stagger" style="animation-delay: 0.15s;">
+                    <h3>Rapport de gestion<br>annuelle 2023</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Transformation digitale des Régies financières en RDC</h2>
+                <div class="title-divider"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-badge">1</div>
+                <div class="timeline-year">2015 - 2018</div>
+                <h3 class="timeline-title">Réalisations à la Direction Générale des Impôts (DGI)</h3>
+                <p class="timeline-desc">Montage stratégique des projets et déploiement des réseaux d'interconnexion.</p>
+                <img src="public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png" alt="DGI" class="timeline-img img-reveal-box stagger">
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-badge">2</div>
+                <div class="timeline-year">2018 - 2024</div>
+                <h3 class="timeline-title">Appui à la Direction Générale des Douanes et Accises (DGDA)</h3>
+                <p class="timeline-desc">Mise en service des ERP et intégration des données financières.</p>
+                <img src="public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg" alt="DGDA" class="timeline-img img-reveal-box stagger">
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-badge">3</div>
+                <div class="timeline-year">2020 - 2024</div>
+                <h3 class="timeline-title">Mise en œuvre de la plateforme citoyenne</h3>
+                <p class="timeline-desc">Déploiement d'une interface pour simplifier paiements et déclarations.</p>
+                <img src="public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg" alt="Plateforme" class="timeline-img img-reveal-box stagger">
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section class="articles-section">
+        <div class="container">
+            <h2>NOS DERNIERS ARTICLES</h2>
+            <div class="row g-4">
+                <div class="col-md-3 stagger">
+                    <div class="article-card">
+                        <img src="public/images/9fe3b95f3d4bbd9a00803da129b576653e10be87.jpg" alt="Article">
+                        <div class="article-card-body">
+                            <h5 class="article-card-title">Lancement de la modernisation</h5>
+                            <p class="article-card-desc">Nouvelle phase d'implémentation...</p>
+                    <a href="detail.php?type=article" class="article-link">En savoir plus →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 stagger" style="animation-delay: 0.1s;">
+                    <div class="article-card">
+                        <img src="public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg" alt="Article">
+                        <div class="article-card-body">
+                            <h5 class="article-card-title">Réunion budgétaire</h5>
+                            <p class="article-card-desc">Discussions sur le budget 2024...</p>
+                    <a href="detail.php?type=article" class="article-link">En savoir plus →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 stagger" style="animation-delay: 0.2s;">
+                    <div class="article-card">
+                        <img src="public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg" alt="Article">
+                        <div class="article-card-body">
+                            <h5 class="article-card-title">Forum fiscal annuel</h5>
+                            <p class="article-card-desc">Réunion des experts financiers...</p>
+                    <a href="detail.php?type=article" class="article-link">En savoir plus →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 stagger" style="animation-delay: 0.3s;">
+                    <div class="article-card">
+                        <img src="public/images/f5e8488f8c3a13bf3dab164a3be46274ca0f4ef6.jpg" alt="Article">
+                        <div class="article-card-body">
+                            <h5 class="article-card-title">Rapport trimestriel</h5>
+                            <p class="article-card-desc">Analyse des recettes publiques...</p>
+                    <a href="detail.php?type=article" class="article-link">En savoir plus →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="articles-footer">
+                <button class="btn-articles">Voir toutes les actualités</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Quelques Chiffres</h2>
+                <div class="title-divider"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 stat-item">
+                    <div class="stat-number">12KM</div>
+                    <div class="stat-label">de fibre optique</div>
+                </div>
+                <div class="col-md-4 stat-item">
+                    <div class="stat-number">21000</div>
+                    <div class="stat-label">agents formés</div>
+                </div>
+                <div class="col-md-4 stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">projets livrés</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Section -->
+    <section class="funding-section">
+        <div class="container">
+            <div class="d-flex align-items-center flex-wrap">
+                <span class="funding-label">Les bailleurs de fonds</span>
+                <div class="funding-logos">
+                    <img src="public/images/logo.webp" alt="RDC">
+                    <img src="public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png" alt="Institution 2">
+                    <img src="public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg" alt="Institution 3">
+                    <img src="public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg" alt="Institution 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="footer-logo-box d-flex gap-3 align-items-center">
+                    <img src="public/images/Logo blanc_Min Finance-8.png" alt="Ministère des Finances" style="height: 60px; width: auto;">
+                    <img src="public/images/logo_Arm blanc.png" alt="Logo" style="height: 60px; width: auto;">
+                </div>
+                <p class="footer-address">
+                    Concession Cotex, Local 6AB Avenue<br>
+                    Colonel Mondjiba N°63 Kinshasa /<br>
+                    RD Congo
+                </p>
+                <div class="footer-contact-row">
+                    <div class="social-circles">
+                        <a href="#" class="social-circle"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                    <div class="call-center-text">
+                        Call Center 1233
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 offset-md-1 footer-column">
+                <h5>ACCÈS RAPIDE</h5>
+                <a href="index.html" class="footer-link"><i class="bi bi-chevron-right"></i> Accueil</a>
+                <a href="about.html" class="footer-link"><i class="bi bi-chevron-right"></i> À propos</a>
+                <a href="projets.php" class="footer-link"><i class="bi bi-chevron-right"></i> Projets</a>
+                <a href="realisations.html" class="footer-link"><i class="bi bi-chevron-right"></i> Réalisations</a>
+            </div>
+            <div class="col-md-2 footer-column">
+                <h5>RÉALISATIONS</h5>
+                <a href="detail.php?type=realisation" class="footer-link"><i class="bi bi-chevron-right"></i> Réalisations à la DGI</a>
+                <a href="detail.php?type=realisation" class="footer-link"><i class="bi bi-chevron-right"></i> Réalisations à la DGRAD</a>
+                <a href="detail.php?type=realisation" class="footer-link"><i class="bi bi-chevron-right"></i> Autres réalisations</a>
+            </div>
+            <div class="col-md-2 footer-column">
+                <h5>PROJETS</h5>
+                <a href="projets.php" class="footer-link"><i class="bi bi-chevron-right"></i> Appels d'offres</a>
+                <a href="realisations.html" class="footer-link"><i class="bi bi-chevron-right"></i> Nos réalisations</a>
+                <a href="#" class="footer-link"><i class="bi bi-chevron-right"></i> Financement</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-ribbon"></div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function buildDetailUrl(type, item) {
+            if (item && item.link_url && item.link_url !== '#') {
+                return item.link_url;
+            }
+
+            const id = item && item.id ? `&id=${encodeURIComponent(item.id)}` : '';
+            return `detail.php?type=${encodeURIComponent(type)}${id}`;
+        }
+
+        function articleCard(item) {
+            const image = item.image_url || 'public/images/9fe3b95f3d4bbd9a00803da129b576653e10be87.jpg';
+            return `
+                <div class="col-md-3">
+                    <div class="article-card h-100">
+                        <img src="${escapeHtml(image)}" alt="${escapeHtml(item.title)}">
+                        <div class="article-card-body">
+                            <h5 class="article-card-title">${escapeHtml(item.title)}</h5>
+                            <p class="article-card-desc">${escapeHtml(item.description)}</p>
+                            <a href="${escapeHtml(buildDetailUrl('article', item))}" class="article-link">En savoir plus →</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function timelineItem(item, index) {
+            const reverse = index % 2 === 1 ? 'flex-lg-row-reverse' : '';
+            const image = item.image_url || 'public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png';
+            return `
+                <div class="timeline-item row align-items-center ${reverse}">
+                    <div class="col-lg-6">
+                        <div class="timeline-card">
+                            <img src="${escapeHtml(image)}" alt="${escapeHtml(item.title)}">
+                            <div class="timeline-content">
+                                <div class="timeline-year">${escapeHtml(item.badge_text || item.section_key || '')}</div>
+                                <h3 class="timeline-title">${escapeHtml(item.title)}</h3>
+                                <p class="timeline-desc">${escapeHtml(item.description)}</p>
+                                <a class="timeline-link" href="${escapeHtml(buildDetailUrl('realisation', item))}">En savoir plus →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                        <span class="timeline-badge">${index + 1}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function loadDynamicContent() {
+            try {
+                const [articleResponse, realisationResponse] = await Promise.all([
+                    fetch('api/content.php?type=article&limit=4'),
+                    fetch('api/content.php?type=realisation&limit=3')
+                ]);
+
+                if (articleResponse.ok) {
+                    const articleData = await articleResponse.json();
+                    const articles = articleData.items || [];
+                    if (articles.length) {
+                        const articlesContainer = document.querySelector('.articles-section .container');
+                        if (articlesContainer) {
+                            articlesContainer.innerHTML = `
+                                <h2>NOS DERNIERS ARTICLES</h2>
+                                <div class="row g-4" id="homeArticles">${articles.map(articleCard).join('')}</div>
+                                <div class="articles-footer">
+                                    <button class="btn-articles">Voir toutes les actualités</button>
+                                </div>
+                            `;
+                            setupReveal();
+                        }
+                    }
+                }
+
+                if (realisationResponse.ok) {
+                    const realisationData = await realisationResponse.json();
+                    const realisations = realisationData.items || [];
+                    if (realisations.length) {
+                        const timelineContainer = document.querySelector('.timeline-section .container');
+                        if (timelineContainer) {
+                            timelineContainer.innerHTML = `
+                                <div class="section-header">
+                                    <h2>Transformation digitale des Régies financières en RDC</h2>
+                                    <div class="title-divider"></div>
+                                </div>
+                                <div id="homeTimeline">
+                                    ${realisations.map((item, index) => timelineItem(item, index)).join('')}
+                                </div>
+                            `;
+                            setupReveal();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn('Content loading failed:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDynamicContent);
+        document.addEventListener('DOMContentLoaded', fetchStats);
+    </script>
+
+    <!-- === SCRIPT ANIMATIONS ULTRA PRO === -->
+    <script>
+        // 1. Initialisation Lenis (Smooth Scroll)
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. Gestion du Curseur Liquide
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            dot.style.left = `${posX}px`;
+            dot.style.top = `${posY}px`;
+            
+            outline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Interactions Curseur avec éléments cliquables
+        document.querySelectorAll('a, button, .article-card, .timeline-img, .img-reveal-box, .governance-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                outline.style.width = '80px';
+                outline.style.height = '80px';
+                outline.style.background = 'rgba(0, 242, 255, 0.1)';
+                outline.style.borderColor = 'rgba(0, 242, 255, 0.8)';
+                dot.style.transform = 'translate(-50%, -50%) scale(3)';
+            });
+            el.addEventListener('mouseleave', () => {
+                outline.style.width = '40px';
+                outline.style.height = '40px';
+                outline.style.background = 'transparent';
+                outline.style.borderColor = '#00f2ff';
+                dot.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // 3. Scroll Reveal (Observer)
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -10% 0px"
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // Observer pour stagger et images
+        document.querySelectorAll('.stagger, .img-reveal-box, .article-card, .governance-card').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // 4. Parallaxe des images au survol
+        document.querySelectorAll('.img-reveal-box, .timeline-img, .article-card img').forEach(box => {
+            const container = box.closest('.img-reveal-box') || box.closest('.article-card') || box.parentElement;
+            if (container) {
+                container.addEventListener('mousemove', (e) => {
+                    const img = box.tagName === 'IMG' ? box : box.querySelector('.img-ultra');
+                    if (img) {
+                        const rect = container.getBoundingClientRect();
+                        const x = (e.clientX - rect.left) / rect.width - 0.5;
+                        const y = (e.clientY - rect.top) / rect.height - 0.5;
+                        img.style.transform = `scale(1.1) translate(${x * 20}px, ${y * 20}px)`;
+                    }
+                });
+                container.addEventListener('mouseleave', () => {
+                    const img = box.tagName === 'IMG' ? box : box.querySelector('.img-ultra');
+                    if (img) img.style.transform = `scale(1) translate(0, 0)`;
+                });
+            }
+        });
+
+        // 5. Dynamic Navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled-ultra');
+            else nav.classList.remove('scrolled-ultra');
+        });
+
+        // 6. Initialiser les icônes Lucide
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="public/js/script.js"></script>
+</body>
+</html>

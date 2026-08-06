@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Animations</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background: #f5f5f5; }
+        
+        .test-section { background: white; padding: 40px; border-radius: 10px; margin-bottom: 40px; }
+        
+        /* Stats Test */
+        .stats-section {
+            background: linear-gradient(135deg, #f5f8fc 0%, #ffffff 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .stat-item {
+            display: inline-block;
+            margin: 0 30px;
+            animation: slideInUp 0.7s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .stat-item:nth-child(1) { animation-delay: 0.1s; }
+        .stat-item:nth-child(2) { animation-delay: 0.25s; }
+        .stat-item:nth-child(3) { animation-delay: 0.4s; }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse-number 2s ease-in-out infinite;
+        }
+        
+        /* Logos Test */
+        .funding-logos {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .funding-logos img {
+            height: 60px;
+            opacity: 0;
+            animation: logoEntrance 0.7s ease-out forwards, logoFloat 3.5s ease-in-out 0.7s infinite;
+        }
+        
+        .funding-logos img:nth-child(1) { animation-delay: 0s, 0s; }
+        .funding-logos img:nth-child(2) { animation-delay: 0.1s, 0.5s; }
+        .funding-logos img:nth-child(3) { animation-delay: 0.2s, 1s; }
+        .funding-logos img:nth-child(4) { animation-delay: 0.3s, 1.5s; }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse-number {
+            0%, 100% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% {
+                transform: scale(1.05);
+                filter: brightness(1.1);
+            }
+        }
+        
+        @keyframes logoEntrance {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test des Animations</h1>
+    
+    <div class="test-section">
+        <h2>Chiffres avec Animation</h2>
+        <div class="stats-section">
+            <div class="stat-item">
+                <div class="stat-number">12KM</div>
+                <p>de réseau</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">21000</div>
+                <p>utilisateurs</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <p>projets</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Logos avec Animation</h2>
+        <div class="funding-logos">
+            <img src="public/images/logo.webp" alt="Logo 1" style="width: 80px;">
+            <img src="public/images/logo.webp" alt="Logo 2" style="width: 80px;">
+            <img src="public/images/logo.webp" alt="Logo 3" style="width: 80px;">
+            <img src="public/images/logo.webp" alt="Logo 4" style="width: 80px;">
+        </div>
+    </div>
+    
+    <script>
+        console.log('✅ Page d\'essai chargée');
+        
+        // Test du compteur
+        const statNumbers = document.querySelectorAll('.stat-number');
+        console.log('🔢 Found', statNumbers.length, 'stat numbers');
+        
+        statNumbers.forEach((el, i) => {
+            setTimeout(() => {
+                const text = el.textContent;
+                const number = parseInt(text.replace(/\D/g, ''));
+                const suffix = text.replace(/\d/g, '');
+                
+                let current = 0;
+                const interval = setInterval(() => {
+                    current += Math.ceil(number / 20);
+                    if (current >= number) {
+                        el.textContent = number + suffix;
+                        clearInterval(interval);
+                    } else {
+                        el.textContent = current + suffix;
+                    }
+                }, 50);
+            }, 500 + i * 150);
+        });
+    </script>
+</body>
+</html>

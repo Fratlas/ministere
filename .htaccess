@@ -1,0 +1,18 @@
+RewriteEngine On
+DirectoryIndex index.php
+
+# Redirect direct access to the old static homepage to the routed home page
+RewriteRule ^index\.html$ / [R=302,L]
+RewriteRule ^about\.html$ /about [R=302,L]
+RewriteRule ^documents\.html$ /documents [R=302,L]
+RewriteRule ^realisations\.html$ /realisations [R=302,L]
+RewriteRule ^contact\.html$ /contact [R=302,L]
+RewriteRule ^projets\.php$ /projects [R=302,L]
+
+# Serve existing files and directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route clean URLs to the PHP front controller
+RewriteRule ^ index.php [L]

@@ -1,0 +1,1306 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministère des Finances - Documents</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --blue-1: #0e8ce4;
+            --blue-2: #00549f;
+            --blue-3: #1678d4;
+            --text-ink: #1d2b40;
+            --text-muted: #69778b;
+            --surface: #ffffff;
+            --border: #e7edf5;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-ink);
+            background:
+                radial-gradient(circle at top left, rgba(14, 140, 228, 0.08), transparent 32%),
+                linear-gradient(180deg, #f6f8fb 0%, #ffffff 18%, #f7f9fd 100%);
+        }
+
+        .documents-page {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .documents-page::before,
+        .documents-page::after {
+            content: '';
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .documents-page::before {
+            width: 260px;
+            height: 260px;
+            right: -80px;
+            top: 40px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 65%);
+        }
+
+        .documents-page::after {
+            width: 180px;
+            height: 180px;
+            left: -70px;
+            top: 520px;
+            background: radial-gradient(circle, rgba(14, 140, 228, 0.1), transparent 68%);
+        }
+
+        .documents-hero {
+            position: relative;
+            margin: 0 0 28px;
+            border-radius: 0;
+            background:
+                linear-gradient(90deg, rgba(14, 140, 228, 0.98), rgba(5, 83, 159, 0.98)),
+                url('public/images/0a0ab46ab0741BVTrB47erypG3tevi1U9Fv6BbNUBEiuiX.png') center / cover no-repeat;
+            color: #fff;
+            padding: 82px 0 86px;
+            box-shadow: 0 18px 48px rgba(0, 32, 84, 0.12);
+            overflow: hidden;
+        }
+
+        .documents-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.08));
+            pointer-events: none;
+        }
+
+        .documents-hero .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .documents-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 12px;
+            text-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+        }
+
+        .documents-hero p {
+            max-width: 780px;
+            margin: 0 auto 26px;
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .documents-search {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .documents-search input {
+            flex: 1 1 430px;
+            min-height: 50px;
+            border: 0;
+            border-radius: 10px;
+            padding: 0 18px 0 46px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="%23919fb4" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.058.076.126.145l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.145-.126zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>') no-repeat 16px center;
+        }
+
+        .documents-search input::placeholder {
+            color: #90a0b5;
+        }
+
+        .documents-search button {
+            min-height: 50px;
+            padding: 0 22px;
+            border: 0;
+            border-radius: 10px;
+            background: #1d8dd9;
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 8px 18px rgba(13, 111, 193, 0.28);
+        }
+
+        .documents-content {
+            padding: 88px 0 92px;
+        }
+
+        .dgda-annex {
+            position: relative;
+            margin-top: 42px;
+            padding: 0;
+        }
+
+        .annex-toggle {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: center;
+            padding: 20px 22px;
+            background: #fff;
+            border: 1px solid rgba(231, 237, 245, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 12px 28px rgba(19, 36, 64, 0.06);
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .annex-toggle::-webkit-details-marker {
+            display: none;
+        }
+
+        .annex-toggle-copy {
+            min-width: 0;
+        }
+
+        .annex-toggle-copy span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blue-2);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .annex-toggle strong {
+            display: block;
+            margin-top: 6px;
+            color: var(--text-ink);
+            font-size: clamp(1.05rem, 2vw, 1.35rem);
+            line-height: 1.25;
+        }
+
+        .annex-toggle-icon {
+            color: var(--blue-3);
+            transition: transform 0.2s ease;
+        }
+
+        .dgda-annex[open] .annex-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .annex-header {
+            max-width: 920px;
+            margin: 18px 0 22px;
+        }
+
+        .annex-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            color: var(--blue-2);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .annex-header h2 {
+            margin: 0 0 12px;
+            color: var(--text-ink);
+            font-size: clamp(1.75rem, 3.2vw, 2.55rem);
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .annex-header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .annex-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .annex-panel,
+        .annex-summary {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(231, 237, 245, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 16px 34px rgba(19, 36, 64, 0.06);
+        }
+
+        .annex-panel {
+            padding: 22px;
+        }
+
+        .annex-summary {
+            padding: 20px;
+            position: sticky;
+            top: 116px;
+        }
+
+        .annex-summary h3,
+        .annex-section h3 {
+            margin: 0 0 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-ink);
+        }
+
+        .annex-summary-list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .annex-summary-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #42526a;
+            font-size: 0.92rem;
+            line-height: 1.35;
+        }
+
+        .annex-summary-list i {
+            color: var(--blue-3);
+        }
+
+        .annex-section + .annex-section {
+            margin-top: 22px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .annex-pill-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .annex-pill {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            background: #f9fbfe;
+        }
+
+        .annex-pill strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--blue-2);
+            font-size: 0.86rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .annex-pill span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .annex-data-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .annex-data-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            background: #fff;
+        }
+
+        .annex-data-item h4 {
+            margin: 0 0 10px;
+            color: #1d2b40;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .annex-data-item p {
+            margin: 0 0 10px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .annex-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .annex-tags span {
+            display: inline-flex;
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: rgba(14, 140, 228, 0.09);
+            color: #315b8c;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .annex-two-cols {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .annex-check-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .annex-check-list li {
+            display: grid;
+            grid-template-columns: 24px minmax(0, 1fr);
+            gap: 8px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .annex-check-list i {
+            color: #18a070;
+            margin-top: 2px;
+        }
+
+        @media (max-width: 991.98px) {
+            .annex-grid,
+            .annex-two-cols {
+                grid-template-columns: 1fr;
+            }
+
+            .annex-summary {
+                position: static;
+            }
+
+            .annex-pill-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .documents-sidebar,
+        .documents-panel {
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(231, 237, 245, 0.95);
+            border-radius: 18px;
+            box-shadow: 0 16px 34px rgba(19, 36, 64, 0.06);
+        }
+
+        .documents-sidebar {
+            padding: 22px 20px;
+        }
+
+        .side-section + .side-section {
+            margin-top: 26px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .side-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: var(--text-ink);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .category-list li.active {
+            background: rgba(14, 140, 228, 0.12);
+            color: var(--blue-2);
+            font-weight: 700;
+        }
+
+        .category-list .count {
+            min-width: 28px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            text-align: center;
+            background: #edf3fa;
+            color: #5a6c84;
+            font-weight: 700;
+        }
+
+        .year-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .year-grid button {
+            border: 1px solid var(--border);
+            background: #fff;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 0.92rem;
+            color: #364357;
+        }
+
+        .year-grid button.active {
+            background: rgba(14, 140, 228, 0.12);
+            border-color: rgba(14, 140, 228, 0.3);
+            color: var(--blue-2);
+            font-weight: 700;
+        }
+
+        .help-box {
+            margin-top: 18px;
+            background: rgba(14, 140, 228, 0.08);
+            border-radius: 8px;
+            padding: 16px;
+            color: #3d5f9a;
+        }
+
+        .help-box h6 {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .help-box a {
+            color: #1d8dd9;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background: rgba(29, 141, 217, 0.1);
+        }
+
+        .help-box a:hover {
+            background: rgba(29, 141, 217, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(29, 141, 217, 0.3);
+        }
+
+        .documents-panel {
+            padding: 18px;
+        }
+
+        .documents-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toolbar-meta {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toolbar-actions select {
+            min-width: 150px;
+            border-radius: 8px;
+            border-color: var(--border);
+            color: #4b5b72;
+        }
+
+        .view-toggle {
+            display: inline-flex;
+            gap: 4px;
+            padding: 4px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .view-toggle button {
+            border: 0;
+            width: 32px;
+            height: 28px;
+            border-radius: 7px;
+            background: transparent;
+            color: #9ca9bb;
+        }
+
+        .view-toggle button.active {
+            background: rgba(14, 140, 228, 0.1);
+            color: var(--blue-3);
+        }
+
+        .document-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 18px 18px 16px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 8px 18px rgba(13, 27, 49, 0.04);
+            margin-bottom: 14px;
+        }
+
+        .document-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            flex: 0 0 52px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #eff5fd;
+            color: var(--blue-3);
+            font-size: 1.35rem;
+        }
+
+        .document-icon.pdf {
+            background: rgba(14, 140, 228, 0.12);
+            color: var(--blue-2);
+        }
+
+        .document-icon.excel {
+            background: rgba(24, 160, 112, 0.12);
+            color: #169a6c;
+        }
+
+        .document-icon.word {
+            background: rgba(47, 103, 234, 0.12);
+            color: #3067e9;
+        }
+
+        .document-meta {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .document-badges {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .doc-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: #edf4ff;
+            color: #4d77c2;
+        }
+
+        .doc-date {
+            color: #9aa7b8;
+            font-size: 0.82rem;
+        }
+
+        .document-meta h5 {
+            margin: 0 0 6px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--text-ink);
+        }
+
+        .document-meta p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .document-aside {
+            width: 76px;
+            text-align: right;
+            flex: 0 0 76px;
+            color: #728095;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .document-aside strong {
+            display: block;
+            color: var(--text-ink);
+            font-size: 0.92rem;
+            margin-top: 2px;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .document-action {
+            color: #1c2f4a;
+            font-size: 1.05rem;
+            margin-left: 2px;
+        }
+
+        .document-action.disabled {
+            color: #b8c1ce;
+            pointer-events: none;
+        }
+
+        .documents-empty {
+            padding: 56px 24px;
+        }
+
+        .documents-pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 6px;
+        }
+
+        .pagination .page-link {
+            color: #394b66;
+            border-color: #e7edf5;
+            min-width: 36px;
+            text-align: center;
+            box-shadow: none;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: #1487db;
+            border-color: #1487db;
+        }
+
+        @media (max-width: 991.98px) {
+            .documents-hero {
+                margin-left: 0;
+                margin-right: 0;
+                padding-top: 66px;
+                padding-bottom: 74px;
+            }
+
+            .documents-sidebar {
+                margin-bottom: 18px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .documents-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .documents-hero p {
+                font-size: 0.98rem;
+            }
+
+            .document-card {
+                align-items: flex-start;
+            }
+
+            .document-aside {
+                width: auto;
+                flex-basis: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="documents-page">
+        <section class="documents-hero">
+            <div class="container">
+                <h1>Bibliothèque de Documents</h1>
+                <p>
+                    Accédez à l'ensemble des textes officiels, rapports financiers, lois de finances
+                    et décrets du Ministère des Finances de la RDC.
+                </p>
+                <div class="documents-search">
+                    <input id="documentSearch" type="search" placeholder="Rechercher un document (ex: Loi de finances 2024)...">
+                    <button type="button"><i class="bi bi-funnel-fill me-2"></i>Filtrer</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="documents-content">
+            <div class="container">
+                <div class="row g-4 align-items-start">
+                    <aside class="col-lg-3">
+                        <div class="documents-sidebar">
+                            <div class="side-section">
+                                <div class="side-title"><i class="bi bi-grid-3x3-gap-fill text-info"></i>Catégories</div>
+                                <ul class="category-list" id="categoryList">
+                                    <li class="active"><span>Tous les documents</span><span class="count">0</span></li>
+                                    <li><span>Textes réglementaires</span><span class="count">0</span></li>
+                                    <li><span>Guides Utilisateurs</span><span class="count">0</span></li>
+                                    <li><span>Appels d'offres</span><span class="count">0</span></li>
+                                    <li><span>Autres ressources</span><span class="count">0</span></li>
+                                </ul>
+                            </div>
+
+                            <div class="side-section" id="yearSection" style="display: none;">
+                                <div class="side-title"><i class="bi bi-calendar3 text-info"></i>Année</div>
+                                <div class="year-grid" id="yearGrid">
+                                    <button type="button" data-year="all" class="active">Toutes</button>
+                                </div>
+                            </div>
+
+                            <div class="help-box">
+                                <h6>Besoin d'aide ?</h6>
+                                <p class="mb-2">Si vous ne trouvez pas un document spécifique, contactez le service de documentation.</p>
+                                <a href="/contact">Contacter le service</a>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <main class="col-lg-9">
+                        <div class="documents-panel">
+                            <div class="documents-toolbar">
+                                <div class="toolbar-meta" id="documentsMeta">Affichage de 0 - 0 sur 0 documents</div>
+                                <div class="toolbar-actions">
+                                    <select class="form-select form-select-sm" id="sortSelect" aria-label="Trier les documents">
+                                        <option value="newest">Plus récents</option>
+                                        <option value="oldest">Plus anciens</option>
+                                        <option value="order">Ordre admin</option>
+                                    </select>
+                                    <div class="view-toggle" aria-label="Changer la vue">
+                                        <button type="button" class="active" aria-label="Vue liste"><i class="bi bi-list-ul"></i></button>
+                                        <button type="button" aria-label="Vue grille"><i class="bi bi-grid-3x3-gap"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="documentsList">
+                                <div class="documents-empty text-center py-5">
+                                    <h5 class="fw-bold mb-2">Chargement des documents...</h5>
+                                    <p class="text-muted mb-0">Les contenus publiés depuis l'administration apparaîtront ici.</p>
+                                </div>
+                            </div>
+
+                            <nav class="documents-pagination">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">12</a></li>
+                                    <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </main>
+                </div>
+
+                <details id="flux-dgda-entrepot" class="dgda-annex" aria-labelledby="fluxDgdaTitle">
+                    <summary class="annex-toggle"><span class="annex-toggle-copy"><span><i class="bi bi-diagram-3-fill"></i> Annexe technique</span><strong id="fluxDgdaTitle">Spécifications du flux de données DGDA vers l'Entrepôt</strong></span><i class="bi bi-chevron-down annex-toggle-icon"></i></summary><div class="annex-header"><p>L'objectif est d'assurer la remontée automatique et exhaustive de chaque acte de recette douanière vers l'Entrepôt de Données de l'État, afin de donner au gouvernement une vision consolidée et en temps réel de la mobilisation des ressources propres.</p></div>
+
+                    <div class="annex-grid">
+                        <div class="annex-panel">
+                            <div class="annex-section">
+                                <h3>Enjeux du projet</h3>
+                                <div class="annex-pill-grid">
+                                    <div class="annex-pill">
+                                        <strong>Aide à la décision</strong>
+                                        <span>Analyse des flux commerciaux et amélioration des prévisions budgétaires.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Transparence</strong>
+                                        <span>Suivi en temps réel des recettes douanières et réduction du rapportage manuel.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Interopérabilité</strong>
+                                        <span>Croisement des données douanières avec celles des impôts et du Trésor.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="annex-section">
+                                <h3>Périmètre des données à récupérer</h3>
+                                <div class="annex-data-list">
+                                    <article class="annex-data-item">
+                                        <h4>Recettes sur déclarations</h4>
+                                        <p>Transmission de toutes les informations constituant une déclaration : droits de douane, TVA, accises, redevances FPI/OGEFREM et autres recettes associées.</p>
+                                        <div class="annex-tags">
+                                            <span>Position tarifaire</span><span>Produit</span><span>Valeur CIF</span><span>Base imposable</span><span>Bureau de douane</span><span>Provenance</span><span>Date paiement</span><span>Déclarant</span><span>Importateur</span><span>Régime</span><span>Contribuable</span>
+                                        </div>
+                                    </article>
+
+                                    <article class="annex-data-item">
+                                        <h4>Recettes hors déclarations</h4>
+                                        <p>Intégration des recettes exceptionnelles, notamment contentieux, forfaits et enchères, pour une vision budgétaire complète.</p>
+                                        <div class="annex-tags">
+                                            <span>Infraction</span><span>Forfait</span><span>Amende</span><span>Prix de vente</span><span>Lieu de génération</span><span>Date quittance</span><span>Contrevenant</span><span>Acheteur</span><span>Acte manuel</span>
+                                        </div>
+                                    </article>
+
+                                    <article class="annex-data-item">
+                                        <h4>État des paiements et Restes à Recouvrer</h4>
+                                        <p>Traçabilité bancaire et identification des manques à gagner immédiats, incluant les déclarations restées au statut « Liquidé » au-delà du délai légal.</p>
+                                        <div class="annex-tags">
+                                            <span>N° quittance</span><span>Banque réceptrice</span><span>Année paiement</span><span>Agence bancaire</span><span>Compte du Trésor</span><span>Date encaissement</span><span>Statut</span><span>RAR</span><span>Contribuable</span>
+                                        </div>
+                                    </article>
+
+                                    <article class="annex-data-item">
+                                        <h4>Données logistiques et référentiels</h4>
+                                        <p>Mise à disposition du contexte de transport et des tables de correspondance nécessaires à l'interopérabilité.</p>
+                                        <div class="annex-tags">
+                                            <span>N° manifeste</span><span>Titre de transport</span><span>Poids</span><span>Banques agréées</span><span>Taux de change journalier</span><span>Codes bureaux</span><span>CAD actifs</span>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+
+                            <div class="annex-section">
+                                <h3>Caractéristiques et architecture du flux</h3>
+                                <div class="annex-two-cols">
+                                    <div class="annex-data-item">
+                                        <h4>Phase d'initialisation</h4>
+                                        <ul class="annex-check-list">
+                                            <li><i class="bi bi-check-circle-fill"></i><span>Reprise de l'intégralité des données des 5 dernières années, à compter de l'année précédant l'exercice en cours.</span></li>
+                                            <li><i class="bi bi-check-circle-fill"></i><span>Transmission directe par dump SQL ou fichiers plats structurés CSV/Parquet, sans passage par l'API.</span></li>
+                                            <li><i class="bi bi-check-circle-fill"></i><span>Respect de la structure fonctionnelle Qui, Quoi, Où, Quand et Comment.</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="annex-data-item">
+                                        <h4>Flux de croisière</h4>
+                                        <ul class="annex-check-list">
+                                            <li><i class="bi bi-check-circle-fill"></i><span>Récupération quotidienne sur la base des données de la journée précédente.</span></li>
+                                            <li><i class="bi bi-check-circle-fill"></i><span>Extraction nocturne des transactions clôturées entre 00h00 et 23h59.</span></li>
+                                            <li><i class="bi bi-check-circle-fill"></i><span>Garantie d'exhaustivité des quittances bancaires avant intégration.</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="annex-section">
+                                <h3>Spécifications techniques</h3>
+                                <div class="annex-two-cols">
+                                    <div class="annex-data-item">
+                                        <h4>Côté Douane</h4>
+                                        <p>Interface REST/JSON sécurisée exposant les données quotidiennes nécessaires au flux automatisé.</p>
+                                    </div>
+                                    <div class="annex-data-item">
+                                        <h4>Côté Gouvernement</h4>
+                                        <p>Moteur ETL souverain appelant l'API pour le flux J-1 et traitant les fichiers ou tables de l'initialisation historique.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="annex-section">
+                                <h3>SLA, sécurité et souveraineté</h3>
+                                <div class="annex-pill-grid">
+                                    <div class="annex-pill">
+                                        <strong>Disponibilité</strong>
+                                        <span>99,9 % en service 24h/24 et 7j/7.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Intégrité</strong>
+                                        <span>100 % de convergence entre SYDONIA et l'Entrepôt, historique et flux J-1 inclus.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Latence</strong>
+                                        <span>Données de la journée J disponibles dans l'entrepôt au plus tard à J+1 à 08h00.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Chiffrement</strong>
+                                        <span>TLS 1.3 pour le transport et AES-256 pour le stockage.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Authentification</strong>
+                                        <span>Certificats numériques et OAuth2.</span>
+                                    </div>
+                                    <div class="annex-pill">
+                                        <strong>Souveraineté</strong>
+                                        <span>Hébergement physique exclusif en RDC, supports de transfert historiques inclus.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="annex-summary" aria-label="Résumé du flux DGDA">
+                            <h3>Résumé opérationnel</h3>
+                            <ul class="annex-summary-list">
+                                <li><i class="bi bi-database-fill-up"></i><span>Flux DGDA vers l'Entrepôt de Données de l'État.</span></li>
+                                <li><i class="bi bi-clock-history"></i><span>Historique initial sur 5 ans, puis reprise quotidienne J-1.</span></li>
+                                <li><i class="bi bi-filetype-sql"></i><span>Initialisation par dump SQL, CSV ou Parquet.</span></li>
+                                <li><i class="bi bi-braces"></i><span>Exploitation quotidienne via API REST/JSON sécurisée.</span></li>
+                                <li><i class="bi bi-bank2"></i><span>Suivi des paiements, quittances et restes à recouvrer.</span></li>
+                                <li><i class="bi bi-shield-lock-fill"></i><span>TLS 1.3, AES-256, certificats numériques et OAuth2.</span></li>
+                            </ul>
+                        </aside>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Détecter la section active depuis l'URL
+        function getCurrentSection() {
+            const hash = window.location.hash || '';
+            if (hash.includes('textes-reglementaires')) return 'textes-reglementaires';
+            if (hash.includes('rapports-activite')) return 'rapports-activite';
+            if (hash.includes('autres-ressources')) return 'autres-ressources';
+            return 'textes-reglementaires'; // par défaut
+        }
+
+        const state = {
+            items: [],
+            filteredItems: [],
+            category: 'all',
+            year: 'all',
+            search: '',
+            sort: 'newest',
+            currentSection: getCurrentSection()
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function slugify(value) {
+            return String(value ?? '')
+                .trim()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function getIconType(item) {
+            const value = String(item.icon_class || item.badge_text || item.file_url || '').toLowerCase();
+            if (value.includes('excel') || value.includes('xls')) return 'excel';
+            if (value.includes('word') || value.includes('doc')) return 'word';
+            if (value.includes('pdf')) return 'pdf';
+            return 'pdf';
+        }
+
+        function getIconClass(type) {
+            if (type === 'excel') return 'bi-file-earmark-spreadsheet-fill';
+            if (type === 'word') return 'bi-file-earmark-word-fill';
+            return 'bi-file-earmark-pdf-fill';
+        }
+
+        function getYear(item) {
+            const values = [item.created_at, item.badge_text, item.meta_text, item.title].join(' ');
+            const match = values.match(/\b(20\d{2}|19\d{2})\b/);
+            return match ? match[1] : 'unknown';
+        }
+
+        function formatDate(item) {
+            const raw = item.created_at || item.updated_at || '';
+            if (!raw) return '';
+
+            const date = new Date(String(raw).replace(' ', 'T'));
+            if (Number.isNaN(date.getTime())) return '';
+
+            return date.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        function sortItems(items) {
+            return [...items].sort((a, b) => {
+                if (state.sort === 'order') {
+                    return Number(a.display_order || 0) - Number(b.display_order || 0);
+                }
+
+                const dateA = new Date(String(a.created_at || '').replace(' ', 'T')).getTime() || 0;
+                const dateB = new Date(String(b.created_at || '').replace(' ', 'T')).getTime() || 0;
+                return state.sort === 'oldest' ? dateA - dateB : dateB - dateA;
+            });
+        }
+
+        function updateCounts(items) {
+            const meta = document.getElementById('documentsMeta');
+            const total = items.length;
+            if (meta) {
+                meta.textContent = total
+                    ? `Affichage de 1 - ${total} sur ${total} documents`
+                    : 'Aucun document trouvé';
+            }
+        }
+
+        function renderDocument(item) {
+            const iconType = getIconType(item);
+            const badge = item.badge_text || item.section_key || 'Document';
+            const date = formatDate(item);
+            const size = item.meta_text || '-';
+            const href = item.file_url || item.link_url || '#';
+            const hasDownload = href && href !== '#';
+            const actionAttrs = hasDownload
+                ? `href="${escapeHtml(href)}" target="_blank" rel="noopener" aria-label="Télécharger ${escapeHtml(item.title)}"`
+                : 'href="#" aria-disabled="true" aria-label="Fichier non disponible"';
+
+            return `
+                <article class="document-card">
+                    <div class="document-icon ${escapeHtml(iconType)}">
+                        <i class="bi ${getIconClass(iconType)}"></i>
+                    </div>
+                    <div class="document-meta">
+                        <div class="document-badges">
+                            <span class="doc-badge">${escapeHtml(badge)}</span>
+                            ${date ? `<span class="doc-date">${escapeHtml(date)}</span>` : ''}
+                        </div>
+                        <h5>${escapeHtml(item.title)}</h5>
+                        <p>${escapeHtml(item.description)}</p>
+                    </div>
+                    <div class="document-aside">
+                        Taille
+                        <strong>${escapeHtml(size)}</strong>
+                    </div>
+                    <a class="document-action ${hasDownload ? '' : 'disabled'}" ${actionAttrs}>
+                        <i class="bi bi-download"></i>
+                    </a>
+                </article>
+            `;
+        }
+
+        function renderCategories(items) {
+            const list = document.getElementById('categoryList');
+            if (!list) return;
+
+            const counts = items.reduce((acc, item) => {
+                const key = slugify(item.section_key || 'Autres ressources');
+                acc[key] = (acc[key] || 0) + 1;
+                return acc;
+            }, {});
+
+            const preferredCategories = [
+                'Textes réglementaires',
+                'Guides Utilisateurs',
+                'Appels d\'offres',
+                'Autres ressources'
+            ];
+            const preferredSlugs = preferredCategories.map(slugify);
+            const extraCategories = [...new Map(items
+                .map((item) => item.section_key || 'Autres ressources')
+                .filter((category) => !preferredSlugs.includes(slugify(category)))
+                .map((category) => [slugify(category), category])
+            ).values()];
+            const categories = [...preferredCategories, ...extraCategories];
+
+            const rows = [
+                `<li class="${state.category === 'all' ? 'active' : ''}" data-category="all"><span>Tous les documents</span><span class="count">${items.length}</span></li>`
+            ];
+
+            categories.forEach(category => {
+                const key = slugify(category);
+                const count = counts[key] || 0;
+                rows.push(`<li class="${state.category === key ? 'active' : ''}" data-category="${escapeHtml(key)}"><span>${escapeHtml(category)}</span><span class="count">${count}</span></li>`);
+            });
+
+            list.innerHTML = rows.join('');
+
+            const sideTitle = document.querySelector('.side-title');
+            if (sideTitle) {
+                sideTitle.innerHTML = `<i class="bi bi-grid-3x3-gap-fill text-info"></i>Catégories`;
+            }
+        }
+
+        function renderYears(items) {
+            const grid = document.getElementById('yearGrid');
+            if (!grid) return;
+
+            const years = [...new Set(items.map(getYear).filter((year) => year !== 'unknown'))]
+                .sort((a, b) => Number(b) - Number(a));
+
+            const buttons = [`<button type="button" data-year="all" class="${state.year === 'all' ? 'active' : ''}">Toutes</button>`];
+            years.forEach((year) => {
+                buttons.push(`<button type="button" data-year="${escapeHtml(year)}" class="${state.year === year ? 'active' : ''}">${escapeHtml(year)}</button>`);
+            });
+
+            grid.innerHTML = buttons.join('');
+        }
+
+        function applyFilters() {
+            const query = state.search.trim().toLowerCase();
+            let items = [...state.items];
+
+            if (state.category !== 'all') {
+                items = items.filter((item) => slugify(item.section_key || 'Autres') === state.category);
+            }
+
+            if (state.year !== 'all') {
+                items = items.filter((item) => getYear(item) === state.year);
+            }
+
+            if (query) {
+                items = items.filter((item) => {
+                    const haystack = [
+                        item.title,
+                        item.description,
+                        item.section_key,
+                        item.badge_text,
+                        item.meta_text,
+                    ].join(' ').toLowerCase();
+                    return haystack.includes(query);
+                });
+            }
+
+            state.filteredItems = sortItems(items);
+            updateCounts(state.filteredItems);
+
+            const list = document.getElementById('documentsList');
+            if (list) {
+                if (state.filteredItems.length) {
+                    list.innerHTML = state.filteredItems.map(renderDocument).join('');
+                } else {
+                    list.innerHTML = `
+                        <div class="documents-empty text-center py-5">
+                            <h5 class="fw-bold mb-2">Aucun document trouvé</h5>
+                            <p class="text-muted mb-0">Essayez un autre mot-clé ou une autre catégorie.</p>
+                        </div>
+                    `;
+                }
+            }
+
+            const yearSection = document.getElementById('yearSection');
+            const categorySection = document.querySelector('.side-section');
+            if (yearSection && categorySection) {
+                yearSection.style.display = 'block';
+                categorySection.style.display = 'block';
+            }
+
+            renderCategories(state.items);
+            renderYears(state.items);
+            wireSidebarFilters();
+        }
+
+        function wireSidebarFilters() {
+            const categoryList = document.getElementById('categoryList');
+            const yearGrid = document.getElementById('yearGrid');
+
+            // Gérer les filtres de catégorie
+            if (categoryList) {
+                categoryList.querySelectorAll('[data-category]').forEach((item) => {
+                    item.addEventListener('click', () => {
+                        state.category = item.dataset.category || 'all';
+                        applyFilters();
+                    });
+                });
+            }
+
+            // Gérer les filtres d'année
+            if (yearGrid) {
+                yearGrid.querySelectorAll('[data-year]').forEach((button) => {
+                    button.addEventListener('click', () => {
+                        state.year = button.dataset.year || 'all';
+                        applyFilters();
+                    });
+                });
+            }
+
+            const sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', () => {
+                    state.sort = sortSelect.value;
+                    applyFilters();
+                });
+            }
+        }
+
+        async function loadDocuments() {
+            const list = document.getElementById('documentsList');
+            const meta = document.getElementById('documentsMeta');
+            const search = document.getElementById('documentSearch');
+            if (!list) return;
+
+            list.innerHTML = '';
+
+            try {
+                const response = await fetch('api/content.php?type=document');
+                if (response.ok) {
+                    const data = await response.json();
+                    state.items = Array.isArray(data.items) ? data.items : [];
+                    state.filteredItems = [...state.items];
+                    if (search) {
+                        search.addEventListener('input', () => {
+                            state.search = search.value || '';
+                            applyFilters();
+                        });
+                    }
+                    if (state.items.length) {
+                        updateCounts(state.items);
+                        renderCategories(state.items);
+                        wireSidebarFilters();
+                        applyFilters();
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.warn('Unable to load documents from admin API.', error);
+            }
+
+            if (meta) {
+                meta.textContent = 'Aucun document disponible';
+            }
+
+            list.innerHTML = `
+                <div class="documents-empty text-center py-5">
+                    <h5 class="fw-bold mb-2">Aucun document disponible</h5>
+                    <p class="text-muted mb-0">Ajoutez des documents depuis l'administration pour les afficher ici.</p>
+                </div>
+            `;
+        }
+
+        function openAnnexFromHash() {
+            if (window.location.hash === '#flux-dgda-entrepot') {
+                const annex = document.getElementById('flux-dgda-entrepot');
+                if (annex) annex.open = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDocuments();
+            openAnnexFromHash();
+        });
+        window.addEventListener('hashchange', openAnnexFromHash);
+    </script>
+</body>
+</html>
+

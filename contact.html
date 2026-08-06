@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministère des Finances - Contact</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/images/Logo blanc_Min Finance-8.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8f9fa; color: #203040; overflow-x: hidden; margin: 0; padding: 0; }
+        
+        /* Navigation et General */
+        .navbar { padding: 1rem 0; background: rgba(255,255,255,0.92); box-shadow: 0 2px 24px rgba(0,0,0,0.05); backdrop-filter: blur(8px); margin: 10px 16px 0; border-radius: 22px; }
+        .navbar-brand img { height: 70px; }
+        .nav-link { font-weight: 500; color: #333 !important; font-size: 0.9rem; text-transform: uppercase; }
+        .nav-link.active { color: #007bff !important; }
+        .btn-contact { background: #007bff; color: white !important; border-radius: 50px; padding: 8px 20px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; pointer-events: none; opacity: 0.75; }
+        
+        /* Hero Section */
+        .hero-section { background: linear-gradient(90deg, #1182d8 0%, #0a64b5 100%); color: white; padding: 80px 0 100px; text-align: center; margin: 0 16px; position: relative; overflow: hidden; border-radius: 0 0 34px 34px; }
+        .hero-section h1 { font-weight: 900; font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 20px; letter-spacing: 0.02em; }
+        .hero-section p { font-size: 1.05rem; max-width: 700px; margin: 0 auto; opacity: 0.95; line-height: 1.6; word-spacing: 0.05em; }
+        .hero-divider { width: 80px; height: 3px; margin: 24px auto 0; background: linear-gradient(to right, #3ea2f5 0 33%, #ffd400 33% 66%, #e31b23 66% 100%); border-radius: 999px; }
+        
+        /* Content Wrapper and Contact Panel */
+        .content-wrapper { background: #fff; padding: 0; }
+        .contact-panel { background: linear-gradient(135deg, #1182d8 0%, #0a7bc7 100%); padding: 60px 0; position: relative; overflow: hidden; }
+        .contact-panel::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+        .contact-panel .container { position: relative; z-index: 1; }
+        
+        /* Contact Grid */
+        .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: start; margin-top: 5px; }
+        
+        /* Contact Form Card */
+        .contact-form-card { background: #ffffff; padding: 35px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .contact-form-card h4 { font-weight: 900; font-size: 1.4rem; margin-bottom: 12px; color: #000000; }
+        .contact-form-card > p { color: #333333; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
+        .contact-form-card .form-label { font-size: 0.75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
+        .contact-form-card .form-control { min-height: 44px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 0.95rem; padding: 10px 14px; }
+        .contact-form-card .form-control:focus { border-color: #1182d8; box-shadow: 0 0 0 3px rgba(17,130,216,0.1); }
+        .contact-form-card .form-select { min-height: 44px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 0.95rem; padding: 10px 14px; }
+        .contact-form-card textarea.form-control { min-height: 120px; resize: none; }
+        .form-group { margin-bottom: 18px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .contact-submit { background: linear-gradient(135deg, #1e6cff 0%, #0b56d9 100%); color: #fff; border: 0; border-radius: 10px; font-weight: 800; padding: 14px 28px; cursor: pointer; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 12px 30px rgba(30,108,255,0.25); margin-top: 8px; }
+        .contact-submit:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(30,108,255,0.35); }
+        .contact-submit i { margin-left: 8px; }
+        
+        /* Contact Info Card (Coordonnées) */
+        .contact-info-card { color: #fff; }
+        .contact-info-card h4 { font-weight: 900; font-size: 1.4rem; margin-bottom: 12px; }
+        .contact-info-card > p { color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; }
+        
+        /* Mini Cards for Address/Phone/Email */
+        .mini-card { display: flex; gap: 16px; align-items: flex-start; background: #ffffff; color: #000000; border-radius: 20px; padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,0.12); margin-bottom: 18px; transition: transform 0.2s, box-shadow 0.2s; }
+        .mini-card:hover { transform: translateY(-2px); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .mini-icon { width: 48px; height: 48px; border-radius: 12px; background: #eef4ff; display: flex; align-items: center; justify-content: center; color: #1182d8; font-size: 1.4rem; flex-shrink: 0; }
+        .mini-card strong { display: block; font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: #000000; }
+        .mini-card p { margin: 0; color: #333333; font-size: 0.9rem; line-height: 1.5; }
+        
+        /* Map Section */
+        .map-wrap { width: 100%; height: 420px; overflow: hidden; margin-top: 0; }
+        
+        /* Footer */
+        .main-footer { background: linear-gradient(135deg, #1785d3 0%, #0c6bbd 100%); color: white; padding: 60px 0 34px; margin: 0 16px 16px; }
+        .footer-link { color: rgba(255,255,255,0.85); text-decoration: none; display: block; margin-bottom: 12px; }
+        .footer-link:hover { color: #fff; }
+        .footer-logo-box { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+        .footer-logo-box img { height: 40px; }
+        .social-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 28px; padding-top: 18px; }
+        .social-icons { display: flex; gap: 14px; font-size: 1.15rem; }
+        .social-icons a { color: #fff; opacity: 0.9; transition: opacity 0.2s; }
+        .social-icons a:hover { opacity: 1; }
+        .call-center { font-weight: 700; font-size: 1.15rem; }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section { padding: 60px 0 80px; }
+            .hero-section h1 { font-size: 2.2rem; }
+            .contact-panel { padding: 40px 0; }
+            .contact-form-card { padding: 25px 20px; }
+            .contact-form-card h4 { font-size: 1.25rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-submit { width: 100%; }
+            .mini-card { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="public/images/logo.webp" alt="Logo" class="me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">À Propos</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">ACTIVITÉS</a>
+                        <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
+                            <li><a class="dropdown-item" href="/projects">Toutes les activités</a></li>
+                            <li><a class="dropdown-item" href="/projects/filter?status=encours">En cours</a></li>
+                            <li><a class="dropdown-item" href="/projects/filter?status=termine">Terminées</a></li>
+                            <li><a class="dropdown-item" href="/projects/filter?status=planifie">Planifiées</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="realisations.html">Réalisations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="documents.html">Documents</a></li>
+                </ul>
+                <a href="contact.html" class="btn btn-contact active">Nous Contacter</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>NOUS CONTACTER</h1>
+            <p>Remplissez le formulaire ci-dessous et nos services vous répondront dans les meilleurs délais.</p>
+            <div class="hero-divider"></div>
+        </div>
+    </section>
+
+    <div class="content-wrapper">
+        <section class="contact-panel">
+            <div class="container">
+                <div class="contact-grid">
+                    <!-- Formulaire de Contact -->
+                    <div class="contact-form-card">
+                        <h4>Envoyez un message</h4>
+                        <p>Remplissez le formulaire ci-dessous et nos services vous répondront dans les plus brefs délais.</p>
+                        <form method="POST" action="#">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Nom complet</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Ex : Jean Kasongo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Adresse Email</label>
+                                    <input type="email" class="form-control" name="email" placeholder="nom@exemple.cd" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Sujet</label>
+                                <select class="form-select" name="subject" required>
+                                    <option value="">-- Sélectionnez un sujet --</option>
+                                    <option value="general">Demande d'information générale</option>
+                                    <option value="projet">Suivi projet</option>
+                                    <option value="partenariat">Partenariat</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" name="message" placeholder="Comment pouvons-nous vous aider ?" required></textarea>
+                            </div>
+                            <button type="submit" class="contact-submit">Envoyer le message <i class="bi bi-arrow-right"></i></button>
+                        </form>
+                    </div>
+                    
+                    <!-- Coordonnées -->
+                    <div class="contact-info-card">
+                        <h4>Nos Coordonnées</h4>
+                        <p>Vous pouvez également nous joindre directement via nos canaux officiels ou nous rendre visite à nos bureaux administratifs.</p>
+                        
+                        <div class="mini-card">
+                            <div class="mini-icon"><a href="https://maps.google.com/maps?q=Place+de+la+Révolution,+Gombe,+Kinshasa,+RD+Congo" target="_blank" style="color: #1182d8;"><i class="bi bi-geo-alt-fill"></i></a></div>
+                            <div>
+                                <strong>Adresse physique</strong>
+                                <p>Place de la Révolution, Gombe, Kinshasa, RD Congo</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mini-card">
+                            <div class="mini-icon"><i class="bi bi-telephone-fill"></i></div>
+                            <div>
+                                <strong>Téléphones</strong>
+                                <p>+243 81 000 0000<br>+243 99 123 4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mini-card">
+                            <div class="mini-icon"><i class="bi bi-envelope-fill"></i></div>
+                            <div>
+                                <strong>Emails officiels</strong>
+                                <p>contact@finances.gov.cd<br>secretariat@finances.gov.cd</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-wrap">
+            <iframe src="https://maps.google.com/maps?q=Kinshasa&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="420" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </section>
+    </div>
+
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="footer-logo-box d-flex gap-3 align-items-center">
+                    <img src="public/images/Logo blanc_Min Finance-8.png" alt="Ministère des Finances" style="height: 60px; width: auto;">
+                    <img src="public/images/logo_Arm blanc.png" alt="Logo" style="height: 60px; width: auto;">
+                </div>
+                <p class="footer-address">
+                    Concession Cotex, Local 6AB Avenue<br>
+                    Colonel Mondjiba N°63 Kinshasa /<br>
+                    RD Congo
+                </p>
+                <div class="footer-contact-row">
+                    <div class="social-circles">
+                        <a href="#" class="social-circle"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-circle"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                    <div class="call-center-text">
+                        Call Center 1233
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 offset-md-1 footer-column">
+                <h5>ACCÈS RAPIDE</h5>
+                <a href="index.html" class="footer-link"><i class="bi bi-chevron-right"></i> Accueil</a>
+                <a href="about.html" class="footer-link"><i class="bi bi-chevron-right"></i> À propos</a>
+                <a href="projets.php" class="footer-link"><i class="bi bi-chevron-right"></i> Projets</a>
+                <a href="realisations.html" class="footer-link"><i class="bi bi-chevron-right"></i> Réalisations</a>
+            </div>
+            <div class="col-md-2 footer-column">
+                <h5>RÉALISATIONS</h5>
+                <a href="detail.php?type=realisation" class="footer-link"><i class="bi bi-chevron-right"></i> Réalisations à la DGI</a>
+                <a href="detail.php?type=realisation" class="footer-link"><i class="bi bi-chevron-right"></i> Réalisations à la DGRAD</a>
+                <a href="detail.php?type=realisation" class="footer-link"><i class="bi bi-chevron-right"></i> Autres réalisations</a>
+            </div>
+            <div class="col-md-2 footer-column">
+                <h5>PROJETS</h5>
+                <a href="projets.php" class="footer-link"><i class="bi bi-chevron-right"></i> Appels d'offres</a>
+                <a href="realisations.html" class="footer-link"><i class="bi bi-chevron-right"></i> Nos réalisations</a>
+                <a href="#" class="footer-link"><i class="bi bi-chevron-right"></i> Financement</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-ribbon"></div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
