@@ -107,7 +107,7 @@ $extraHead = <<<'HTML'
     }
 
     body.projects-page .hero-section h1 {
-        font-size: clamp(2.7rem, 5vw, 4.4rem);
+        font-size: clamp(3.2rem, 6vw, 5rem);
         font-weight: 900;
         letter-spacing: 0.04em;
         line-height: 1;
