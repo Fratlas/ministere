@@ -218,15 +218,30 @@ $isContact = str_starts_with($currentPath, '/contact');
             transform: translateX(4px);
         }
 
+        .navbar-nav {
+            column-gap: clamp(20px, 2.4vw, 40px);
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                margin-left: 56px;
+            }
+        }
+
         .btn-contact {
-            background: linear-gradient(135deg, #4d7cb7 0%, #2c5d92 100%);
+            background: var(--brand-blue);
             color: white !important;
-            border-radius: 999px;
+            border-radius: 10px;
             padding: 10px 22px;
             font-weight: 700;
             font-size: 0.85rem;
             text-transform: uppercase;
-            box-shadow: 0 8px 18px rgba(44, 93, 146, 0.16);
+            box-shadow: 0 8px 18px rgba(10, 133, 223, 0.22);
+        }
+
+        .btn-contact:hover {
+            background: var(--brand-blue-deep);
+            color: white !important;
         }
 
         .main-footer {
@@ -269,7 +284,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .footer-brand-box img {
-            height:150px;
+            height: 62px;
             width: auto;
             object-fit: contain;
             display: block;
@@ -600,7 +615,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav mx-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link<?php echo $isHome ? ' active' : ''; ?>" href="/">Accueil</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">À propos</a>
@@ -638,7 +653,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                         </ul>
                     </li>
                 </ul>
-                <a href="/contact" class="btn btn-contact<?php echo $isContact ? ' active' : ''; ?>">Nous contacter</a>
+                <a href="/contact" class="btn btn-contact ms-lg-auto<?php echo $isContact ? ' active' : ''; ?>">Nous contacter</a>
             </div>
         </div>
     </nav>
@@ -653,14 +668,12 @@ $isContact = str_starts_with($currentPath, '/contact');
                 <div class="footer-col">
                     <div class="footer-brand-box">
                         <img src="/public/images/Logo blanc_Min Finance-8.png" alt="Ministère des Finances">
-                        
                     </div>
                     <p class="footer-address">
                         Concession Cotex, Local 6AB Avenue<br>
                         Colonel Mondjiba N°63 Kinshasa /<br>
                         RD Congo
                     </p>
-                   
                 </div>
 
                 <div class="footer-col footer-column">
