@@ -8,7 +8,7 @@ if ($currentPath === '') {
 
 $isHome = $currentPath === '/' || $currentPath === '/index.php';
 $isAbout = str_starts_with($currentPath, '/about');
-$isProjects = str_starts_with($currentPath, '/activite');
+$isProjects = str_starts_with($currentPath, '/activite') || str_starts_with($currentPath, '/projects');
 $isRealisations = str_starts_with($currentPath, '/realisations');
 $isRealisationsDGDA = str_starts_with($currentPath, '/realisations-dgda');
 $isDocuments = str_starts_with($currentPath, '/documents');
@@ -620,19 +620,19 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">À propos</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/about#presentation-projet">Présentation de l'activité</a></li>
-                            <li><a class="dropdown-item" href="/about#mission-objectifs">Missions et Objectifs</a></li>
+                            <li><a class="dropdown-item" href="/about#presentation-projet">Présentation du Projet</a></li>
+                            <li><a class="dropdown-item" href="/about#structure">Fondements</a></li>
                             <li><a class="dropdown-item" href="/about#financement">Financements</a></li>
-                            <li><a class="dropdown-item" href="/about#equipe-projet">Équipe de l'activité</a></li>
+                            <li><a class="dropdown-item" href="/about#equipe-projet">Équipe Projet</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/activite" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activités</a>
+                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projets</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/activite">Toutes les activités</a></li>
-                            <li><a class="dropdown-item" href="/activite?status=en_cours">En cours</a></li>
-                            <li><a class="dropdown-item" href="/activite?status=termine">Terminées</a></li>
-                            <li><a class="dropdown-item" href="/activite?status=planifie">Planifiées</a></li>
+                            <li><a class="dropdown-item" href="/projects">Tous les projets</a></li>
+                            <li><a class="dropdown-item" href="/projects?status=en_cours">En cours</a></li>
+                            <li><a class="dropdown-item" href="/projects?status=termine">Terminées</a></li>
+                            <li><a class="dropdown-item" href="/projects?status=planifie">Planifiées</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -644,14 +644,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                             <li><a class="dropdown-item" href="/realisations#autres">Autres réalisations</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo $isDocuments ? ' active' : ''; ?>" href="/documents" role="button" data-bs-toggle="dropdown" aria-expanded="false">Documents</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/documents#rapports-activites">Rapports d’Activités</a></li>
-                            <li><a class="dropdown-item" href="/documents#textes-reglementaires">Textes Réglementaires</a></li>
-                            <li><a class="dropdown-item" href="/documents#autres-ressources">Autres ressources</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-item"><a class="nav-link<?php echo $isDocuments ? ' active' : ''; ?>" href="/documents">Documents</a></li>
                 </ul>
                 <a href="/contact" class="btn btn-contact ms-lg-auto<?php echo $isContact ? ' active' : ''; ?>">Nous contacter</a>
             </div>
@@ -680,7 +673,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <h5>Accès Rapide</h5>
                     <a href="/" class="footer-link"><i class="bi bi-chevron-right"></i>Accueil</a>
                     <a href="/about" class="footer-link"><i class="bi bi-chevron-right"></i>À propos</a>
-                    <a href="/activite" class="footer-link"><i class="bi bi-chevron-right"></i>Activités</a>
+                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Projets</a>
                     <a href="/realisations" class="footer-link"><i class="bi bi-chevron-right"></i>Réalisations</a>
                 </div>
 
@@ -693,9 +686,9 @@ $isContact = str_starts_with($currentPath, '/contact');
                 </div>
 
                 <div class="footer-col footer-column">
-                    <h5>Activités</h5>
-                    <a href="/activite" class="footer-link"><i class="bi bi-chevron-right"></i>Appels d'offres</a>
-                    <a href="/activite" class="footer-link"><i class="bi bi-chevron-right"></i>Nos réalisations</a>
+                    <h5>Projets</h5>
+                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Appels d'offres</a>
+                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Nos réalisations</a>
                     <a href="#" class="footer-link"><i class="bi bi-chevron-right"></i>Financement</a>
                 </div>
             </div>
@@ -755,7 +748,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             
             // Fermer le menu mobile lors du clic sur un lien
             const navbarCollapse = document.querySelector('.navbar-collapse');
-            const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+            const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle), .dropdown-item');
             const mobileMenu = document.querySelector('.navbar-toggler');
             
             navLinks.forEach(link => {
