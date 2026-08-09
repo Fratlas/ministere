@@ -763,18 +763,17 @@
                             <div class="side-section">
                                 <div class="side-title"><i class="bi bi-grid-3x3-gap-fill text-info"></i>Catégories</div>
                                 <ul class="category-list" id="categoryList">
-                                    <li class="active"><span>Tous les documents</span><span class="count">0</span></li>
-                                    <li><span>Textes réglementaires</span><span class="count">0</span></li>
-                                    <li><span>Guides Utilisateurs</span><span class="count">0</span></li>
-                                    <li><span>Appels d'offres</span><span class="count">0</span></li>
-                                    <li><span>Autres ressources</span><span class="count">0</span></li>
+                                    <li class="active" data-category="all"><span>Tous les documents</span><span class="count">0</span></li>
+                                    <li data-category="rapports-d-activites"><span>Rapports d'Activités</span><span class="count">0</span></li>
+                                    <li data-category="textes-reglementaires"><span>Textes Réglementaires</span><span class="count">0</span></li>
+                                    <li data-category="autres-ressources"><span>Autres ressources</span><span class="count">0</span></li>
                                 </ul>
                             </div>
 
-                            <div class="side-section" id="yearSection" style="display: none;">
-                                <div class="side-title"><i class="bi bi-calendar3 text-info"></i>Année</div>
-                                <div class="year-grid" id="yearGrid">
-                                    <button type="button" data-year="all" class="active">Toutes</button>
+                            <div class="side-section" id="subfilterSection" style="display: none;">
+                                <div class="side-title" id="subfilterTitle"><i class="bi bi-calendar3 text-info"></i>Année</div>
+                                <div class="year-grid" id="subfilterGrid">
+                                    <button type="button" data-subfilter="all" class="active">Toutes</button>
                                 </div>
                             </div>
 
@@ -980,11 +979,24 @@
             return 'textes-reglementaires'; // par défaut
         }
 
+        // Nomenclature officielle des catégories et sous-catégories du menu Documents
+        const CATEGORIES = [
+            "Rapports d'Activités",
+            'Textes Réglementaires',
+            'Autres ressources'
+        ];
+
+        const SUBFILTERS = {
+            'rapports-d-activites': { label: 'Année', type: 'year' },
+            'textes-reglementaires': { label: 'Type de texte', type: 'badge', options: ['Décrets', 'Arrêtés', 'Circulaires'] },
+            'autres-ressources': { label: 'Type', type: 'badge', options: ['Guides utilisateurs', 'Tutoriels'] }
+        };
+
         const state = {
             items: [],
             filteredItems: [],
             category: 'all',
-            year: 'all',
+            subfilter: 'all',
             search: '',
             sort: 'newest',
             currentSection: getCurrentSection()
@@ -1007,6 +1019,11 @@
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-+|-+$/g, '');
+        }
+
+        // Normalise un libellé pour comparer singulier/pluriel/accents (Décret ~ Décrets)
+        function normalizeLabel(value) {
+            return slugify(value).replace(/s$/, '');
         }
 
         function getIconType(item) {
@@ -1110,48 +1127,48 @@
                 return acc;
             }, {});
 
-            const preferredCategories = [
-                'Textes réglementaires',
-                'Guides Utilisateurs',
-                'Appels d\'offres',
-                'Autres ressources'
-            ];
-            const preferredSlugs = preferredCategories.map(slugify);
-            const extraCategories = [...new Map(items
-                .map((item) => item.section_key || 'Autres ressources')
-                .filter((category) => !preferredSlugs.includes(slugify(category)))
-                .map((category) => [slugify(category), category])
-            ).values()];
-            const categories = [...preferredCategories, ...extraCategories];
-
             const rows = [
                 `<li class="${state.category === 'all' ? 'active' : ''}" data-category="all"><span>Tous les documents</span><span class="count">${items.length}</span></li>`
             ];
 
-            categories.forEach(category => {
+            CATEGORIES.forEach(category => {
                 const key = slugify(category);
                 const count = counts[key] || 0;
                 rows.push(`<li class="${state.category === key ? 'active' : ''}" data-category="${escapeHtml(key)}"><span>${escapeHtml(category)}</span><span class="count">${count}</span></li>`);
             });
 
             list.innerHTML = rows.join('');
-
-            const sideTitle = document.querySelector('.side-title');
-            if (sideTitle) {
-                sideTitle.innerHTML = `<i class="bi bi-grid-3x3-gap-fill text-info"></i>Catégories`;
-            }
         }
 
-        function renderYears(items) {
-            const grid = document.getElementById('yearGrid');
-            if (!grid) return;
+        function renderSubfilter(items) {
+            const section = document.getElementById('subfilterSection');
+            const title = document.getElementById('subfilterTitle');
+            const grid = document.getElementById('subfilterGrid');
+            if (!section || !title || !grid) return;
 
-            const years = [...new Set(items.map(getYear).filter((year) => year !== 'unknown'))]
-                .sort((a, b) => Number(b) - Number(a));
+            const config = SUBFILTERS[state.category];
 
-            const buttons = [`<button type="button" data-year="all" class="${state.year === 'all' ? 'active' : ''}">Toutes</button>`];
-            years.forEach((year) => {
-                buttons.push(`<button type="button" data-year="${escapeHtml(year)}" class="${state.year === year ? 'active' : ''}">${escapeHtml(year)}</button>`);
+            if (!config) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+
+            let options = [];
+            if (config.type === 'year') {
+                options = [...new Set(items.map(getYear).filter((year) => year !== 'unknown'))]
+                    .sort((a, b) => Number(b) - Number(a));
+            } else {
+                options = config.options;
+            }
+
+            title.innerHTML = `<i class="bi bi-${config.type === 'year' ? 'calendar3' : 'tags-fill'} text-info"></i>${escapeHtml(config.label)}`;
+
+            const buttons = [`<button type="button" data-subfilter="all" class="${state.subfilter === 'all' ? 'active' : ''}">Toutes</button>`];
+            options.forEach((option) => {
+                const key = normalizeLabel(option);
+                buttons.push(`<button type="button" data-subfilter="${escapeHtml(key)}" class="${state.subfilter === key ? 'active' : ''}">${escapeHtml(option)}</button>`);
             });
 
             grid.innerHTML = buttons.join('');
@@ -1162,11 +1179,18 @@
             let items = [...state.items];
 
             if (state.category !== 'all') {
-                items = items.filter((item) => slugify(item.section_key || 'Autres') === state.category);
+                items = items.filter((item) => slugify(item.section_key || 'Autres ressources') === state.category);
             }
 
-            if (state.year !== 'all') {
-                items = items.filter((item) => getYear(item) === state.year);
+            const categoryItems = [...items];
+
+            if (state.subfilter !== 'all') {
+                const config = SUBFILTERS[state.category];
+                if (config && config.type === 'year') {
+                    items = items.filter((item) => getYear(item) === state.subfilter);
+                } else if (config && config.type === 'badge') {
+                    items = items.filter((item) => normalizeLabel(item.badge_text || '') === state.subfilter);
+                }
             }
 
             if (query) {
@@ -1199,37 +1223,31 @@
                 }
             }
 
-            const yearSection = document.getElementById('yearSection');
-            const categorySection = document.querySelector('.side-section');
-            if (yearSection && categorySection) {
-                yearSection.style.display = 'block';
-                categorySection.style.display = 'block';
-            }
-
             renderCategories(state.items);
-            renderYears(state.items);
+            renderSubfilter(categoryItems);
             wireSidebarFilters();
         }
 
         function wireSidebarFilters() {
             const categoryList = document.getElementById('categoryList');
-            const yearGrid = document.getElementById('yearGrid');
+            const subfilterGrid = document.getElementById('subfilterGrid');
 
             // Gérer les filtres de catégorie
             if (categoryList) {
                 categoryList.querySelectorAll('[data-category]').forEach((item) => {
                     item.addEventListener('click', () => {
                         state.category = item.dataset.category || 'all';
+                        state.subfilter = 'all';
                         applyFilters();
                     });
                 });
             }
 
-            // Gérer les filtres d'année
-            if (yearGrid) {
-                yearGrid.querySelectorAll('[data-year]').forEach((button) => {
+            // Gérer les sous-filtres (Année / Décrets-Arrêtés-Circulaires / Guides-Tutoriels)
+            if (subfilterGrid) {
+                subfilterGrid.querySelectorAll('[data-subfilter]').forEach((button) => {
                     button.addEventListener('click', () => {
-                        state.year = button.dataset.year || 'all';
+                        state.subfilter = button.dataset.subfilter || 'all';
                         applyFilters();
                     });
                 });

@@ -283,12 +283,27 @@ function h($value) {
 
                                 <div class="mb-3">
                                     <label class="form-label"><?php echo h($config['section_label']); ?></label>
-                                    <input type="text" name="section_key" class="form-control" value="<?php echo h($editItem['section_key'] ?? ''); ?>" placeholder="Ex: DGI, Budget, Actualite">
+                                    <?php if ($sectionKey === 'documents'): ?>
+                                        <select name="section_key" id="docCategorySelect" class="form-select" required>
+                                            <option value="">-- Choisir une categorie --</option>
+                                            <?php foreach (["Rapports d'Activit\xc3\xa9s", 'Textes R\xc3\xa9glementaires', 'Autres ressources'] as $catOption): ?>
+                                                <option value="<?php echo h($catOption); ?>" <?php echo (($editItem['section_key'] ?? '') === $catOption) ? 'selected' : ''; ?>><?php echo h($catOption); ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php else: ?>
+                                        <input type="text" name="section_key" class="form-control" value="<?php echo h($editItem['section_key'] ?? ''); ?>" placeholder="Ex: DGI, Budget, Actualite">
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label"><?php echo h($config['badge_label']); ?></label>
-                                    <input type="text" name="badge_text" class="form-control" value="<?php echo h($editItem['badge_text'] ?? ''); ?>" placeholder="Ex: 2020 - 2024, PDF, Actualite">
+                                    <label class="form-label" id="badgeFieldLabel"><?php echo h($config['badge_label']); ?></label>
+                                    <?php if ($sectionKey === 'documents'): ?>
+                                        <input type="text" name="badge_text" id="docBadgeInput" class="form-control" list="docBadgeOptions" value="<?php echo h($editItem['badge_text'] ?? ''); ?>" placeholder="Choisissez d'abord une categorie">
+                                        <datalist id="docBadgeOptions"></datalist>
+                                        <small class="text-muted d-block mt-1">Nomenclature : Rapports d'Activites -&gt; Annee (ex : 2024) | Textes Reglementaires -&gt; Decrets / Arretes / Circulaires | Autres ressources -&gt; Guides utilisateurs / Tutoriels.</small>
+                                    <?php else: ?>
+                                        <input type="text" name="badge_text" class="form-control" value="<?php echo h($editItem['badge_text'] ?? ''); ?>" placeholder="Ex: 2020 - 2024, PDF, Actualite">
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="mb-3">
@@ -374,5 +389,31 @@ function h($value) {
             </div>
         </div>
     </div>
+
+    <?php if ($sectionKey === 'documents'): ?>
+    <script>
+        (function () {
+            const categorySelect = document.getElementById('docCategorySelect');
+            const badgeInput = document.getElementById('docBadgeInput');
+            const badgeOptions = document.getElementById('docBadgeOptions');
+            if (!categorySelect || !badgeInput || !badgeOptions) return;
+
+            const NOMENCLATURE = {
+                "Rapports d'Activités": { placeholder: 'Ex: 2024', options: [] },
+                'Textes Réglementaires': { placeholder: 'Choisir : Décrets, Arrêtés ou Circulaires', options: ['Décrets', 'Arrêtés', 'Circulaires'] },
+                'Autres ressources': { placeholder: 'Choisir : Guides utilisateurs ou Tutoriels', options: ['Guides utilisateurs', 'Tutoriels'] }
+            };
+
+            function refresh() {
+                const config = NOMENCLATURE[categorySelect.value] || { placeholder: "Choisissez d'abord une catégorie", options: [] };
+                badgeInput.placeholder = config.placeholder;
+                badgeOptions.innerHTML = config.options.map((option) => `<option value="${option}"></option>`).join('');
+            }
+
+            categorySelect.addEventListener('change', refresh);
+            refresh();
+        })();
+    </script>
+    <?php endif; ?>
 </body>
 </html>

@@ -235,6 +235,11 @@ $extraHead = <<<'HTML'
         font-size: 1.2rem;
     }
 
+    .about-page .foundation-icon.foundation-icon-amber {
+        background: rgba(245, 191, 13, 0.16);
+        color: #d69b04;
+    }
+
     .about-page .structure-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -521,12 +526,12 @@ ob_start();
             <div style="height:50px;"></div>
             <div class="foundation-grid">
                 <div class="foundation-card">
-                    <div class="foundation-icon"><i class="bi bi-journal-check"></i></div>
+                    <div class="foundation-icon"><i class="bi bi-clipboard-check"></i></div>
                     <h3 class="h4 fw-bold">NOTRE MISSION</h3>
                     <p class="section-copy mb-0">Préparer et exécuter la politique budgétaire et fiscale de l'État, assurer la gestion de la trésorerie publique et superviser le secteur financier pour garantir la stabilité économique nationale et la croissance durable.</p>
                 </div>
                 <div class="foundation-card">
-                    <div class="foundation-icon"><i class="bi bi-flag-fill"></i></div>
+                    <div class="foundation-icon foundation-icon-amber"><i class="bi bi-eye"></i></div>
                     <h3 class="h4 fw-bold">MISSIONS ET OBJECTIFS</h3>
                     <p class="section-copy mb-0">Devenir une administration financière moderne, performante et totalement transparente, au service d'une croissance inclusive et de l'émergence irréversible de la République Démocratique du Congo.</p>
                 </div>
