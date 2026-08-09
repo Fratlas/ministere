@@ -607,6 +607,11 @@
             color: #3067e9;
         }
 
+        .document-icon.file {
+            background: rgba(214, 52, 80, 0.12);
+            color: #d63450;
+        }
+
         .document-meta {
             flex: 1 1 auto;
             min-width: 0;
@@ -631,6 +636,31 @@
             text-transform: uppercase;
             background: #edf4ff;
             color: #4d77c2;
+        }
+
+        .doc-badge-blue {
+            background: #edf4ff;
+            color: #4d77c2;
+        }
+
+        .doc-badge-red {
+            background: #fde8ec;
+            color: #c22a4c;
+        }
+
+        .doc-badge-green {
+            background: #e3f7ec;
+            color: #1a9c5c;
+        }
+
+        .doc-badge-yellow {
+            background: #fff6df;
+            color: #b98900;
+        }
+
+        .doc-badge-gray {
+            background: #eef1f5;
+            color: #5b6472;
         }
 
         .doc-date {
@@ -766,6 +796,7 @@
                                     <li class="active" data-category="all"><span>Tous les documents</span><span class="count">0</span></li>
                                     <li data-category="rapports-d-activites"><span>Rapports d'Activités</span><span class="count">0</span></li>
                                     <li data-category="textes-reglementaires"><span>Textes Réglementaires</span><span class="count">0</span></li>
+                                    <li data-category="appels-d-offres"><span>Appels d'offres</span><span class="count">0</span></li>
                                     <li data-category="autres-ressources"><span>Autres ressources</span><span class="count">0</span></li>
                                 </ul>
                             </div>
@@ -983,8 +1014,11 @@
         const CATEGORIES = [
             "Rapports d'Activités",
             'Textes Réglementaires',
+            "Appels d'offres",
             'Autres ressources'
         ];
+
+        const CURRENT_YEAR = new Date().getFullYear();
 
         const SUBFILTERS = {
             'rapports-d-activites': { label: 'Année', type: 'year' },
@@ -1031,17 +1065,45 @@
             if (value.includes('excel') || value.includes('xls')) return 'excel';
             if (value.includes('word') || value.includes('doc')) return 'word';
             if (value.includes('pdf')) return 'pdf';
-            return 'pdf';
+            return 'file';
         }
 
         function getIconClass(type) {
             if (type === 'excel') return 'bi-file-earmark-spreadsheet-fill';
             if (type === 'word') return 'bi-file-earmark-word-fill';
+            if (type === 'file') return 'bi-file-earmark-text-fill';
             return 'bi-file-earmark-pdf-fill';
         }
 
+        // Couleur de badge selon le type de document (aligne sur la maquette : rouge, vert, jaune, gris)
+        function getBadgeColorClass(value) {
+            const normalized = normalizeLabel(value);
+            const knownColors = {
+                'loi-de-finance': 'doc-badge-red',
+                'decret': 'doc-badge-red',
+                'arrete': 'doc-badge-gray',
+                'arrete-ministeriel': 'doc-badge-gray',
+                'circulaire': 'doc-badge-gray',
+                'rapport-annuel': 'doc-badge-green',
+                'statistique': 'doc-badge-yellow',
+                'guides-utilisateur': 'doc-badge-green',
+                'tutoriel': 'doc-badge-green',
+                'appels-d-offre': 'doc-badge-yellow'
+            };
+
+            if (knownColors[normalized]) return knownColors[normalized];
+
+            // Repartition stable par hachage pour les libelles non repertories
+            const palette = ['doc-badge-blue', 'doc-badge-green', 'doc-badge-yellow', 'doc-badge-gray', 'doc-badge-red'];
+            let hash = 0;
+            for (let i = 0; i < normalized.length; i++) {
+                hash = (hash * 31 + normalized.charCodeAt(i)) >>> 0;
+            }
+            return palette[hash % palette.length];
+        }
+
         function getYear(item) {
-            const values = [item.created_at, item.badge_text, item.meta_text, item.title].join(' ');
+            const values = [item.updated_at, item.created_at, item.badge_text, item.meta_text, item.title].join(' ');
             const match = values.match(/\b(20\d{2}|19\d{2})\b/);
             return match ? match[1] : 'unknown';
         }
@@ -1085,6 +1147,7 @@
         function renderDocument(item) {
             const iconType = getIconType(item);
             const badge = item.badge_text || item.section_key || 'Document';
+            const badgeClass = getBadgeColorClass(badge);
             const date = formatDate(item);
             const size = item.meta_text || '-';
             const href = item.file_url || item.link_url || '#';
@@ -1100,7 +1163,7 @@
                     </div>
                     <div class="document-meta">
                         <div class="document-badges">
-                            <span class="doc-badge">${escapeHtml(badge)}</span>
+                            <span class="doc-badge ${badgeClass}">${escapeHtml(badge)}</span>
                             ${date ? `<span class="doc-date">${escapeHtml(date)}</span>` : ''}
                         </div>
                         <h5>${escapeHtml(item.title)}</h5>
@@ -1154,22 +1217,24 @@
             }
 
             section.style.display = 'block';
-
-            let options = [];
-            if (config.type === 'year') {
-                options = [...new Set(items.map(getYear).filter((year) => year !== 'unknown'))]
-                    .sort((a, b) => Number(b) - Number(a));
-            } else {
-                options = config.options;
-            }
-
             title.innerHTML = `<i class="bi bi-${config.type === 'year' ? 'calendar3' : 'tags-fill'} text-info"></i>${escapeHtml(config.label)}`;
 
             const buttons = [`<button type="button" data-subfilter="all" class="${state.subfilter === 'all' ? 'active' : ''}">Toutes</button>`];
-            options.forEach((option) => {
-                const key = normalizeLabel(option);
-                buttons.push(`<button type="button" data-subfilter="${escapeHtml(key)}" class="${state.subfilter === key ? 'active' : ''}">${escapeHtml(option)}</button>`);
-            });
+
+            if (config.type === 'year') {
+                // Années de référence basées sur l'année en cours (2026) + une case Archives pour le plus ancien
+                const years = [CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2];
+                years.forEach((year) => {
+                    const key = String(year);
+                    buttons.push(`<button type="button" data-subfilter="${key}" class="${state.subfilter === key ? 'active' : ''}">${key}</button>`);
+                });
+                buttons.push(`<button type="button" data-subfilter="archives" class="${state.subfilter === 'archives' ? 'active' : ''}">Archives</button>`);
+            } else {
+                config.options.forEach((option) => {
+                    const key = normalizeLabel(option);
+                    buttons.push(`<button type="button" data-subfilter="${escapeHtml(key)}" class="${state.subfilter === key ? 'active' : ''}">${escapeHtml(option)}</button>`);
+                });
+            }
 
             grid.innerHTML = buttons.join('');
         }
@@ -1187,7 +1252,14 @@
             if (state.subfilter !== 'all') {
                 const config = SUBFILTERS[state.category];
                 if (config && config.type === 'year') {
-                    items = items.filter((item) => getYear(item) === state.subfilter);
+                    if (state.subfilter === 'archives') {
+                        items = items.filter((item) => {
+                            const year = getYear(item);
+                            return year === 'unknown' || Number(year) <= CURRENT_YEAR - 3;
+                        });
+                    } else {
+                        items = items.filter((item) => getYear(item) === state.subfilter);
+                    }
                 } else if (config && config.type === 'badge') {
                     items = items.filter((item) => normalizeLabel(item.badge_text || '') === state.subfilter);
                 }
