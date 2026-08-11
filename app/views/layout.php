@@ -54,7 +54,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             color: var(--text-ink);
             background: #f6f8fb;
             overflow-x: hidden;
-            padding-top: 92px;
+            padding-top: 130px;
             position: relative;
             z-index: 0;
         }
@@ -126,10 +126,10 @@ $isContact = str_starts_with($currentPath, '/contact');
 
         /* === FIX NAVBAR : Z-INDEX ÉLEVÉ + POSITION FORCÉE === */
         .navbar {
-            padding: 1rem 0;
-            background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 2px 24px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(10px);
+            padding: 22px 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 16px rgba(24, 45, 72, 0.04);
+            backdrop-filter: blur(8px);
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
@@ -141,21 +141,21 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .navbar-brand img {
-            height: 58px;
+            height: 66px;
         }
 
         .nav-link {
-            font-weight: 600;
-            color: #526174 !important;
-            font-size: 0.9rem;
-            margin: 0 10px;
+            font-weight: 700;
+            color: #182230 !important;
+            font-size: 0.78rem;
+            margin: 0;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            letter-spacing: -.01em;
             transition: color 0.2s ease, opacity 0.2s ease;
         }
 
         .nav-link:hover {
-            color: #2f6eb1 !important;
+            color: var(--brand-blue) !important;
         }
 
         .nav-link.active[href="/"] {
@@ -163,14 +163,10 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .nav-link.active:not([href="/"]) {
-            color: #4f78ab !important;
+            color: var(--brand-blue) !important;
         }
 
-        .navbar .dropdown-toggle::after {
-            margin-left: 0.45rem;
-            vertical-align: 0.15em;
-            transition: transform 0.25s ease;
-        }
+        .navbar .dropdown-toggle::after { display: none; }
 
         .navbar .dropdown.show .dropdown-toggle::after,
         .navbar .dropdown:hover .dropdown-toggle::after,
@@ -219,22 +215,22 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .navbar-nav {
-            column-gap: clamp(20px, 2.4vw, 40px);
+            column-gap: clamp(18px, 2.6vw, 42px);
         }
 
         @media (min-width: 992px) {
             .navbar-nav {
-                margin-left: 56px;
+                margin-left: 0;
             }
         }
 
         .btn-contact {
             background: var(--brand-blue);
             color: white !important;
-            border-radius: 10px;
-            padding: 10px 22px;
-            font-weight: 700;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-weight: 800;
+            font-size: 0.76rem;
             text-transform: uppercase;
             box-shadow: 0 8px 18px rgba(10, 133, 223, 0.22);
         }
@@ -245,9 +241,9 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .main-footer {
-            background: linear-gradient(90deg, #0d8de4 0%, #004d98 100%);
+            background: linear-gradient(105deg, #078ed8 0%, #006eb6 48%, #00558e 100%);
             color: white;
-            padding: 36px 0 0;
+            padding: 92px 0 0;
             margin-top: auto;
             flex-shrink: 0;
             position: relative;
@@ -258,33 +254,47 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .footer-upper {
-            padding-bottom: 28px;
+            padding-bottom: 0;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr 1fr 1fr;
-            column-gap: clamp(22px, 3vw, 44px);
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            column-gap: clamp(32px, 5vw, 78px);
             row-gap: 18px;
-            align-items: end;
+            align-items: start;
         }
 
         .footer-col {
             min-width: 0;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: flex-start;
+            align-self: start;
+        }
+
+        .footer-brand-col {
+            grid-column: 1;
+            grid-row: 1 / -1;
+            align-self: stretch;
+            min-height: 100%;
+        }
+
+        .footer-grid > .footer-column {
+            grid-row: 1;
+            align-self: start;
         }
 
         .footer-brand-box {
             display: flex;
             align-items: center;
-            gap: 18px;
-            margin-bottom: 12px;
+            gap: 20px;
+            margin-bottom: 24px;
         }
 
         .footer-brand-box img {
-            height: 62px;
+            height: 64px;
             width: auto;
             object-fit: contain;
             display: block;
@@ -300,40 +310,41 @@ $isContact = str_starts_with($currentPath, '/contact');
 
         .footer-address {
             color: rgba(255, 255, 255, 0.95);
-            line-height: 1.5;
+            line-height: 1.35;
             margin-bottom: 0;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
         }
 
         .footer-contact-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 16px 0 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            justify-content: flex-start;
+            gap: 48px;
+            flex-wrap: nowrap;
+            padding: 0;
+            margin-top: auto;
+            padding-top: 74px;
         }
 
         .social-circles {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .social-circle {
-            width: 36px;
-            height: 36px;
+            width: auto;
+            height: auto;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             color: white;
             text-decoration: none;
             opacity: 0.92;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.24);
-            background: rgba(255, 255, 255, 0.12);
+            border-radius: 0;
+            border: 0;
+            background: transparent;
+            font-size: 1.35rem;
         }
 
         .social-circle:hover {
@@ -341,29 +352,33 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .call-center-text {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-left: 8px;
+            font-size: 1.18rem;
+            font-weight: 500;
+            margin-left: 0;
+            white-space: nowrap;
         }
 
         .footer-column h5 {
             font-size: 1.05rem;
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 18px;
+            margin: 6px 0 26px;
             letter-spacing: 0.02em;
         }
 
         .footer-link {
-            display: block;
+            display: flex;
+            align-items: center;
             color: rgba(255, 255, 255, 0.88);
             text-decoration: none;
-            margin-bottom: 14px;
+            gap: 11px;
+            margin-bottom: 18px;
             font-size: 0.95rem;
         }
 
         .footer-link i {
-            margin-right: 8px;
+            margin-right: 0;
+            font-size: 1.15rem;
         }
 
         .footer-link:hover {
@@ -374,9 +389,9 @@ $isContact = str_starts_with($currentPath, '/contact');
             display: block;
             width: 100%;
             height: 6px;
-            margin-top: 0;
+            margin-top: 60px;
             flex-shrink: 0;
-            background: linear-gradient(90deg, #0da0f0 0 38%, #ffd400 38% 68%, #e31b23 68% 100%);
+            background: linear-gradient(90deg, #00a5e7 0 32%, #ffd100 32% 64%, #ce1126 64% 100%);
         }
 
         /* === Z-INDEX POUR LES SECTIONS (pour éviter les conflits avec navbar) === */
@@ -510,11 +525,29 @@ $isContact = str_starts_with($currentPath, '/contact');
 
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
                 column-gap: 24px;
+            }
+
+            .footer-brand-col {
+                grid-row: auto;
+                grid-column: 1 / -1;
+            }
+
+            .footer-grid > .footer-column {
+                grid-row: auto;
             }
 
             .footer-column {
                 margin-top: 8px;
+            }
+
+            .main-footer {
+                padding-top: 60px;
+            }
+
+            .footer-contact-row {
+                margin-top: 36px;
             }
         }
 
@@ -563,11 +596,24 @@ $isContact = str_starts_with($currentPath, '/contact');
 
             .footer-grid {
                 grid-template-columns: 1fr;
+                grid-template-rows: auto;
                 row-gap: 8px;
+            }
+
+            .footer-brand-col {
+                grid-column: auto;
+                grid-row: auto;
+            }
+
+            .footer-grid > .footer-column {
+                grid-row: auto;
             }
 
             .footer-contact-row {
                 justify-content: flex-start;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 24px;
             }
         }
 
@@ -615,7 +661,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link<?php echo $isHome ? ' active' : ''; ?>" href="/">Accueil</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">À propos</a>
@@ -658,8 +704,9 @@ $isContact = str_starts_with($currentPath, '/contact');
     <footer class="main-footer">
         <div class="container footer-upper">
             <div class="footer-grid">
-                <div class="footer-col">
+                <div class="footer-col footer-brand-col">
                     <div class="footer-brand-box">
+                        <img src="/public/images/logo_Arm blanc.png" alt="Armoiries de la RDC">
                         <img src="/public/images/Logo blanc_Min Finance-8.png" alt="Ministère des Finances">
                     </div>
                     <p class="footer-address">
@@ -667,6 +714,15 @@ $isContact = str_starts_with($currentPath, '/contact');
                         Colonel Mondjiba N°63 Kinshasa /<br>
                         RD Congo
                     </p>
+                    <div class="footer-contact-row">
+                        <div class="social-circles" aria-label="Réseaux sociaux">
+                            <a href="#" class="social-circle" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="social-circle" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="social-circle" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#" class="social-circle" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                        </div>
+                        <div class="call-center-text">Call Center 1233</div>
+                    </div>
                 </div>
 
                 <div class="footer-col footer-column">
@@ -694,17 +750,6 @@ $isContact = str_starts_with($currentPath, '/contact');
             </div>
         </div>
 
-        <div class="container">
-            <div class="footer-contact-row">
-                <div class="social-circles">
-                    <a href="#" class="social-circle"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="social-circle"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="social-circle"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="social-circle"><i class="bi bi-tiktok"></i></a>
-                </div>
-                <div class="call-center-text">Call Center 1233</div>
-            </div>
-        </div>
         <div class="footer-ribbon"></div>
     </footer>
 

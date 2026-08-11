@@ -1060,6 +1060,21 @@
             return slugify(value).replace(/s$/, '');
         }
 
+        function getCategorySlug(item) {
+            return slugify(item.section_key || 'Autres ressources');
+        }
+
+        // Compare un badge document avec un sous-filtre (ex. Arrêtés ~ Arrêté ministériel)
+        function matchesBadgeFilter(badgeText, filterKey) {
+            const normalized = normalizeLabel(badgeText || '');
+            if (!normalized || !filterKey) return false;
+            if (normalized === filterKey) return true;
+            if (normalized.startsWith(filterKey + '-')) return true;
+
+            const firstToken = normalized.split('-')[0];
+            return firstToken === filterKey;
+        }
+
         function getIconType(item) {
             const value = String(item.icon_class || item.badge_text || item.file_url || '').toLowerCase();
             if (value.includes('excel') || value.includes('xls')) return 'excel';
@@ -1185,7 +1200,7 @@
             if (!list) return;
 
             const counts = items.reduce((acc, item) => {
-                const key = slugify(item.section_key || 'Autres ressources');
+                const key = getCategorySlug(item);
                 acc[key] = (acc[key] || 0) + 1;
                 return acc;
             }, {});
@@ -1244,7 +1259,7 @@
             let items = [...state.items];
 
             if (state.category !== 'all') {
-                items = items.filter((item) => slugify(item.section_key || 'Autres ressources') === state.category);
+                items = items.filter((item) => getCategorySlug(item) === state.category);
             }
 
             const categoryItems = [...items];
@@ -1261,7 +1276,7 @@
                         items = items.filter((item) => getYear(item) === state.subfilter);
                     }
                 } else if (config && config.type === 'badge') {
-                    items = items.filter((item) => normalizeLabel(item.badge_text || '') === state.subfilter);
+                    items = items.filter((item) => matchesBadgeFilter(item.badge_text, state.subfilter));
                 }
             }
 
@@ -1297,38 +1312,47 @@
 
             renderCategories(state.items);
             renderSubfilter(categoryItems);
-            wireSidebarFilters();
         }
 
         function wireSidebarFilters() {
-            const categoryList = document.getElementById('categoryList');
-            const subfilterGrid = document.getElementById('subfilterGrid');
+            const sidebar = document.querySelector('.documents-sidebar');
+            if (sidebar && !sidebar.dataset.filtersWired) {
+                sidebar.dataset.filtersWired = '1';
 
-            // Gérer les filtres de catégorie
-            if (categoryList) {
-                categoryList.querySelectorAll('[data-category]').forEach((item) => {
-                    item.addEventListener('click', () => {
-                        state.category = item.dataset.category || 'all';
+                sidebar.addEventListener('click', (event) => {
+                    const categoryItem = event.target.closest('[data-category]');
+                    if (categoryItem) {
+                        state.category = categoryItem.dataset.category || 'all';
                         state.subfilter = 'all';
                         applyFilters();
-                    });
-                });
-            }
+                        return;
+                    }
 
-            // Gérer les sous-filtres (Année / Décrets-Arrêtés-Circulaires / Guides-Tutoriels)
-            if (subfilterGrid) {
-                subfilterGrid.querySelectorAll('[data-subfilter]').forEach((button) => {
-                    button.addEventListener('click', () => {
-                        state.subfilter = button.dataset.subfilter || 'all';
+                    const subfilterButton = event.target.closest('[data-subfilter]');
+                    if (subfilterButton) {
+                        state.subfilter = subfilterButton.dataset.subfilter || 'all';
                         applyFilters();
-                    });
+                    }
                 });
             }
 
             const sortSelect = document.getElementById('sortSelect');
-            if (sortSelect) {
+            if (sortSelect && !sortSelect.dataset.filtersWired) {
+                sortSelect.dataset.filtersWired = '1';
                 sortSelect.addEventListener('change', () => {
                     state.sort = sortSelect.value;
+                    applyFilters();
+                });
+            }
+
+            const searchInput = document.getElementById('documentSearch');
+            const searchButton = document.querySelector('.documents-search button');
+            if (searchButton && !searchButton.dataset.filtersWired) {
+                searchButton.dataset.filtersWired = '1';
+                searchButton.addEventListener('click', () => {
+                    if (searchInput) {
+                        state.search = searchInput.value || '';
+                    }
                     applyFilters();
                 });
             }
@@ -1348,16 +1372,17 @@
                     const data = await response.json();
                     state.items = Array.isArray(data.items) ? data.items : [];
                     state.filteredItems = [...state.items];
-                    if (search) {
+                    wireSidebarFilters();
+
+                    if (search && !search.dataset.filtersWired) {
+                        search.dataset.filtersWired = '1';
                         search.addEventListener('input', () => {
                             state.search = search.value || '';
                             applyFilters();
                         });
                     }
+
                     if (state.items.length) {
-                        updateCounts(state.items);
-                        renderCategories(state.items);
-                        wireSidebarFilters();
                         applyFilters();
                         return;
                     }
