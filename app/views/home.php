@@ -124,11 +124,13 @@ a.youtube-link i {
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(220,38,38,0.58) 0%, rgba(37,156,235,0.52) 100%); z-index: 1; pointer-events: none; }
     .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); z-index: 1; pointer-events: none; }
     /* Hero stage: titre en haut à droite, bouton + flèches écartés en bas (calé sur la maquette) */
-    .hero-stage { position: relative; z-index: 2; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; padding: 32px 0 24px; }
-    .hero-title-wrapper { text-align: right; align-self: flex-end; width: 100%; max-width: 640px; margin-left: auto; }
+    .hero-stage { position: relative; z-index: 2; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; padding-top: 32px; padding-bottom: 24px; }
+    .hero-title-wrapper { text-align: right; align-self: flex-end; width: auto; max-width: min(640px, 100%); margin-left: auto; }
+    .hero-stage,
+    .governance-grid { max-width: 100%; min-width: 0; }
     .hero-title { font-size: clamp(1.05rem, 2.1vw, 1.9rem); font-weight: 800; line-height: 1.1; margin: 0 0 10px 0; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.25); letter-spacing: -0.01em; text-align: right; }
     .hero-underline-custom { width: 100px; height: 10px; margin: 0 0 0 auto; border-radius: 0px; background: #ffd400; box-shadow: 0 1px 4px rgba(255,212,0,0.4); }
-    .hero-content-wrapper { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 920px; width: 100%; margin: 0; z-index: 4; }
+    .hero-content-wrapper { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(16px, 4vw, 48px); width: 100%; margin: 0; z-index: 4; }
     .hero-button-side { flex: 0 0 auto; }
     .hero-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border-radius: 6px; padding: 12px 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); letter-spacing: 0.3px; }
     .hero-btn-custom:hover { background: #1565c0; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); }
@@ -145,16 +147,17 @@ a.youtube-link i {
 
     /* ========== GOUVERNANCE ========== */
     .section-shell { margin: 0; border-radius: 0; background: #eeeeeeff; box-shadow: 0 18px 48px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.3s ease; position: relative; z-index: 1; }
-    .section-shell:hover { transform: translateY(-5px); }
-    .governance-section { padding: 84px 0; background: #eeeeeeff; }
-    .governance-grid { display: grid; grid-template-columns: 1.1fr 1.3fr; gap: 40px; align-items: center; }
+    .section-shell:hover { transform: none; }
+    .governance-band { padding-top: clamp(56px, 8vw, 84px); padding-bottom: clamp(56px, 8vw, 84px); background: #eeeeeeff; }
+    .governance-text { text-align: left; }
+    .governance-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 56px); align-items: center; }
     .governance-text h2 { font-size: clamp(2rem, 3vw, 3rem); font-weight: 800; color: #333; line-height: 1.08; margin-bottom: 18px; }
     .governance-text p { color: #555; line-height: 1.7; max-width: 420px; margin-bottom: 20px; }
     .governance-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
     .governance-links a { color: #0a6fd6; font-weight: 700; text-decoration: none; transition: color 0.3s ease; }
     .governance-links a:hover { color: #e31b23; }
-    .governance-card { min-height: 280px; border-radius: 18px; background: linear-gradient(135deg, rgba(25,14,103,0.78), rgba(25,14,103,0.92)), url('/public/images/centre financier.jpg') center / cover no-repeat; box-shadow: 0 18px 42px rgba(34,18,111,0.28); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; padding: 28px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .governance-card:hover { transform: scale(1.02); box-shadow: 0 25px 50px rgba(34,18,111,0.35); }
+    .governance-card { min-height: 280px; border-radius: 18px; background: linear-gradient(135deg, rgba(25,14,103,0.78), rgba(25,14,103,0.92)), url('/public/images/centre financier.jpg') center / cover no-repeat; box-shadow: 0 18px 42px rgba(34,18,111,0.28); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; padding: 28px; transition: box-shadow 0.3s ease; min-width: 0; }
+    .governance-card:hover { box-shadow: 0 25px 50px rgba(34,18,111,0.35); }
     .governance-card h3 { font-size: 1.15rem; margin: 0; }
 
     /* ========== TRANSFORMATION / TIMELINE ========== */
@@ -467,8 +470,8 @@ a.youtube-link i {
     .stats-section::before, .stats-section::after,
     .funding-section::before, .funding-section::after { display: none !important; }
 
-    .timeline-section .container { position: relative; z-index: 1; }
-    .timeline-section .container::before {
+    .timeline-section .site-shell { position: relative; z-index: 1; }
+    .timeline-section .site-shell::before {
         content: ""; position: absolute;
         right: -260px; bottom: -220px;
         width: 520px; height: 520px;
@@ -479,7 +482,7 @@ a.youtube-link i {
 
     /* ========== RESPONSIVE ========== */
     @media (max-width: 991.98px) {
-        .hero-stage { padding: 24px 0; min-height: 380px; }
+        .hero-stage { padding-top: 24px; padding-bottom: 24px; min-height: 380px; }
         .hero-title-wrapper { text-align: center; align-self: center; margin: 0 0 24px; max-width: 100%; }
         .hero-title { font-size: 1.5rem; text-align: center; }
         .hero-underline-custom { margin: 0 auto; }
@@ -540,7 +543,7 @@ a.youtube-link i {
         .home-stats-content { grid-template-columns: 1fr; }
     }
     @media (max-width: 575.98px) {
-        .hero-stage { padding: 18px 0; min-height: 260px; }
+        .hero-stage { padding-top: 18px; padding-bottom: 18px; min-height: 260px; }
         .hero-title { font-size: 1.0rem; line-height: 1.4; }
         .hero-underline-custom { width: 120px; }
         .hero-btn-custom { padding: 8px 18px; font-size: 0.82rem; }
@@ -580,7 +583,7 @@ ob_start();
     </div>
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="container hero-stage">
+    <div class="site-shell hero-stage">
         <div class="hero-title-wrapper" data-aos="fade-right" data-aos-duration="800" data-aos-delay="200">
             <h3 class="hero-title">Mise en place <br>de la chaîne informatisée<br>de la recette publique</h3>
             <div class="hero-underline-custom"></div>
@@ -600,8 +603,8 @@ ob_start();
 </section>
 
 <!-- Section Gouvernance -->
-<section class="section-shell" data-aos="fade-up" data-aos-duration="1000">
-    <div class="container governance-section">
+<section class="section-shell governance-band" data-aos="fade-up" data-aos-duration="1000">
+    <div class="site-shell">
         <div class="governance-grid">
             <div class="governance-text" data-aos="fade-right" data-aos-duration="800">
                 <h2>Visualisez l'activité <br>Gouvernance Financière</h2>
@@ -623,7 +626,7 @@ ob_start();
 
 <!-- Section Transformation Digitale (Timeline Design Landing Page) -->
 <section class="timeline-section">
-    <div class="container">
+    <div class="site-shell">
         <header class="header-section text-center" data-aos="fade-up" data-aos-duration="800">
             <h2 class="main-title">Transformation digitale des<br>Régies financières en RDC</h2>
             <div class="tri-color-bar">
@@ -679,7 +682,7 @@ ob_start();
 
 <!-- Section Derniers Articles -->
 <section class="articles-section">
-    <div class="container">
+    <div class="site-shell">
         <header class="header-section text-center" data-aos="fade-up" data-aos-duration="800">
             <h2 class="main-title">NOS DERNIERS ARTICLES</h2>
             <div class="tri-color-bar">
@@ -713,7 +716,7 @@ ob_start();
 <!-- Section Quelques Chiffres & Bailleurs de fonds -->
 <section class="home-metrics-panel" data-aos="fade-up" data-aos-duration="1000" aria-label="Quelques chiffres et bailleurs de fonds">
     <div class="home-metrics-band home-metrics-band--stats">
-        <div class="container">
+        <div class="site-shell">
             <div class="home-metrics-grid">
                 <h2 class="home-metrics-title" data-aos="fade-up" data-aos-duration="600">Quelques<br>Chiffres</h2>
                 <div class="home-metrics-divider" aria-hidden="true"></div>
@@ -741,7 +744,7 @@ ob_start();
     </div>
 
     <div class="home-metrics-band home-metrics-band--funding">
-        <div class="container">
+        <div class="site-shell">
             <div class="home-metrics-grid">
                 <h2 class="home-metrics-title" data-aos="fade-right" data-aos-duration="800">Les bailleurs<br>de fonds</h2>
                 <div class="home-metrics-divider" aria-hidden="true"></div>

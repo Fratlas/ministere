@@ -1,13 +1,15 @@
 /**
- * Marges et largeur de contenu alignées sur la maquette.
- * Logo navbar (gauche) et CTA (droite) = bords du contenu principal.
+ * Grille de mise en page — alignée sur la maquette.
+ * Toutes les sections utilisent .site-shell pour les mêmes marges que la navbar.
  */
 :root {
-    --site-content-max: 1140px;
-    --site-gutter: clamp(32px, 8vw, 120px);
+    --site-content-max: 1200px;
+    --site-gutter: clamp(48px, 8.5vw, 120px);
     --site-shell-max: calc(var(--site-content-max) + (2 * var(--site-gutter)));
 }
 
+/* Conteneur principal du site (remplace Bootstrap .container pour l'alignement) */
+.site-shell,
 .container,
 .container-sm,
 .container-md,
@@ -31,14 +33,104 @@
     box-sizing: border-box;
 }
 
+/* Gouttières protégées — aucun padding shorthand ne doit les effacer */
+.site-shell,
+main .container,
+main .site-shell,
+.navbar > .site-shell,
+.navbar > .navbar-shell,
 .navbar > .container,
-.main-footer .container,
-main .container {
-    max-width: var(--site-shell-max);
+.main-footer .site-shell,
+.main-footer .container {
+    padding-left: var(--site-gutter) !important;
+    padding-right: var(--site-gutter) !important;
+    max-width: var(--site-shell-max) !important;
+}
+
+/* Navbar : logo à gauche, menu centré, CTA à droite */
+@media (min-width: 992px) {
+    .navbar > .site-shell,
+    .navbar > .navbar-shell,
+    .navbar > .container {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: clamp(32px, 5vw, 72px);
+    }
+
+    .navbar-brand {
+        grid-column: 1;
+        grid-row: 1;
+        margin-right: 0;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+
+    .navbar-collapse {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex !important;
+        flex-basis: auto;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        margin: 0 auto !important;
+        column-gap: clamp(22px, 2.8vw, 48px);
+    }
+
+    .navbar-contact-desktop {
+        grid-column: 3;
+        grid-row: 1;
+        flex: 0 0 auto;
+        margin-left: 0 !important;
+        margin-right: 0;
+        white-space: nowrap;
+        align-self: center;
+    }
+}
+
+@media (max-width: 991.98px) {
+    :root {
+        --site-gutter: clamp(24px, 5.5vw, 40px);
+    }
+
+    .navbar > .site-shell,
+    .navbar > .navbar-shell,
+    .navbar > .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar-brand {
+        flex: 0 0 auto;
+    }
+
+    .navbar-toggler {
+        flex: 0 0 auto;
+        margin-left: auto;
+    }
+
+    .navbar-collapse {
+        flex: 0 0 100%;
+        width: 100%;
+    }
 }
 
 @media (max-width: 575.98px) {
     :root {
-        --site-gutter: clamp(20px, 5vw, 28px);
+        --site-gutter: clamp(18px, 4.5vw, 28px);
     }
 }

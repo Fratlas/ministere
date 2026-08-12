@@ -26,8 +26,8 @@ $isContact = str_starts_with($currentPath, '/contact');
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/site-layout.css">
     <?php echo $extraHead ?? ''; ?>
+    <link rel="stylesheet" href="/public/css/site-layout.css?v=2">
     <style>
         :root {
             --brand-blue: #0a85df;
@@ -75,7 +75,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         section,
         .section-shell,
         .hero-section,
-        .governance-section,
+        .governance-band,
         .timeline-section,
         .articles-section,
         .stats-section,
@@ -90,8 +90,6 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .hero-title-wrapper,
-        .hero-content-wrapper,
-        .governance-text,
         .timeline-section .section-header,
         .articles-section h2,
         .articles-footer,
@@ -106,11 +104,6 @@ $isContact = str_starts_with($currentPath, '/contact');
         .contact-info-card,
         .contact-form-wrap {
             text-align: center;
-        }
-
-        .hero-content-wrapper {
-            justify-content: center;
-            align-items: center;
         }
 
         .governance-grid,
@@ -215,12 +208,18 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .navbar-nav {
-            column-gap: clamp(18px, 2.6vw, 42px);
+            column-gap: clamp(22px, 2.8vw, 48px);
         }
 
         @media (min-width: 992px) {
             .navbar-nav {
                 margin-left: 0;
+            }
+
+            .navbar > .site-shell,
+            .navbar > .navbar-shell {
+                padding-top: 4px;
+                padding-bottom: 4px;
             }
         }
 
@@ -654,7 +653,7 @@ $isContact = str_starts_with($currentPath, '/contact');
     </div>
 
     <nav class="navbar navbar-expand-lg">
-        <div class="container">
+        <div class="site-shell navbar-shell">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <img src="/public/images/logo.webp" alt="RDC Logo" class="me-2">
             </a>
@@ -662,7 +661,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav mx-auto">
+                <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link<?php echo $isHome ? ' active' : ''; ?>" href="/">Accueil</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">À propos</a>
@@ -697,8 +696,9 @@ $isContact = str_starts_with($currentPath, '/contact');
                     </li>
                     <li class="nav-item"><a class="nav-link<?php echo $isDocuments ? ' active' : ''; ?>" href="/documents">Documents</a></li>
                 </ul>
-                <a href="/contact" class="btn btn-contact ms-lg-auto<?php echo $isContact ? ' active' : ''; ?>">Nous contacter</a>
+                <a href="/contact" class="btn btn-contact d-lg-none<?php echo $isContact ? ' active' : ''; ?>">Nous contacter</a>
             </div>
+            <a href="/contact" class="btn btn-contact navbar-contact-desktop d-none d-lg-inline-flex<?php echo $isContact ? ' active' : ''; ?>">Nous contacter</a>
         </div>
     </nav>
 
@@ -707,7 +707,7 @@ $isContact = str_starts_with($currentPath, '/contact');
     </main>
 
     <footer class="main-footer">
-        <div class="container footer-upper">
+        <div class="site-shell footer-upper">
             <div class="footer-grid">
                 <div class="footer-col footer-brand-col">
                     <div class="footer-brand-box">
@@ -799,7 +799,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             
             // Fermer le menu mobile lors du clic sur un lien
             const navbarCollapse = document.querySelector('.navbar-collapse');
-            const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle), .dropdown-item');
+            const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle), .dropdown-item, .btn-contact');
             const mobileMenu = document.querySelector('.navbar-toggler');
             
             navLinks.forEach(link => {
