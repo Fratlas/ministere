@@ -20,19 +20,31 @@ function project_excerpt_view($text, $length = 115) {
 
 $extraHead = <<<'HTML'
 <style>
-.hero-static {
-    background: linear-gradient(90deg, #1182d8 0%, #0a64b5 100%);
-    color: white;
-    padding: 92px 0 110px;
+.activities-page { background: #efefef; padding-bottom: 64px; }
+.activities-page .real-hero {
+    background: linear-gradient(90deg, #0d8ddd 0%, #075d9f 100%);
+    color: #fff;
     text-align: center;
-    margin: 0 16px;
-    border-radius: 0;
-    position: relative;
-    overflow: hidden;
+    padding: 64px 0 68px;
 }
-.hero-static .container {
-    position: relative;
-    z-index: 1;
+.activities-page .real-hero h1 {
+    font-weight: 900;
+    font-size: clamp(2.2rem, 4vw, 3.3rem);
+    margin-bottom: 10px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.activities-page .real-hero p {
+    margin: 0 auto;
+    max-width: 640px;
+    opacity: 0.9;
+    font-size: 1.05rem;
+}
+.activities-page .real-divider {
+    width: 88px;
+    height: 4px;
+    margin: 16px auto 0;
+    background: linear-gradient(to right, #0a84db 0 33%, #f4d10f 33% 66%, #ce1021 66% 100%);
 }
 </style>
 HTML;
@@ -40,14 +52,15 @@ HTML;
 ob_start();
 ?>
 
-<section class="hero-static">
+<div class="activities-page">
+<section class="real-hero">
     <div class="container">
-        <h1><strong>ACTIVITÉS</strong></h1>
-        <p>Découvrez les étapes clés de la transformation financière <br> de la République Démocratique du Congo.</p>
-        <div class="hero-divider"></div>
+        <h1>ACTIVITÉS</h1>
+        <p>Découvrez les étapes clés de la transformation financière de la République Démocratique du Congo.</p>
+        <div class="real-divider"></div>
     </div>
 </section>
-<br><br><br><br>
+
 <div class="content-wrapper">
     <div class="container">
         <div class="filter-box">
@@ -129,6 +142,7 @@ ob_start();
             </ul>
         </nav>
     </div>
+</div>
 </div>
 
 <?php
