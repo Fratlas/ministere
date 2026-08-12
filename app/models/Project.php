@@ -124,6 +124,36 @@ class Project {
                 'update_date' => 'JUIN 2024',
                 'created_at' => '2024-06-01 00:00:00',
             ],
+            [
+                'id' => 4,
+                'category' => 'Ressources Humaines',
+                'title' => 'Programme "21000 Experts"',
+                'description' => 'Formation massive des agents et cadres des regies financieres sur les nouveaux outils de gestion numerique.',
+                'status' => 'En cours',
+                'image_url' => '/public/images/f5e8488f8c3a13bf3dab164a3be46274ca0f4ef6.jpg',
+                'update_date' => 'PHASE 2 SUR 4',
+                'created_at' => '2024-04-01 00:00:00',
+            ],
+            [
+                'id' => 5,
+                'category' => 'Legislation',
+                'title' => 'Nouveau Code des Accises',
+                'description' => 'Revision du cadre legislatif pour l adapter aux standards internationaux et lutter contre la fraude.',
+                'status' => 'En cours',
+                'image_url' => '/public/images/9fe3b95f3d4bbd9a00803da129b576653e10be87.jpg',
+                'update_date' => 'EN DISCUSSION',
+                'created_at' => '2024-02-01 00:00:00',
+            ],
+            [
+                'id' => 6,
+                'category' => 'Transparence',
+                'title' => 'Portail Open Budget',
+                'description' => 'Acces public aux donnees budgetaires en temps reel pour renforcer la redevabilite de l Etat.',
+                'status' => 'Termine',
+                'image_url' => '/public/images/d6aa7c59153499f8c21f31ede2d928d8e0f9d23a.png',
+                'update_date' => 'NOV 2023',
+                'created_at' => '2023-11-01 00:00:00',
+            ],
         ];
     }
 }

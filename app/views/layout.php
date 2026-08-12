@@ -146,12 +146,24 @@ $isContact = str_starts_with($currentPath, '/contact');
             color: var(--brand-blue) !important;
         }
 
-        .nav-link.active[href="/"] {
+        .nav-link.active[href="/"],
+        .nav-link.active:not([href="/"]) {
             color: var(--brand-blue) !important;
         }
 
-        .nav-link.active:not([href="/"]) {
-            color: var(--brand-blue) !important;
+        .navbar .nav-item > .nav-link.active {
+            position: relative;
+        }
+
+        .navbar .nav-item > .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -10px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(to right, #0a84db 0 33%, #f4d10f 33% 66%, #ce1021 66% 100%);
         }
 
         .navbar .dropdown-toggle::after { display: none; }

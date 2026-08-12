@@ -93,6 +93,32 @@ $extraHead = <<<'HTML'
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
+.activities-page .pagination .page-link {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    border: 1px solid #dce3ec;
+    color: #4a5568;
+    font-weight: 700;
+    padding: 0;
+    box-shadow: none;
+}
+.activities-page .pagination .page-item.active .page-link {
+    background: #0a85df;
+    border-color: #0a85df;
+    color: #fff;
+}
+.activities-page .pagination .page-link:hover {
+    background: #eef6fd;
+    color: #0a85df;
+}
+.activities-page .pagination .page-item.disabled .page-link {
+    opacity: 0.45;
+    pointer-events: none;
+}
 </style>
 HTML;
 
@@ -156,7 +182,7 @@ ob_start();
         </div>
 
         <div class="row g-4 activities-grid">
-            <?php foreach ($projects as $project): ?>
+            <?php foreach ($projectsPage as $project): ?>
             <div class="col-lg-4 col-md-6">
                 <div class="card card-project">
                     <div class="card-img-wrapper">
@@ -179,14 +205,26 @@ ob_start();
             <?php endforeach; ?>
         </div>
 
-        <nav class="mt-5">
+        <nav class="mt-5" aria-label="Pagination des activités">
+            <?php if (($totalPages ?? 1) > 1): ?>
             <ul class="pagination justify-content-center border-0">
-                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#"><i class="bi bi-chevron-left"></i></a></li>
-                <li class="page-item mx-1 active"><a class="page-link rounded-circle" href="#">1</a></li>
-                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#">2</a></li>
-                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#">3</a></li>
-                <li class="page-item mx-1"><a class="page-link rounded-circle" href="#"><i class="bi bi-chevron-right"></i></a></li>
+                <li class="page-item mx-1<?php echo ($page ?? 1) <= 1 ? ' disabled' : ''; ?>">
+                    <a class="page-link rounded-circle" href="<?php echo htmlspecialchars($paginationUrl(max(1, ($page ?? 1) - 1)), ENT_QUOTES, 'UTF-8'); ?>" aria-label="Page précédente">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                <?php for ($i = 1; $i <= ($totalPages ?? 1); $i++): ?>
+                <li class="page-item mx-1<?php echo ($page ?? 1) === $i ? ' active' : ''; ?>">
+                    <a class="page-link rounded-circle" href="<?php echo htmlspecialchars($paginationUrl($i), ENT_QUOTES, 'UTF-8'); ?>"><?php echo $i; ?></a>
+                </li>
+                <?php endfor; ?>
+                <li class="page-item mx-1<?php echo ($page ?? 1) >= ($totalPages ?? 1) ? ' disabled' : ''; ?>">
+                    <a class="page-link rounded-circle" href="<?php echo htmlspecialchars($paginationUrl(min($totalPages ?? 1, ($page ?? 1) + 1)), ENT_QUOTES, 'UTF-8'); ?>" aria-label="Page suivante">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
             </ul>
+            <?php endif; ?>
         </nav>
     </div>
 </div>

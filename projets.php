@@ -1,4 +1,7 @@
 <?php
+header('Location: /projects', true, 301);
+exit;
+
 require_once __DIR__ . '/config/database.php';
 
 $db = Database::getInstance();

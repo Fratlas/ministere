@@ -51,6 +51,7 @@ switch ($controller) {
         $controllerObj = new PageController();
         $controllerObj->index();
         break;
+    case 'activites':
     case 'projects':
         require_once __DIR__ . '/app/controllers/ProjectController.php';
         $controllerObj = new ProjectController();
