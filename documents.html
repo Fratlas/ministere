@@ -1060,19 +1060,81 @@
             return slugify(value).replace(/s$/, '');
         }
 
-        function getCategorySlug(item) {
-            return slugify(item.section_key || 'Autres ressources');
+        const KNOWN_CATEGORY_SLUGS = new Set([
+            'rapports-d-activites',
+            'textes-reglementaires',
+            'appels-d-offres',
+            'autres-ressources'
+        ]);
+
+        const BADGE_FILTER_GROUPS = {
+            decret: ['decret', 'decrets', 'projet-de-loi', 'loi-de-finance'],
+            arrete: ['arrete', 'arretes', 'arrete-ministeriel', 'arrete-ministeriele'],
+            circulaire: ['circulaire', 'circulaires'],
+            'guides-utilisateur': ['guides-utilisateur', 'guide-utilisateur', 'manuel'],
+            tutoriel: ['tutoriel', 'tutoriels']
+        };
+
+        function resolveCategorySlug(item) {
+            const sectionSlug = slugify(item.section_key || '');
+
+            if (KNOWN_CATEGORY_SLUGS.has(sectionSlug)) {
+                return sectionSlug;
+            }
+
+            const sectionNorm = normalizeLabel(item.section_key || '');
+            if (sectionNorm.includes('rapport') && sectionNorm.includes('activit')) return 'rapports-d-activites';
+            if (sectionNorm.includes('texte') && sectionNorm.includes('reglement')) return 'textes-reglementaires';
+            if (sectionNorm.includes('appel') && sectionNorm.includes('offre')) return 'appels-d-offres';
+            if (sectionNorm.includes('autre') && sectionNorm.includes('ressource')) return 'autres-ressources';
+
+            const badgeSlug = slugify(item.badge_text || '');
+            const badgeNorm = normalizeLabel(item.badge_text || '');
+
+            if (/^(19|20)\d{2}$/.test(badgeNorm)) return 'rapports-d-activites';
+            if (/^(19|20)\d{2}-(19|20)\d{2}$/.test(badgeSlug)) return 'autres-ressources';
+
+            if (['decret', 'arrete', 'circulaire', 'loi-de-finance', 'projet-de-loi'].some((key) => badgeNorm === key || badgeNorm.startsWith(key + '-'))) {
+                return 'textes-reglementaires';
+            }
+            if (['rapport', 'rapport-annuel'].some((key) => badgeNorm === key || badgeNorm.startsWith(key + '-'))) {
+                return 'rapports-d-activites';
+            }
+            if (['guide', 'tutoriel', 'bulletin', 'statistique', 'manuel'].some((key) => badgeNorm.includes(key))) {
+                return 'autres-ressources';
+            }
+
+            const titleSlug = slugify(item.title || '');
+            if (/(^|-)arrete(-|$)/.test(titleSlug) || titleSlug.includes('decret') || titleSlug.includes('circulaire') || titleSlug.includes('loi-de-finance')) {
+                return 'textes-reglementaires';
+            }
+            if (titleSlug.includes('rapport')) return 'rapports-d-activites';
+            if (titleSlug.includes('appel') && titleSlug.includes('offre')) return 'appels-d-offres';
+
+            return KNOWN_CATEGORY_SLUGS.has(sectionSlug) ? sectionSlug : 'autres-ressources';
         }
 
-        // Compare un badge document avec un sous-filtre (ex. Arrêtés ~ Arrêté ministériel)
-        function matchesBadgeFilter(badgeText, filterKey) {
-            const normalized = normalizeLabel(badgeText || '');
+        function getCategorySlug(item) {
+            return resolveCategorySlug(item);
+        }
+
+        function labelMatchesFilter(text, filterKey) {
+            const normalized = normalizeLabel(text || '');
             if (!normalized || !filterKey) return false;
             if (normalized === filterKey) return true;
             if (normalized.startsWith(filterKey + '-')) return true;
 
             const firstToken = normalized.split('-')[0];
-            return firstToken === filterKey;
+            if (firstToken === filterKey) return true;
+
+            const aliases = BADGE_FILTER_GROUPS[filterKey] || [];
+            return aliases.some((alias) => normalized === alias || normalized.startsWith(alias + '-'));
+        }
+
+        // Compare un document avec un sous-filtre (badge, titre, description)
+        function matchesBadgeFilter(item, filterKey) {
+            const fields = [item.badge_text, item.title, item.description];
+            return fields.some((field) => labelMatchesFilter(field, filterKey));
         }
 
         function getIconType(item) {
@@ -1117,18 +1179,57 @@
             return palette[hash % palette.length];
         }
 
+        function extractYearFromText(value) {
+            const matches = String(value || '').match(/\b(19|20)\d{2}\b/g);
+            if (!matches || !matches.length) return null;
+            return matches[matches.length - 1];
+        }
+
         function getYear(item) {
-            const values = [item.updated_at, item.created_at, item.badge_text, item.meta_text, item.title].join(' ');
-            const match = values.match(/\b(20\d{2}|19\d{2})\b/);
-            return match ? match[1] : 'unknown';
+            const category = resolveCategorySlug(item);
+
+            if (category === 'rapports-d-activites') {
+                const badgeYear = extractYearFromText(item.badge_text);
+                if (badgeYear) return badgeYear;
+            }
+
+            const titleYear = extractYearFromText(item.title);
+            if (titleYear) return titleYear;
+
+            const metaYear = extractYearFromText(item.meta_text);
+            if (metaYear) return metaYear;
+
+            const raw = item.updated_at || item.created_at || '';
+            const dateYear = extractYearFromText(raw);
+            return dateYear || 'unknown';
+        }
+
+        function getDocumentDate(item) {
+            const category = resolveCategorySlug(item);
+            const year = getYear(item);
+
+            if (year !== 'unknown') {
+                if (category === 'rapports-d-activites') {
+                    return new Date(`${year}-12-31T12:00:00`);
+                }
+
+                const raw = item.updated_at || item.created_at || '';
+                const parsed = new Date(String(raw).replace(' ', 'T'));
+                if (!Number.isNaN(parsed.getTime())) {
+                    return parsed;
+                }
+
+                return new Date(`${year}-06-01T12:00:00`);
+            }
+
+            const raw = item.updated_at || item.created_at || '';
+            const parsed = new Date(String(raw).replace(' ', 'T'));
+            return Number.isNaN(parsed.getTime()) ? null : parsed;
         }
 
         function formatDate(item) {
-            const raw = item.created_at || item.updated_at || '';
-            if (!raw) return '';
-
-            const date = new Date(String(raw).replace(' ', 'T'));
-            if (Number.isNaN(date.getTime())) return '';
+            const date = getDocumentDate(item);
+            if (!date) return '';
 
             return date.toLocaleDateString('fr-FR', {
                 day: '2-digit',
@@ -1143,9 +1244,11 @@
                     return Number(a.display_order || 0) - Number(b.display_order || 0);
                 }
 
-                const dateA = new Date(String(a.created_at || '').replace(' ', 'T')).getTime() || 0;
-                const dateB = new Date(String(b.created_at || '').replace(' ', 'T')).getTime() || 0;
-                return state.sort === 'oldest' ? dateA - dateB : dateB - dateA;
+                const dateA = getDocumentDate(a);
+                const dateB = getDocumentDate(b);
+                const timeA = dateA ? dateA.getTime() : 0;
+                const timeB = dateB ? dateB.getTime() : 0;
+                return state.sort === 'oldest' ? timeA - timeB : timeB - timeA;
             });
         }
 
@@ -1276,7 +1379,7 @@
                         items = items.filter((item) => getYear(item) === state.subfilter);
                     }
                 } else if (config && config.type === 'badge') {
-                    items = items.filter((item) => matchesBadgeFilter(item.badge_text, state.subfilter));
+                    items = items.filter((item) => matchesBadgeFilter(item, state.subfilter));
                 }
             }
 
