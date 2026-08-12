@@ -310,35 +310,102 @@ a.youtube-link i {
     }
 
     .home-funding-content {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: clamp(20px, 3vw, 40px);
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(16px, 3vw, 40px);
+        align-items: start;
+        width: 100%;
     }
 
-    .funding-logo-block {
+    .funding-logo-block,
+    .funding-partner {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         margin: 0;
-        min-width: 120px;
+        min-width: 0;
+        opacity: 0;
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .logo-img-wrap { height: 58px; display: flex; align-items: center; justify-content: center; }
-    .funding-logo-block img { height: 58px; object-fit: contain; display: block; max-width: 140px; }
-    .eu-note { display: block; margin-top: 6px; font-size: 0.78rem; color: #285ab2; font-weight: 700; line-height: 1.05; text-align: center; }
-    .funding-partner { display: flex; align-items: flex-start; justify-content: center; gap: 18px; flex-wrap: wrap; }
+    .home-funding-content > .funding-logo-block:first-child { justify-self: start; }
+    .home-funding-content > .funding-logo-block:nth-child(2) { justify-self: center; }
+    .home-funding-content > .funding-partner {
+        justify-self: end;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: clamp(14px, 2vw, 24px);
+    }
+
+    .funding-logo-block.is-visible,
+    .funding-partner.is-visible {
+        animation: fundingLogoIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .home-funding-content > .funding-logo-block:nth-child(1).is-visible { animation-delay: 0.05s; }
+    .home-funding-content > .funding-logo-block:nth-child(2).is-visible { animation-delay: 0.18s; }
+    .home-funding-content > .funding-partner.is-visible { animation-delay: 0.31s; }
+
+    @keyframes fundingLogoIn {
+        from { opacity: 0; transform: translateY(18px) scale(0.96); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .funding-logo-block:hover,
+    .funding-partner:hover {
+        transform: translateY(-5px) scale(1.04);
+    }
+
+    .logo-img-wrap {
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .funding-logo-block:hover .logo-img-wrap,
+    .funding-partner:hover .logo-img-wrap {
+        filter: saturate(1.1);
+    }
+
+    .funding-logo-block img,
+    .funding-partner img {
+        height: 58px;
+        object-fit: contain;
+        display: block;
+        max-width: clamp(100px, 12vw, 150px);
+        transition: transform 0.35s ease;
+    }
+
+    .eu-note {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.78rem;
+        color: #285ab2;
+        font-weight: 700;
+        line-height: 1.05;
+        text-align: center;
+    }
+
     .funding-partner .logo-img-wrap { height: 58px; }
-    .funding-partner img { height: 58px; object-fit: contain; max-width: 140px; display: block; }
-    .home-funding-content img { animation: none !important; transform: none !important; opacity: 1 !important; }
+
+    .home-stat-number {
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .home-stat.is-counting .home-stat-number {
+        color: var(--rdc-blue);
+    }
 
     .funding-details {
-        max-width: 760px;
-        margin: 32px auto 0;
-        border-top: 1px solid rgba(0,0,0,0.08);
+        width: 100%;
+        margin: clamp(28px, 4vw, 40px) 0 0;
         padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        margin-left: calc(var(--metrics-title-col) + var(--metrics-gap) + 1px + var(--metrics-gap));
+        padding-right: calc(var(--metrics-gap) + 1px);
     }
 
     .funding-toggle {
@@ -441,7 +508,25 @@ a.youtube-link i {
         }
 
         .home-funding-content {
+            grid-template-columns: 1fr;
+            justify-items: center;
+            row-gap: 28px;
+        }
+
+        .home-funding-content > .funding-logo-block:first-child,
+        .home-funding-content > .funding-logo-block:nth-child(2),
+        .home-funding-content > .funding-partner {
+            justify-self: center;
+        }
+
+        .funding-partner {
+            flex-wrap: wrap;
             justify-content: center;
+        }
+
+        .funding-details {
+            margin-left: 0;
+            padding-right: 0;
         }
 
         .governance-grid { grid-template-columns: 1fr; }
@@ -665,14 +750,14 @@ ob_start();
                 <h2 class="home-metrics-title" data-aos="fade-right" data-aos-duration="800">Les bailleurs<br>de fonds</h2>
                 <div class="home-metrics-divider" aria-hidden="true"></div>
                 <div class="home-metrics-content home-funding-content">
-                    <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+                    <div class="funding-logo-block">
                         <div class="logo-img-wrap"><img src="/public/images/logo.webp" alt="Ministère des Finances"></div>
                     </div>
-                    <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+                    <div class="funding-logo-block">
                         <div class="logo-img-wrap"><img src="/public/images/eu_flag.jpg" alt="Union européenne"></div>
                         <span class="eu-note">Financé par<br>l'Union européenne</span>
                     </div>
-                    <div class="funding-partner" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+                    <div class="funding-partner">
                         <div class="logo-img-wrap"><img src="/public/images/republique_francaise_rvb.png" alt="République française"></div>
                         <div class="logo-img-wrap"><img src="/public/images/afd_logo.webp" alt="AFD"></div>
                     </div>
@@ -714,29 +799,68 @@ $extraFooter = <<<'HTML'
     });
 
     const animateStats = () => {
-        document.querySelectorAll('.home-stat-number').forEach(counter => {
-            if (counter.classList.contains('animated')) return;
+        document.querySelectorAll('.home-stat').forEach(statBlock => {
+            const counter = statBlock.querySelector('.home-stat-number');
+            if (!counter || counter.classList.contains('animated')) return;
             counter.classList.add('animated');
+            statBlock.classList.add('is-counting');
+
             const rawText = (counter.textContent || '').replace(/\s+/g, '');
             const hasKm = rawText.toUpperCase().includes('KM');
+            const hasPlus = rawText.includes('+');
             const numeric = parseInt(rawText.replace(/[^\d]/g, ''), 10);
             if (!Number.isFinite(numeric) || numeric <= 0) return;
 
-            let current = 0; const duration = 1600; const stepTime = 20; const increment = numeric / (duration / stepTime);
-            const update = () => {
-                current += increment; const value = current < numeric ? Math.ceil(current) : numeric;
-                counter.textContent = hasKm ? `${value.toLocaleString('fr-FR')}KM` : value.toLocaleString('fr-FR');
-                if (current < numeric) setTimeout(update, stepTime);
+            let current = 0;
+            const duration = 1600;
+            const stepTime = 20;
+            const increment = numeric / (duration / stepTime);
+
+            const formatValue = (value) => {
+                const formatted = value.toLocaleString('fr-FR');
+                if (hasKm) return `${formatted} Km`;
+                if (hasPlus) return `${formatted}+`;
+                return formatted;
             };
+
+            const update = () => {
+                current += increment;
+                const value = current < numeric ? Math.ceil(current) : numeric;
+                counter.textContent = formatValue(value);
+                if (current < numeric) {
+                    setTimeout(update, stepTime);
+                } else {
+                    statBlock.classList.remove('is-counting');
+                }
+            };
+
             update();
         });
     };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { animateStats(); observer.unobserve(entry.target); } });
-    }, { threshold: 0.5 });
-    const statsSection = document.querySelector('.home-metrics-band--stats');
-    if (statsSection) observer.observe(statsSection);
+    const animateFundingLogos = () => {
+        document.querySelectorAll('.home-funding-content > .funding-logo-block, .home-funding-content > .funding-partner').forEach(item => {
+            item.classList.add('is-visible');
+        });
+    };
+
+    const metricsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            if (entry.target.classList.contains('home-metrics-band--stats')) {
+                animateStats();
+                metricsObserver.unobserve(entry.target);
+            }
+            if (entry.target.classList.contains('home-metrics-band--funding')) {
+                animateFundingLogos();
+                metricsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('.home-metrics-band--stats, .home-metrics-band--funding').forEach(section => {
+        metricsObserver.observe(section);
+    });
 
     document.querySelectorAll('.hero-controls-bottom button').forEach(btn => {
         btn.addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
