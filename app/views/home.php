@@ -310,10 +310,11 @@ a.youtube-link i {
     }
 
     .home-funding-content {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: clamp(16px, 3vw, 40px);
-        align-items: start;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+        gap: clamp(20px, 3vw, 44px);
+        flex-wrap: wrap;
         width: 100%;
     }
 
@@ -325,14 +326,12 @@ a.youtube-link i {
         justify-content: flex-start;
         margin: 0;
         min-width: 0;
+        flex: 0 0 auto;
         opacity: 0;
         transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .home-funding-content > .funding-logo-block:first-child { justify-self: start; }
-    .home-funding-content > .funding-logo-block:nth-child(2) { justify-self: center; }
-    .home-funding-content > .funding-partner {
-        justify-self: end;
+    .funding-partner {
         flex-direction: row;
         align-items: flex-start;
         gap: clamp(14px, 2vw, 24px);
@@ -406,12 +405,17 @@ a.youtube-link i {
         border-top: 1px solid rgba(0, 0, 0, 0.08);
         margin-left: calc(var(--metrics-title-col) + var(--metrics-gap) + 1px + var(--metrics-gap));
         padding-right: calc(var(--metrics-gap) + 1px);
+        text-align: right;
+    }
+
+    .funding-details-content {
+        text-align: left;
     }
 
     .funding-toggle {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         gap: 10px;
         width: 100%;
         background: none;
@@ -508,25 +512,17 @@ a.youtube-link i {
         }
 
         .home-funding-content {
-            grid-template-columns: 1fr;
-            justify-items: center;
-            row-gap: 28px;
-        }
-
-        .home-funding-content > .funding-logo-block:first-child,
-        .home-funding-content > .funding-logo-block:nth-child(2),
-        .home-funding-content > .funding-partner {
-            justify-self: center;
-        }
-
-        .funding-partner {
-            flex-wrap: wrap;
             justify-content: center;
         }
 
         .funding-details {
             margin-left: 0;
             padding-right: 0;
+            text-align: center;
+        }
+
+        .funding-toggle {
+            justify-content: center;
         }
 
         .governance-grid { grid-template-columns: 1fr; }
