@@ -673,9 +673,9 @@ $isContact = str_starts_with($currentPath, '/contact');
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projets</a>
+                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activités</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/projects">Tous les projets</a></li>
+                            <li><a class="dropdown-item" href="/projects">Toutes les activités</a></li>
                             <li><a class="dropdown-item" href="/projects?status=en_cours">En cours</a></li>
                             <li><a class="dropdown-item" href="/projects?status=termine">Terminées</a></li>
                             <li><a class="dropdown-item" href="/projects?status=planifie">Planifiées</a></li>
