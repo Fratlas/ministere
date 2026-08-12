@@ -1475,6 +1475,12 @@
                     const data = await response.json();
                     state.items = Array.isArray(data.items) ? data.items : [];
                     state.filteredItems = [...state.items];
+
+                    const hashCategory = (window.location.hash || '').replace('#', '').trim();
+                    if (hashCategory && hashCategory !== 'flux-dgda-entrepot') {
+                        state.category = hashCategory;
+                    }
+
                     wireSidebarFilters();
 
                     if (search && !search.dataset.filtersWired) {

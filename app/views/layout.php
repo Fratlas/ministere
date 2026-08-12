@@ -738,7 +738,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <h5>Accès Rapide</h5>
                     <a href="/" class="footer-link"><i class="bi bi-chevron-right"></i>Accueil</a>
                     <a href="/about" class="footer-link"><i class="bi bi-chevron-right"></i>À propos</a>
-                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Projets</a>
+                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Activités</a>
                     <a href="/realisations" class="footer-link"><i class="bi bi-chevron-right"></i>Réalisations</a>
                 </div>
 
@@ -751,10 +751,11 @@ $isContact = str_starts_with($currentPath, '/contact');
                 </div>
 
                 <div class="footer-col footer-column">
-                    <h5>Projets</h5>
-                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Appels d'offres</a>
-                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Nos réalisations</a>
-                    <a href="#" class="footer-link"><i class="bi bi-chevron-right"></i>Financement</a>
+                    <h5>Documents</h5>
+                    <a href="/documents" class="footer-link"><i class="bi bi-chevron-right"></i>Tous les documents</a>
+                    <a href="/documents#rapports-d-activites" class="footer-link"><i class="bi bi-chevron-right"></i>Rapports d'Activités</a>
+                    <a href="/documents#textes-reglementaires" class="footer-link"><i class="bi bi-chevron-right"></i>Textes Réglementaires</a>
+                    <a href="/documents#autres-ressources" class="footer-link"><i class="bi bi-chevron-right"></i>Autres ressources</a>
                 </div>
             </div>
         </div>
