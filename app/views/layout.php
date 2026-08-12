@@ -87,6 +87,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         .articles-section,
         .stats-section,
         .funding-section,
+        .home-metrics-panel,
         .about-page .about-intro,
         .about-page .about-section,
         .contact-panel {
@@ -103,6 +104,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         .articles-footer,
         .stats-section .home-stats-title,
         .stats-section .home-stat,
+        .home-metrics-panel .home-stat,
         .about-page .about-intro,
         .about-page .about-section,
         .contact-title,
@@ -406,6 +408,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         .articles-section,
         .stats-section,
         .funding-section,
+        .home-metrics-panel,
         .fixed-image-section {
             position: relative;
             z-index: 1;

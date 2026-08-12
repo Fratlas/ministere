@@ -220,68 +220,103 @@ a.youtube-link i {
     .btn-articles { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border: none; border-radius: 6px; padding: 12px 30px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.3px; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); }
     .btn-articles:hover { background: #1565c0; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); }
 
-    /* ========== STATS & FUNDING ========== */
-    .stats-section { margin: 0; border-radius: 0; background: #f4f6fa; padding: 72px 0; position: relative; overflow: hidden; z-index: 1; }
-    .stats-section .home-stats-row {
-        display: flex;
-        align-items: stretch;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: clamp(20px, 4vw, 40px);
+    /* ========== STATS & FUNDING (grille alignée maquette) ========== */
+    .home-metrics-panel {
+        --metrics-title-col: clamp(150px, 17vw, 210px);
+        --metrics-gap: clamp(28px, 4vw, 56px);
+        margin: 0;
+        position: relative;
+        z-index: 1;
     }
-    .stats-section .home-stats-title {
-        flex: 0 0 auto;
+
+    .home-metrics-band {
+        padding: clamp(48px, 6vw, 72px) 0;
+    }
+
+    .home-metrics-band--stats {
+        background: #f4f6fa;
+    }
+
+    .home-metrics-band--funding {
+        background: #fff;
+    }
+
+    .home-metrics-grid {
+        display: grid;
+        grid-template-columns: var(--metrics-title-col) 1px minmax(0, 1fr) 1px;
+        column-gap: var(--metrics-gap);
+        align-items: center;
+    }
+
+    .home-metrics-title {
+        grid-column: 1;
         font-size: clamp(1.55rem, 2.5vw, 2rem);
         font-weight: 900;
         color: #333;
         line-height: 1.08;
         margin: 0;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        text-align: left;
     }
-    .stats-section .home-stats-divider {
-        flex: 0 0 auto;
+
+    .home-metrics-divider {
+        grid-column: 2;
         width: 1px;
+        min-height: 72px;
         align-self: stretch;
-        background: rgba(0,0,0,0.15);
+        background: rgba(0, 0, 0, 0.18);
+        justify-self: center;
     }
-    .stats-section .home-stat {
-        flex: 1 1 190px;
-        max-width: 260px;
+
+    .home-metrics-divider--end {
+        grid-column: 4;
+    }
+
+    .home-metrics-content {
+        grid-column: 3;
+        min-width: 0;
+    }
+
+    .home-stats-content {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: clamp(14px, 2.2vw, 32px);
+        align-items: start;
+    }
+
+    .home-stat {
         text-align: center;
-        padding: 8px 4px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        padding: 4px 6px;
         transition: transform 0.3s ease;
     }
-    .stats-section .home-stat:hover { transform: translateY(-3px); }
-    .stats-section .home-stat-number { font-size: clamp(1.85rem, 3.2vw, 2.35rem); font-weight: 900; color: #333; line-height: 1; margin: 0 0 12px; letter-spacing: -0.02em; }
-    .stats-section .home-stat-label { font-size: 0.88rem; font-weight: 400; color: #2f2f2f; line-height: 1.35; margin: 0; max-width: 280px; }
 
-    .funding-section { margin: 0; border-radius: 0; background: #f4f6fa; padding: 72px 0; position: relative; overflow: hidden; z-index: 1; }
-    .funding-row {
-        display: flex;
-        align-items: stretch;
-        justify-content: center;
-        gap: clamp(24px, 4vw, 56px);
-        flex-wrap: wrap;
+    .home-stat:hover { transform: translateY(-3px); }
+
+    .home-stat-number {
+        font-size: clamp(1.85rem, 3.2vw, 2.35rem);
+        font-weight: 900;
+        color: #333;
+        line-height: 1;
+        margin: 0 0 12px;
+        letter-spacing: -0.02em;
     }
-    .funding-label-block { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
-    .funding-label { font-size: clamp(1.25rem, 2.2vw, 1.9rem); font-weight: 900; color: #222; line-height: 1.08; margin: 0; text-transform: uppercase; text-align: center; }
-    .funding-divider { flex: 0 0 auto; width: 1px; align-self: stretch; background: rgba(0,0,0,0.15); }
-    .funding-logos {
+
+    .home-stat-label {
+        font-size: 0.88rem;
+        font-weight: 400;
+        color: #2f2f2f;
+        line-height: 1.35;
+        margin: 0 auto;
+        max-width: 240px;
+    }
+
+    .home-funding-content {
         display: flex;
-        gap: 28px;
         align-items: flex-start;
-        justify-content: center;
+        justify-content: flex-start;
+        gap: clamp(20px, 3vw, 40px);
         flex-wrap: wrap;
-        flex: 1 1 auto;
-        align-self: center;
     }
+
     .funding-logo-block {
         display: flex;
         flex-direction: column;
@@ -290,21 +325,22 @@ a.youtube-link i {
         margin: 0;
         min-width: 120px;
     }
+
     .logo-img-wrap { height: 58px; display: flex; align-items: center; justify-content: center; }
     .funding-logo-block img { height: 58px; object-fit: contain; display: block; max-width: 140px; }
     .eu-note { display: block; margin-top: 6px; font-size: 0.78rem; color: #285ab2; font-weight: 700; line-height: 1.05; text-align: center; }
     .funding-partner { display: flex; align-items: flex-start; justify-content: center; gap: 18px; flex-wrap: wrap; }
     .funding-partner .logo-img-wrap { height: 58px; }
     .funding-partner img { height: 58px; object-fit: contain; max-width: 140px; display: block; }
-    .funding-logos img { animation: none !important; transform: none !important; opacity: 1 !important; }
+    .home-funding-content img { animation: none !important; transform: none !important; opacity: 1 !important; }
 
-    /* Bloc dépliable "En savoir plus" pour les bailleurs de fonds */
     .funding-details {
         max-width: 760px;
         margin: 32px auto 0;
         border-top: 1px solid rgba(0,0,0,0.08);
         padding-top: 20px;
     }
+
     .funding-toggle {
         display: flex;
         align-items: center;
@@ -320,12 +356,11 @@ a.youtube-link i {
         padding: 6px 0;
         transition: color 0.25s ease;
     }
+
     .funding-toggle:hover { color: #1565c0; }
-    .funding-toggle i {
-        font-size: 1.1rem;
-        transition: transform 0.3s ease;
-    }
+    .funding-toggle i { font-size: 1.1rem; transition: transform 0.3s ease; }
     .funding-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
+
     .funding-details-content {
         max-height: 0;
         overflow: hidden;
@@ -335,14 +370,19 @@ a.youtube-link i {
         text-align: left;
         color: #333;
     }
+
     .funding-details-content.show {
         max-height: 600px;
         opacity: 1;
         margin-top: 16px;
     }
+
     .funding-details-content p { margin-bottom: 12px; line-height: 1.6; }
     .funding-details-content ul { margin: 0 0 6px 18px; padding: 0; }
     .funding-details-content ul li { margin-bottom: 6px; line-height: 1.5; }
+
+    .home-metrics-panel::before,
+    .home-metrics-panel::after { display: none !important; }
 
     /* ========== ARRIÈRE-PLANS (teet.png & armoiries.png) ========== */
     .timeline-section::before, .timeline-section::after {
@@ -375,8 +415,35 @@ a.youtube-link i {
         .hero-content-wrapper { flex-direction: row; gap: 14px; }
         .hero-button-side { width: auto; }
         .hero-controls-bottom button { width: 40px; height: 40px; font-size: 1.4rem; }
-        .stats-section .home-stats-row { flex-direction: column; row-gap: 22px; }
-        .stats-section .home-stats-divider { width: 100%; height: 1px; }
+        .home-metrics-grid {
+            grid-template-columns: 1fr;
+            row-gap: 24px;
+        }
+
+        .home-metrics-title,
+        .home-metrics-divider,
+        .home-metrics-content,
+        .home-metrics-divider--end {
+            grid-column: 1;
+        }
+
+        .home-metrics-divider,
+        .home-metrics-divider--end {
+            width: 100%;
+            height: 1px;
+            min-height: 0;
+        }
+
+        .home-metrics-title { text-align: center; }
+
+        .home-stats-content {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .home-funding-content {
+            justify-content: center;
+        }
+
         .governance-grid { grid-template-columns: 1fr; }
 
         /* Timeline Mobile */
@@ -389,8 +456,7 @@ a.youtube-link i {
         .tri-color-bar { max-width: 90%; }
 
         /* Funding Mobile */
-        .funding-row { display: flex; flex-direction: column; align-items: center; text-align: center; row-gap: 16px; }
-        .funding-divider { display: none; }
+        .home-stats-content { grid-template-columns: 1fr; }
     }
     @media (max-width: 575.98px) {
         .hero-stage { padding: 18px 0; min-height: 260px; }
@@ -563,74 +629,70 @@ ob_start();
     </div>
 </section>
 
-<!-- Section Quelques Chiffres -->
-<section class="stats-section" data-aos="fade-up" data-aos-duration="1000" aria-label="Quelques chiffres">
-    <div class="container">
-        <div class="home-stats-row">
-                <h2 class="home-stats-title" data-aos="fade-up" data-aos-duration="600">Quelques<br>Chiffres</h2>
-                <div class="home-stats-divider" aria-hidden="true"></div>
-
-                <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="80">
-                    <div class="home-stat-number">12&nbsp;Km</div>
-                    <p class="home-stat-label mb-0">de réseau fibre optique déployé à Kinshasa</p>
+<!-- Section Quelques Chiffres & Bailleurs de fonds -->
+<section class="home-metrics-panel" data-aos="fade-up" data-aos-duration="1000" aria-label="Quelques chiffres et bailleurs de fonds">
+    <div class="home-metrics-band home-metrics-band--stats">
+        <div class="container">
+            <div class="home-metrics-grid">
+                <h2 class="home-metrics-title" data-aos="fade-up" data-aos-duration="600">Quelques<br>Chiffres</h2>
+                <div class="home-metrics-divider" aria-hidden="true"></div>
+                <div class="home-metrics-content home-stats-content">
+                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="80">
+                        <div class="home-stat-number">12&nbsp;Km</div>
+                        <p class="home-stat-label mb-0">de réseau fibre optique déployé à Kinshasa</p>
+                    </div>
+                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="120">
+                        <div class="home-stat-number">21&nbsp;000</div>
+                        <p class="home-stat-label mb-0">Utilisateurs formés sur l'ensemble du territoire</p>
+                    </div>
+                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="160">
+                        <div class="home-stat-number">6&nbsp;000</div>
+                        <p class="home-stat-label mb-0">Utilisateurs formés sur ISYS-Régies depuis janv. 2022</p>
+                    </div>
+                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="200">
+                        <div class="home-stat-number">100+</div>
+                        <p class="home-stat-label mb-0">Agents des régies formés (certifications internationales)</p>
+                    </div>
                 </div>
-
-                <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="120">
-                    <div class="home-stat-number">21&nbsp;000</div>
-                    <p class="home-stat-label mb-0">Utilisateurs formés sur l'ensemble du territoire</p>
-                </div>
-
-                <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="160">
-                    <div class="home-stat-number">6&nbsp;000</div>
-                    <p class="home-stat-label mb-0">Utilisateurs formés sur ISYS-Régies depuis janv. 2022</p>
-                </div>
-
-                <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="200">
-                    <div class="home-stat-number">100+</div>
-                    <p class="home-stat-label mb-0">Agents des régies formés (certifications internationales)</p>
-                </div>
-
-                <div class="home-stats-divider" aria-hidden="true"></div>
-            </div>
-    </div>
-</section>
-
-<!-- Section Bailleurs de Fonds -->
-<section class="funding-section" data-aos="fade-up" data-aos-duration="1000">
-    <div class="container">
-        <div class="funding-row">
-            <div class="funding-label-block" data-aos="fade-right" data-aos-duration="800">
-                <span class="funding-label">les bailleurs <br>de fonds</span>
-            </div>
-            <div class="funding-divider" aria-hidden="true"></div>
-            <div class="funding-logos">
-                <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
-                    <div class="logo-img-wrap"><img src="/public/images/logo.webp" alt="Ministère des Finances"></div>
-                </div>
-                <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
-                    <div class="logo-img-wrap"><img src="/public/images/eu_flag.jpg" alt="Union européenne"></div>
-                    <span class="eu-note">Financé par<br>l'Union européenne</span>
-                </div>
-                <div class="funding-partner" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
-                    <div class="logo-img-wrap"><img src="/public/images/republique_francaise_rvb.png" alt="République française"></div>
-                    <div class="logo-img-wrap"><img src="/public/images/afd_logo.webp" alt="AFD"></div>
-                </div>
+                <div class="home-metrics-divider home-metrics-divider--end" aria-hidden="true"></div>
             </div>
         </div>
+    </div>
 
-        <!-- Bloc dépliable : détails du financement -->
-        <div class="funding-details" data-aos="fade-up" data-aos-duration="600">
-            <button type="button" class="funding-toggle" aria-expanded="false" aria-controls="funding-details-content">
-                <span>En savoir plus sur le financement</span>
-                <i class="bi bi-chevron-down"></i>
-            </button>
-            <div id="funding-details-content" class="funding-details-content">
-                <p>L'activité « Gouvernance Financière » est financée depuis 2015 dans le cadre du Contrat de Désendettement et de Développement (C2D), à travers l'Agence Française de Développement (AFD) et le Ministère des Finances de la RDC. Depuis juillet 2021, elle bénéficie d'un appui additionnel de l'Union Européenne.</p>
-                <ul>
-                    <li>République Française / AFD (Agence Française de Développement)</li>
-                    <li>Union Européenne</li>
-                    <li>Ministère des Finances de la RDC</li>
-                </ul>
+    <div class="home-metrics-band home-metrics-band--funding">
+        <div class="container">
+            <div class="home-metrics-grid">
+                <h2 class="home-metrics-title" data-aos="fade-right" data-aos-duration="800">Les bailleurs<br>de fonds</h2>
+                <div class="home-metrics-divider" aria-hidden="true"></div>
+                <div class="home-metrics-content home-funding-content">
+                    <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+                        <div class="logo-img-wrap"><img src="/public/images/logo.webp" alt="Ministère des Finances"></div>
+                    </div>
+                    <div class="funding-logo-block" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+                        <div class="logo-img-wrap"><img src="/public/images/eu_flag.jpg" alt="Union européenne"></div>
+                        <span class="eu-note">Financé par<br>l'Union européenne</span>
+                    </div>
+                    <div class="funding-partner" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+                        <div class="logo-img-wrap"><img src="/public/images/republique_francaise_rvb.png" alt="République française"></div>
+                        <div class="logo-img-wrap"><img src="/public/images/afd_logo.webp" alt="AFD"></div>
+                    </div>
+                </div>
+                <div class="home-metrics-divider home-metrics-divider--end" aria-hidden="true"></div>
+            </div>
+
+            <div class="funding-details" data-aos="fade-up" data-aos-duration="600">
+                <button type="button" class="funding-toggle" aria-expanded="false" aria-controls="funding-details-content">
+                    <span>En savoir plus sur le financement</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div id="funding-details-content" class="funding-details-content">
+                    <p>L'activité « Gouvernance Financière » est financée depuis 2015 dans le cadre du Contrat de Désendettement et de Développement (C2D), à travers l'Agence Française de Développement (AFD) et le Ministère des Finances de la RDC. Depuis juillet 2021, elle bénéficie d'un appui additionnel de l'Union Européenne.</p>
+                    <ul>
+                        <li>République Française / AFD (Agence Française de Développement)</li>
+                        <li>Union Européenne</li>
+                        <li>Ministère des Finances de la RDC</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -673,7 +735,7 @@ $extraFooter = <<<'HTML'
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) { animateStats(); observer.unobserve(entry.target); } });
     }, { threshold: 0.5 });
-    const statsSection = document.querySelector('.stats-section');
+    const statsSection = document.querySelector('.home-metrics-band--stats');
     if (statsSection) observer.observe(statsSection);
 
     document.querySelectorAll('.hero-controls-bottom button').forEach(btn => {
