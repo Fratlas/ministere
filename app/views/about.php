@@ -8,8 +8,13 @@ $extraHead = <<<'HTML'
     }
 
     .about-page .about-intro,
-    .about-page .about-section {
-        scroll-margin-top: 120px;
+    .about-page .about-section,
+    .about-page #presentation-projet,
+    .about-page #fondements,
+    .about-page #missions-objectifs,
+    .about-page #financement,
+    .about-page #equipe-projet {
+        scroll-margin-top: 130px;
     }
 
     .about-page .about-intro {
@@ -79,7 +84,7 @@ $extraHead = <<<'HTML'
     }
 
     .about-page .about-intro + .about-section {
-        padding-top: 140px;
+        padding-top: 100px;
     }
 
     .about-page .about-section > .container {
@@ -220,19 +225,19 @@ $extraHead = <<<'HTML'
     .about-page .foundation-icon {
         width: 48px;
         height: 48px;
-        border-radius: 14px;
-        background: rgba(13, 139, 220, 0.12);
+        border-radius: 12px;
+        background: rgba(13, 139, 220, 0.14);
         color: #0d8bdc;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 18px;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
     }
 
     .about-page .foundation-icon.foundation-icon-amber {
-        background: rgba(245, 191, 13, 0.16);
-        color: #d69b04;
+        background: rgba(245, 191, 13, 0.2);
+        color: #c99700;
     }
 
     .about-page .structure-grid {
@@ -469,7 +474,7 @@ ob_start();
 ?>
 
 <div class="about-page">
-<section id="presentation-projet" class="about-intro" style="overflow: hidden;">
+<section class="about-intro" style="overflow: hidden;">
     <div class="about-intro-blob about-intro-blob-1"></div>
     <div class="about-intro-blob about-intro-blob-2"></div>
     <div class="container" style="position: relative; z-index: 2;">
@@ -481,7 +486,7 @@ ob_start();
     </div>
 </section>
 
-<section id="mission-objectifs" class="about-section">
+<section id="presentation-projet" class="about-section">
     <div class="container">
         <div class="about-authority">
             <div class="about-photo">
@@ -497,8 +502,8 @@ ob_start();
                 </div>
             </div>
             <div>
-                <div class="section-kicker">LE MOT DE L'AUTORITÉ</div>
-                <h2 class="section-title">Missions et Objectifs pour une gestion financière exemplaire</h2>
+                <div class="section-kicker">PRÉSENTATION DU PROJET</div>
+                <h2 class="section-title">Historique et contexte du projet</h2>
                 <p class="section-copy">Le Ministère des Finances joue un rôle pivot dans la stabilisation macroéconomique et le développement durable du pays. Sous l'impulsion du Chef de l'État, nous avons engagé des réformes profondes visant à moderniser nos régies financières et à optimiser la dépense publique.</p>
                 <p class="section-copy">La transformation digitale que nous opérons aujourd'hui est le socle de notre stratégie pour lutter contre la corruption et garantir une mobilisation maximale des recettes. L'informatisation de la chaîne de la recette est une priorité absolue.</p>
                 <div class="signature-block">
@@ -510,7 +515,7 @@ ob_start();
     </div>
 </section>
 
-<section id="structure" class="about-section pt-0">
+<section id="fondements" class="about-section pt-0">
     <div class="container">
         <div class="foundation-shell">
             <div class="text-center mb-5">
@@ -521,12 +526,12 @@ ob_start();
             <div style="height:50px;"></div>
             <div class="foundation-grid">
                 <div class="foundation-card">
-                    <div class="foundation-icon"><i class="bi bi-clipboard-check"></i></div>
+                    <div class="foundation-icon"><i class="bi bi-file-earmark-text"></i></div>
                     <h3 class="h4 fw-bold">NOTRE MISSION</h3>
                     <p class="section-copy mb-0">Préparer et exécuter la politique budgétaire et fiscale de l'État, assurer la gestion de la trésorerie publique et superviser le secteur financier pour garantir la stabilité économique nationale et la croissance durable.</p>
                 </div>
-                <div class="foundation-card">
-                    <div class="foundation-icon foundation-icon-amber"><i class="bi bi-eye"></i></div>
+                <div id="missions-objectifs" class="foundation-card">
+                    <div class="foundation-icon foundation-icon-amber"><i class="bi bi-link-45deg"></i></div>
                     <h3 class="h4 fw-bold">MISSIONS ET OBJECTIFS</h3>
                     <p class="section-copy mb-0">Devenir une administration financière moderne, performante et totalement transparente, au service d'une croissance inclusive et de l'émergence irréversible de la République Démocratique du Congo.</p>
                 </div>

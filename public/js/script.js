@@ -345,11 +345,14 @@ document.addEventListener("DOMContentLoaded", () => {
     internalLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             if (e.ctrlKey || e.metaKey || e.shiftKey || link.target === "_blank") return;
-            if (link.hash) return;
 
             const destinationUrl = new URL(link.href, window.location.origin);
             const currentUrl = new URL(window.location.href);
-            if (destinationUrl.pathname === currentUrl.pathname) return;
+
+            // Ancres sur la même page : laisser le navigateur / layout gérer
+            if (link.hash && destinationUrl.pathname === currentUrl.pathname) return;
+
+            if (destinationUrl.pathname === currentUrl.pathname && !link.hash) return;
             
             e.preventDefault();
             const destination = link.href;

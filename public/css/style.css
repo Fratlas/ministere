@@ -878,11 +878,14 @@ a:hover {
 /* Button ripple effect setup */
 .btn-details-link,
 .btn-contact,
-.social-circle,
 .hero-btn,
 .btn {
     position: relative;
     overflow: hidden;
+}
+
+.main-footer .social-circle {
+    overflow: visible;
 }
 
 /* Reduced motion preferences */

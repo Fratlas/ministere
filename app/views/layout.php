@@ -246,14 +246,14 @@ $isContact = str_starts_with($currentPath, '/contact');
             margin-top: auto;
             flex-shrink: 0;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             display: flex;
             flex-direction: column;
             z-index: 1;
         }
 
         .footer-upper {
-            padding-bottom: 0;
+            padding-bottom: 28px;
         }
 
         .footer-grid {
@@ -318,36 +318,54 @@ $isContact = str_starts_with($currentPath, '/contact');
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 48px;
-            flex-wrap: nowrap;
+            gap: clamp(24px, 4vw, 48px);
+            flex-wrap: wrap;
             padding: 0;
             margin-top: auto;
             padding-top: 74px;
+            overflow: visible;
         }
 
         .social-circles {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            overflow: visible;
+            flex-shrink: 0;
         }
 
-        .social-circle {
-            width: auto;
-            height: auto;
+        .main-footer .social-circle {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            min-height: 42px;
             display: inline-flex;
             align-items: center;
-            color: white;
+            justify-content: center;
+            color: #0076bc;
             text-decoration: none;
-            opacity: 0.92;
-            border-radius: 0;
+            opacity: 1;
+            border-radius: 50%;
             border: 0;
-            background: transparent;
-            font-size: 1.35rem;
+            background: #fff;
+            font-size: 1.15rem;
+            overflow: visible !important;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .social-circle:hover {
+        .main-footer .social-circle i {
+            display: block;
+            line-height: 1;
+        }
+
+        .main-footer .social-circle:hover {
             opacity: 1;
+            color: #00558e;
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
         }
 
         .call-center-text {
@@ -666,12 +684,9 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">À propos</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/about">Vue d'ensemble</a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/about#presentation-projet">Présentation du Projet</a></li>
-                            <li><a class="dropdown-item" href="/about#mission-objectifs">Missions et Objectifs</a></li>
-                            <li><a class="dropdown-item" href="/about#structure">Fondements</a></li>
-                            <li><a class="dropdown-item" href="/about#chainerecette">Chaîne de la recette</a></li>
+                            <li><a class="dropdown-item" href="/about#fondements">Fondements</a></li>
+                            <li><a class="dropdown-item" href="/about#missions-objectifs">Missions et Objectifs</a></li>
                             <li><a class="dropdown-item" href="/about#financement">Financements</a></li>
                             <li><a class="dropdown-item" href="/about#equipe-projet">Équipe Projet</a></li>
                         </ul>
@@ -820,16 +835,40 @@ $isContact = str_starts_with($currentPath, '/contact');
 
             function scrollToPageHash(delay = 150) {
                 if (!window.location.hash) return;
-                const target = document.querySelector(window.location.hash);
+                const hash = window.location.hash;
+                const target = document.querySelector(hash);
                 if (!target) return;
                 window.setTimeout(() => {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const nav = document.querySelector('.navbar');
+                    const offset = (nav ? nav.offsetHeight : 100) + 16;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
                 }, delay);
             }
 
-            const hashDelay = window.location.pathname.replace(/\/+$/, '') === '/about' ? 1200 : 300;
+            const isAboutPage = window.location.pathname.replace(/\/+$/, '') === '/about';
+            const hashDelay = isAboutPage && window.location.hash ? 700 : 300;
             scrollToPageHash(hashDelay);
-            window.addEventListener('hashchange', () => scrollToPageHash(0));
+            window.addEventListener('hashchange', () => scrollToPageHash(80));
+
+            // Liens À propos avec ancre : forcer le scroll même si déjà sur /about
+            document.querySelectorAll('a.dropdown-item[href*="/about#"], a.dropdown-item[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href') || '';
+                    const hashIndex = href.indexOf('#');
+                    if (hashIndex === -1) return;
+                    const hash = href.slice(hashIndex);
+                    const path = href.slice(0, hashIndex) || window.location.pathname;
+                    const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+                    const targetPath = path.replace(/\/+$/, '') || '/';
+
+                    if (targetPath === '/about' && currentPath === '/about') {
+                        e.preventDefault();
+                        history.pushState(null, '', hash);
+                        scrollToPageHash(80);
+                    }
+                });
+            });
         });
     </script>
 </body>
