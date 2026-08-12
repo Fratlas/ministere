@@ -61,18 +61,13 @@ $extraHead = <<<'HTML'
         line-height: 1.55;
     }
 
-    .about-page .about-divider {
-        width: 90px;
-        height: 4px;
-        margin: 18px auto 0;
-        background: #ffcc00;
-    }
-
+    .about-page .about-divider,
     .about-page .about-divider-tri {
-        width: 90px;
+        width: 88px;
         height: 4px;
         margin: 18px auto 0;
-        background: linear-gradient(to right, #0d8bdc 33%, #ffcc00 33%, #ffcc00 66%, #e60000 66%);
+        background: linear-gradient(to right, #0a84db 0 33%, #f4d10f 33% 66%, #ce1021 66% 100%);
+        border-radius: 1px;
     }
 
     .about-page .about-section {
@@ -480,7 +475,7 @@ ob_start();
     <div class="container" style="position: relative; z-index: 2;">
         <h1>A PROPOS</h1>
         <br>
-        <div class="about-divider"></div>
+        <div class="about-divider-tri"></div>
         <br>
         <p>Découvrez l'historique, le contexte et les objectifs du projet Gouvernance Financière, ainsi que l'organisation de son équipe de pilotage.</p>
     </div>
