@@ -26,6 +26,7 @@ $isContact = str_starts_with($currentPath, '/contact');
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/site-layout.css">
     <?php echo $extraHead ?? ''; ?>
     <style>
         :root {
@@ -63,14 +64,6 @@ $isContact = str_starts_with($currentPath, '/contact');
             flex: 1 0 auto;
             width: 100%;
             max-width: 100%;
-        }
-
-        .container,
-        .container-fluid {
-            width: 100%;
-            max-width: 100%;
-            padding-left: clamp(18px, 3vw, 36px);
-            padding-right: clamp(18px, 3vw, 36px);
         }
 
         .container > .row,

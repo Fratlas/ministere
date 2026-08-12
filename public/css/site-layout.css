@@ -1,0 +1,44 @@
+/**
+ * Marges et largeur de contenu alignées sur la maquette.
+ * Logo navbar (gauche) et CTA (droite) = bords du contenu principal.
+ */
+:root {
+    --site-content-max: 1140px;
+    --site-gutter: clamp(32px, 8vw, 120px);
+    --site-shell-max: calc(var(--site-content-max) + (2 * var(--site-gutter)));
+}
+
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl {
+    width: 100%;
+    max-width: var(--site-shell-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--site-gutter);
+    padding-right: var(--site-gutter);
+    box-sizing: border-box;
+}
+
+.container-fluid {
+    width: 100%;
+    max-width: 100%;
+    padding-left: var(--site-gutter);
+    padding-right: var(--site-gutter);
+    box-sizing: border-box;
+}
+
+.navbar > .container,
+.main-footer .container,
+main .container {
+    max-width: var(--site-shell-max);
+}
+
+@media (max-width: 575.98px) {
+    :root {
+        --site-gutter: clamp(20px, 5vw, 28px);
+    }
+}

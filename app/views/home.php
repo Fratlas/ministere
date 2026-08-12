@@ -124,7 +124,7 @@ a.youtube-link i {
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(220,38,38,0.58) 0%, rgba(37,156,235,0.52) 100%); z-index: 1; pointer-events: none; }
     .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 70%); z-index: 1; pointer-events: none; }
     /* Hero stage: titre en haut à droite, bouton + flèches écartés en bas (calé sur la maquette) */
-    .hero-stage { position: relative; z-index: 2; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; padding: 32px 0 24px; max-width: 100% !important; padding-left: clamp(20px, 4vw, 56px) !important; padding-right: clamp(20px, 4vw, 56px) !important; }
+    .hero-stage { position: relative; z-index: 2; min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; padding: 32px 0 24px; }
     .hero-title-wrapper { text-align: right; align-self: flex-end; width: 100%; max-width: 640px; margin-left: auto; }
     .hero-title { font-size: clamp(1.05rem, 2.1vw, 1.9rem); font-weight: 800; line-height: 1.1; margin: 0 0 10px 0; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.25); letter-spacing: -0.01em; text-align: right; }
     .hero-underline-custom { width: 100px; height: 10px; margin: 0 0 0 auto; border-radius: 0px; background: #ffd400; box-shadow: 0 1px 4px rgba(255,212,0,0.4); }
@@ -167,7 +167,7 @@ a.youtube-link i {
     .bar-yellow { background-color: var(--rdc-yellow); flex: 1; }
     .bar-red { background-color: var(--rdc-red); flex: 1; }
 
-    .timeline-container { position: relative; max-width: 1100px; margin: 42px auto 0; padding: 0 24px; }
+    .timeline-container { position: relative; max-width: 100%; margin: 42px auto 0; padding: 0; }
     .timeline-icon {
         position: absolute; left: 50%; top: 0; width: 44px; height: 44px;
         background-color: var(--rdc-yellow); border-radius: 50%; transform: translateX(-50%);
