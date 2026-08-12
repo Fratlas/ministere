@@ -25,7 +25,7 @@ $extraHead = <<<'HTML'
     background: linear-gradient(90deg, #0d8ddd 0%, #075d9f 100%);
     color: #fff;
     text-align: center;
-    padding: 64px 0 68px;
+    padding: 64px 0 96px;
 }
 .activities-page .real-hero h1 {
     font-weight: 900;
@@ -46,6 +46,50 @@ $extraHead = <<<'HTML'
     margin: 16px auto 0;
     background: linear-gradient(to right, #0a84db 0 33%, #f4d10f 33% 66%, #ce1021 66% 100%);
 }
+.activities-page .content-wrapper {
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 80px;
+}
+.activities-page .filter-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 28px 30px;
+    box-shadow: 0 14px 35px rgba(12, 25, 45, 0.08);
+    margin-top: -72px;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 3;
+}
+.activities-page .filter-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7a8088;
+    margin-bottom: 8px;
+}
+.activities-page .filter-box .form-control,
+.activities-page .filter-box .form-select {
+    min-height: 44px;
+    border-radius: 6px;
+    border: 1px solid #e4e8ee;
+    box-shadow: none !important;
+}
+.activities-page .filter-box .input-group-text {
+    background: #f8f9fb;
+    border: 1px solid #e4e8ee;
+    color: #9aa3af;
+}
+.activities-page .filter-box .btn-primary {
+    min-height: 44px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
 </style>
 HTML;
 
@@ -64,7 +108,7 @@ ob_start();
 <div class="content-wrapper">
     <div class="container">
         <div class="filter-box">
-            <form method="GET" action="/activite/filter">
+            <form method="GET" action="/projects/filter">
                 <div class="row g-3 align-items-end">
                     <div class="col-lg-7">
                         <div class="filter-label">Rechercher une activité</div>
@@ -124,7 +168,7 @@ ob_start();
                         <p class="project-desc"><?php echo htmlspecialchars(project_excerpt_view($project['description']), ENT_QUOTES, 'UTF-8'); ?></p>
                         <div class="card-footer-custom">
                             <span><?php echo htmlspecialchars($project['update_date'], ENT_QUOTES, 'UTF-8'); ?></span>
-                            <a href="/activite/<?php echo (int) $project['id']; ?>" class="btn-details-link">Voir détails →</a>
+                            <a href="/projects/<?php echo (int) $project['id']; ?>" class="btn-details-link">Voir détails →</a>
                         </div>
                     </div>
                 </div>

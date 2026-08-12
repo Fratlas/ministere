@@ -51,7 +51,8 @@ class ProjectController {
             });
         }
 
-        require_once __DIR__ . '/../views/activite.php';
+        $projects = array_values($projects);
+        require_once __DIR__ . '/../views/activite_new.php';
     }
 }
 ?>
