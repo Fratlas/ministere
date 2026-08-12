@@ -345,6 +345,11 @@ document.addEventListener("DOMContentLoaded", () => {
     internalLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             if (e.ctrlKey || e.metaKey || e.shiftKey || link.target === "_blank") return;
+            if (link.hash) return;
+
+            const destinationUrl = new URL(link.href, window.location.origin);
+            const currentUrl = new URL(window.location.href);
+            if (destinationUrl.pathname === currentUrl.pathname) return;
             
             e.preventDefault();
             const destination = link.href;

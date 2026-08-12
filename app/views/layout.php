@@ -214,6 +214,11 @@ $isContact = str_starts_with($currentPath, '/contact');
             transform: translateX(4px);
         }
 
+        .navbar .dropdown-divider {
+            margin: 0.35rem 0;
+            opacity: 0.12;
+        }
+
         .navbar-nav {
             column-gap: clamp(18px, 2.6vw, 42px);
         }
@@ -664,10 +669,14 @@ $isContact = str_starts_with($currentPath, '/contact');
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link<?php echo $isHome ? ' active' : ''; ?>" href="/">Accueil</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="/about" role="button" data-bs-toggle="dropdown" aria-expanded="false">À propos</a>
+                        <a class="nav-link dropdown-toggle<?php echo $isAbout ? ' active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">À propos</a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/about">Vue d'ensemble</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/about#presentation-projet">Présentation du Projet</a></li>
+                            <li><a class="dropdown-item" href="/about#mission-objectifs">Missions et Objectifs</a></li>
                             <li><a class="dropdown-item" href="/about#structure">Fondements</a></li>
+                            <li><a class="dropdown-item" href="/about#chainerecette">Chaîne de la recette</a></li>
                             <li><a class="dropdown-item" href="/about#financement">Financements</a></li>
                             <li><a class="dropdown-item" href="/about#equipe-projet">Équipe Projet</a></li>
                         </ul>
@@ -811,6 +820,19 @@ $isContact = str_starts_with($currentPath, '/contact');
                     }
                 });
             });
+
+            function scrollToPageHash(delay = 150) {
+                if (!window.location.hash) return;
+                const target = document.querySelector(window.location.hash);
+                if (!target) return;
+                window.setTimeout(() => {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, delay);
+            }
+
+            const hashDelay = window.location.pathname.replace(/\/+$/, '') === '/about' ? 1200 : 300;
+            scrollToPageHash(hashDelay);
+            window.addEventListener('hashchange', () => scrollToPageHash(0));
         });
     </script>
 </body>
