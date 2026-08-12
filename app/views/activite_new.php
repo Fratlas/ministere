@@ -25,7 +25,7 @@ $extraHead = <<<'HTML'
     background: linear-gradient(90deg, #0d8ddd 0%, #075d9f 100%);
     color: #fff;
     text-align: center;
-    padding: 64px 0 96px;
+    padding: 64px 0 68px;
 }
 .activities-page .real-hero h1 {
     font-weight: 900;
@@ -50,7 +50,7 @@ $extraHead = <<<'HTML'
     position: relative;
     z-index: 2;
     margin-top: 0;
-    padding-top: 0;
+    padding-top: 48px;
     padding-bottom: 80px;
 }
 .activities-page .filter-box {
@@ -58,10 +58,13 @@ $extraHead = <<<'HTML'
     border-radius: 8px;
     padding: 28px 30px;
     box-shadow: 0 14px 35px rgba(12, 25, 45, 0.08);
-    margin-top: -72px;
-    margin-bottom: 48px;
+    margin-top: 0 !important;
+    margin-bottom: 56px;
     position: relative;
     z-index: 3;
+}
+.activities-page .activities-grid {
+    margin-top: 8px;
 }
 .activities-page .filter-label {
     font-size: 0.72rem;
@@ -152,7 +155,7 @@ ob_start();
             </form>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4 activities-grid">
             <?php foreach ($projects as $project): ?>
             <div class="col-lg-4 col-md-6">
                 <div class="card card-project">
