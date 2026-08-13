@@ -729,20 +729,55 @@
         .documents-pagination {
             display: flex;
             justify-content: center;
-            margin: 20px 0 6px;
+            margin: 28px 0 6px;
         }
 
-        .pagination .page-link {
+        .documents-pagination[hidden] {
+            display: none !important;
+        }
+
+        .documents-pagination .pagination {
+            gap: 8px;
+            margin-bottom: 0;
+        }
+
+        .documents-pagination .page-link {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50% !important;
+            border: 1px solid #e7edf5;
             color: #394b66;
-            border-color: #e7edf5;
-            min-width: 36px;
+            font-weight: 700;
+            padding: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+            min-width: 42px;
             text-align: center;
-            box-shadow: none;
+            cursor: pointer;
         }
 
-        .pagination .page-item.active .page-link {
+        .documents-pagination button.page-link {
+            line-height: 1;
+        }
+
+        .documents-pagination .page-item.active .page-link {
             background: #1487db;
             border-color: #1487db;
+            color: #fff;
+        }
+
+        .documents-pagination .page-link:hover {
+            background: #eef6fd;
+            color: #1487db;
+            border-color: #1487db;
+        }
+
+        .documents-pagination .page-item.disabled .page-link {
+            opacity: 0.45;
+            pointer-events: none;
         }
 
         @media (max-width: 991.98px) {
@@ -849,16 +884,8 @@
                                 </div>
                             </div>
 
-                            <nav class="documents-pagination">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item disabled"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">12</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
-                                </ul>
+                            <nav class="documents-pagination" id="documentsPagination" aria-label="Pagination des documents" hidden>
+                                <ul class="pagination mb-0" id="documentsPaginationList"></ul>
                             </nav>
                         </div>
                     </main>
@@ -1036,6 +1063,8 @@
             'autres-ressources': { label: 'Type', type: 'badge', options: ['Guides utilisateurs', 'Tutoriels', 'Bulletin', 'Statistiques'] }
         };
 
+        const DOCS_PER_PAGE = 5;
+
         const state = {
             items: [],
             filteredItems: [],
@@ -1043,6 +1072,7 @@
             subfilter: 'all',
             search: '',
             sort: 'newest',
+            currentPage: 1,
             currentSection: getCurrentSection()
         };
 
@@ -1262,13 +1292,100 @@
             });
         }
 
-        function updateCounts(items) {
+        function updateCounts(total, start, end) {
             const meta = document.getElementById('documentsMeta');
-            const total = items.length;
             if (meta) {
                 meta.textContent = total
-                    ? `Affichage de 1 - ${total} sur ${total} documents`
+                    ? `Affichage de ${start} - ${end} sur ${total} documents`
                     : 'Aucun document trouvé';
+            }
+        }
+
+        function getPaginationPages(current, totalPages) {
+            if (totalPages <= 1) return [];
+
+            if (totalPages <= 5) {
+                return Array.from({ length: totalPages }, (_, index) => index + 1);
+            }
+
+            const pages = [1];
+            const middleStart = Math.max(2, current - 1);
+            const middleEnd = Math.min(totalPages - 1, current + 1);
+
+            if (middleStart > 2) {
+                pages.push('...');
+            }
+
+            for (let page = middleStart; page <= middleEnd; page += 1) {
+                pages.push(page);
+            }
+
+            if (middleEnd < totalPages - 1) {
+                pages.push('...');
+            }
+
+            pages.push(totalPages);
+            return pages;
+        }
+
+        function renderPagination(totalItems) {
+            const nav = document.getElementById('documentsPagination');
+            const list = document.getElementById('documentsPaginationList');
+            if (!nav || !list) return;
+
+            const totalPages = Math.max(1, Math.ceil(totalItems / DOCS_PER_PAGE));
+            if (totalItems <= DOCS_PER_PAGE) {
+                nav.hidden = true;
+                list.innerHTML = '';
+                return;
+            }
+
+            nav.hidden = false;
+            const current = Math.min(Math.max(state.currentPage, 1), totalPages);
+            state.currentPage = current;
+
+            const rows = [];
+            rows.push(`
+                <li class="page-item${current <= 1 ? ' disabled' : ''}">
+                    <button type="button" class="page-link" data-page="${current - 1}" aria-label="Page precedente"${current <= 1 ? ' disabled' : ''}>
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                </li>
+            `);
+
+            getPaginationPages(current, totalPages).forEach((entry) => {
+                if (entry === '...') {
+                    rows.push('<li class="page-item disabled"><span class="page-link">...</span></li>');
+                    return;
+                }
+
+                rows.push(`
+                    <li class="page-item${entry === current ? ' active' : ''}">
+                        <button type="button" class="page-link" data-page="${entry}" aria-label="Page ${entry}" aria-current="${entry === current ? 'page' : 'false'}">${entry}</button>
+                    </li>
+                `);
+            });
+
+            rows.push(`
+                <li class="page-item${current >= totalPages ? ' disabled' : ''}">
+                    <button type="button" class="page-link" data-page="${current + 1}" aria-label="Page suivante"${current >= totalPages ? ' disabled' : ''}>
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </li>
+            `);
+
+            list.innerHTML = rows.join('');
+        }
+
+        function goToPage(page) {
+            const totalPages = Math.max(1, Math.ceil(state.filteredItems.length / DOCS_PER_PAGE));
+            const nextPage = Math.min(Math.max(page, 1), totalPages);
+            if (nextPage === state.currentPage) return;
+            state.currentPage = nextPage;
+            applyFilters(false);
+            const list = document.getElementById('documentsList');
+            if (list) {
+                list.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -1422,9 +1539,13 @@
             grid.innerHTML = buttons.join('');
         }
 
-        function applyFilters() {
+        function applyFilters(resetPage = true) {
             const query = state.search.trim().toLowerCase();
             let items = [...state.items];
+
+            if (resetPage) {
+                state.currentPage = 1;
+            }
 
             if (state.category !== 'all') {
                 items = items.filter((item) => getCategorySlug(item) === state.category);
@@ -1462,12 +1583,24 @@
             }
 
             state.filteredItems = sortItems(items);
-            updateCounts(state.filteredItems);
+            const total = state.filteredItems.length;
+            const totalPages = Math.max(1, Math.ceil(total / DOCS_PER_PAGE));
+            if (state.currentPage > totalPages) {
+                state.currentPage = totalPages;
+            }
+
+            const startIndex = (state.currentPage - 1) * DOCS_PER_PAGE;
+            const pageItems = state.filteredItems.slice(startIndex, startIndex + DOCS_PER_PAGE);
+            const startDisplay = total ? startIndex + 1 : 0;
+            const endDisplay = total ? startIndex + pageItems.length : 0;
+
+            updateCounts(total, startDisplay, endDisplay);
+            renderPagination(total);
 
             const list = document.getElementById('documentsList');
             if (list) {
-                if (state.filteredItems.length) {
-                    list.innerHTML = state.filteredItems.map(renderDocument).join('');
+                if (pageItems.length) {
+                    list.innerHTML = pageItems.map(renderDocument).join('');
                 } else {
                     list.innerHTML = `
                         <div class="documents-empty text-center py-5">
@@ -1521,7 +1654,18 @@
                     if (searchInput) {
                         state.search = searchInput.value || '';
                     }
-                    applyFilters();
+                    applyFilters(true);
+                });
+            }
+
+            const paginationList = document.getElementById('documentsPaginationList');
+            if (paginationList && !paginationList.dataset.filtersWired) {
+                paginationList.dataset.filtersWired = '1';
+                paginationList.addEventListener('click', (event) => {
+                    const button = event.target.closest('[data-page]');
+                    if (!button || button.disabled) return;
+                    event.preventDefault();
+                    goToPage(Number(button.dataset.page));
                 });
             }
         }
