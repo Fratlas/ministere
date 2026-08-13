@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 0. Désactive l'animation sur les pages de projets / réalisations
     const currentPath = window.location.pathname.toLowerCase();
     const currentHref = window.location.href.toLowerCase();
-    if (currentPath.includes('/projects') || currentPath.includes('/activite') || currentPath.includes('/realisations') || currentHref.includes('projets.php') || currentHref.includes('activite.php') || currentHref.includes('realisations.html')) {
-        document.querySelectorAll('.gsap-reveal, [data-split], .card-project, .stat-item, .reveal-item, .hero-section h1, .hero-section p').forEach(el => {
+    if (currentPath.includes('/projects') || currentPath.includes('/activite') || currentPath.includes('/realisations') || currentPath.includes('/contact') || currentHref.includes('projets.php') || currentHref.includes('activite.php') || currentHref.includes('realisations.html') || currentHref.includes('contact.html')) {
+        document.querySelectorAll('.gsap-reveal, [data-split], .card-project, .stat-item, .reveal-item, .hero-section h1, .hero-section p, .contact-title, .contact-panel h3, .contact-card, .contact-info-card').forEach(el => {
             el.style.visibility = 'visible';
             el.style.opacity = 1;
             el.style.transform = 'none';
@@ -186,10 +186,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const currentPath = window.location.pathname.toLowerCase();
+    const currentHref = window.location.href.toLowerCase();
+    const isProjectsHero = document.querySelector('.hero-section h1')?.textContent.includes('PROJETS') || document.querySelector('.hero-section h1')?.textContent.includes('ACTIVITÉS');
+    const disableAnimations = isProjectsHero
+        || currentPath.includes('/contact')
+        || currentHref.includes('contact.html');
 
-    // 🔴 DÉSACTIVER ANIMATION POUR PROJETS
-    if (document.querySelector('.hero-section h1')?.textContent.includes('PROJETS') || document.querySelector('.hero-section h1')?.textContent.includes('ACTIVITÉS')) {
-        document.querySelectorAll('.gsap-reveal, [data-split], .card-project, .stat-item, .reveal-item, .hero-section h1, .hero-section p').forEach(el => {
+    // 🔴 DÉSACTIVER ANIMATION POUR PROJETS / CONTACT
+    if (disableAnimations) {
+        document.querySelectorAll('.gsap-reveal, [data-split], .card-project, .stat-item, .reveal-item, .hero-section h1, .hero-section p, .contact-title, .contact-panel h3, .contact-card, .contact-info-card').forEach(el => {
             el.style.visibility = 'visible';
             el.style.opacity = 1;
             el.style.transform = 'none';

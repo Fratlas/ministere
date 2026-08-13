@@ -158,12 +158,6 @@ $extraHead = <<<'HTML'
         color: #fff;
         background: linear-gradient(135deg, #255ee6 0%, #0d55d7 100%);
         box-shadow: 0 14px 28px rgba(37, 94, 230, 0.28);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .contact-submit:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 16px 32px rgba(37, 94, 230, 0.34);
     }
 
     .contact-info {
