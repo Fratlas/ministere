@@ -90,6 +90,29 @@ $featuredItem = $articles[0] ?? ($realisations[0] ?? null);
 $articleCards = array_slice($articles, 0, 4);
 $timelineCards = array_slice($realisations, 0, 3);
 
+$keyStats = [
+    [
+        'number' => '12 Km',
+        'label' => 'de réseau fibre optique',
+        'detail' => 'Déployé à Kinshasa, reliant 12 services de l\'État (DGRAD, DGI, DGDA, BCC, DTO, DCP-DC, DCP-AP, DUIK, CDI, IGV, CTR et CABFIN), opérationnel depuis août 2017.',
+    ],
+    [
+        'number' => '21 000',
+        'label' => 'utilisateurs formés',
+        'detail' => 'Plus de 21 000 utilisateurs formés sur l\'ensemble du territoire de la RDC.',
+    ],
+    [
+        'number' => '6 000',
+        'label' => 'utilisateurs formés sur ISYS-Régies',
+        'detail' => 'Plus de 6 000 utilisateurs du secteur privé et public formés sur ISYS-Régies depuis janvier 2022.',
+    ],
+    [
+        'number' => '100+',
+        'label' => 'agents des régies formés',
+        'detail' => 'Plus de 100 agents des régies financières ont bénéficié de formations certifiantes de niveau international.',
+    ],
+];
+
 $extraHead = <<<'HTML'
 <!-- AOS Library for animations -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -305,9 +328,11 @@ a.youtube-link i {
     }
 
     .home-stat {
+        position: relative;
         text-align: center;
         padding: 4px 6px;
         transition: transform 0.3s ease;
+        cursor: help;
     }
 
     .home-stat:hover { transform: translateY(-3px); }
@@ -317,17 +342,60 @@ a.youtube-link i {
         font-weight: 900;
         color: #333;
         line-height: 1;
-        margin: 0 0 12px;
+        margin: 0 0 10px;
         letter-spacing: -0.02em;
     }
 
     .home-stat-label {
         font-size: 0.88rem;
-        font-weight: 400;
+        font-weight: 600;
         color: #2f2f2f;
-        line-height: 1.35;
+        line-height: 1.3;
         margin: 0 auto;
-        max-width: 240px;
+        max-width: 170px;
+    }
+
+    .home-stat-popup {
+        position: absolute;
+        left: 50%;
+        bottom: calc(100% + 14px);
+        transform: translateX(-50%) translateY(10px);
+        width: min(290px, calc(100vw - 48px));
+        padding: 14px 16px;
+        background: #fff;
+        color: #334155;
+        font-size: 0.82rem;
+        font-weight: 400;
+        line-height: 1.55;
+        text-align: left;
+        border-radius: 12px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: 0 18px 42px rgba(9, 31, 64, 0.16);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+        z-index: 12;
+    }
+
+    .home-stat-popup::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -7px;
+        width: 14px;
+        height: 14px;
+        background: #fff;
+        border-right: 1px solid rgba(15, 23, 42, 0.08);
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        transform: translateX(-50%) rotate(45deg);
+    }
+
+    .home-stat:hover .home-stat-popup,
+    .home-stat:focus-within .home-stat-popup {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
     }
 
     .home-funding-content {
@@ -553,6 +621,10 @@ a.youtube-link i {
 
         /* Funding Mobile */
         .home-stats-content { grid-template-columns: 1fr; }
+        .home-stat-popup {
+            left: 50%;
+            width: min(320px, calc(100vw - 32px));
+        }
     }
     @media (max-width: 575.98px) {
         .hero-stage { padding-top: 18px; padding-bottom: 18px; min-height: 260px; }
@@ -736,22 +808,13 @@ ob_start();
                 <h2 class="home-metrics-title" data-aos="fade-up" data-aos-duration="600">Quelques<br>Chiffres</h2>
                 <div class="home-metrics-divider" aria-hidden="true"></div>
                 <div class="home-metrics-content home-stats-content">
-                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="80">
-                        <div class="home-stat-number">12&nbsp;Km</div>
-                        <p class="home-stat-label mb-0">de réseau fibre optique déployé à Kinshasa</p>
+                    <?php foreach ($keyStats as $index => $stat): ?>
+                    <div class="home-stat" tabindex="0" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="<?php echo 80 + ($index * 40); ?>">
+                        <div class="home-stat-number"><?php echo home_h($stat['number']); ?></div>
+                        <p class="home-stat-label mb-0"><?php echo home_h($stat['label']); ?></p>
+                        <div class="home-stat-popup" role="tooltip"><?php echo home_h($stat['detail']); ?></div>
                     </div>
-                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="120">
-                        <div class="home-stat-number">21&nbsp;000</div>
-                        <p class="home-stat-label mb-0">Utilisateurs formés sur l'ensemble du territoire</p>
-                    </div>
-                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="160">
-                        <div class="home-stat-number">6&nbsp;000</div>
-                        <p class="home-stat-label mb-0">Utilisateurs formés sur ISYS-Régies depuis janv. 2022</p>
-                    </div>
-                    <div class="home-stat" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="200">
-                        <div class="home-stat-number">100+</div>
-                        <p class="home-stat-label mb-0">Agents des régies formés (certifications internationales)</p>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
                 <div class="home-metrics-divider home-metrics-divider--end" aria-hidden="true"></div>
             </div>
