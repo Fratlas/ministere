@@ -504,10 +504,10 @@ ob_start();
                 </div>
             </div>
             <div>
-                <div class="section-kicker">PRÉSENTATION DU PROJET</div>
-                <h2 class="section-title">Historique et contexte du projet</h2>
-                <p class="section-copy">Le Ministère des Finances joue un rôle pivot dans la stabilisation macroéconomique et le développement durable du pays. Sous l'impulsion du Chef de l'État, nous avons engagé des réformes profondes visant à moderniser nos régies financières et à optimiser la dépense publique.</p>
-                <p class="section-copy">La transformation digitale que nous opérons aujourd'hui est le socle de notre stratégie pour lutter contre la corruption et garantir une mobilisation maximale des recettes. L'informatisation de la chaîne de la recette est une priorité absolue.</p>
+                <div class="section-kicker">LE MOT DE L'AUTORITÉ</div>
+                <h2 class="section-title">Vision pour une Gestion Financière Exemplaire</h2>
+                <p class="section-copy">Le Ministère des Finances joue un rôle pivot dans la stabilisation macroéconomique et le développement durable de la RDC. Sous l'impulsion du Chef de l'État, des réformes profondes ont été engagées pour moderniser les régies financières et optimiser la dépense publique.</p>
+                <p class="section-copy">La transformation digitale opérée aujourd'hui constitue le socle de la stratégie nationale pour lutter contre la corruption et garantir une mobilisation maximale des recettes. L'informatisation de la chaîne de la recette est une priorité absolue.</p>
                 <div class="signature-block">
                     S.E. MONSIEUR LE MINISTRE
                     <small>Ministère des Finances, RDC</small>
