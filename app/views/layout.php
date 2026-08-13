@@ -695,6 +695,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/about#presentation-projet">Présentation du Projet</a></li>
                             <li><a class="dropdown-item" href="/about#fondements">Fondements</a></li>
+                            <li><a class="dropdown-item" href="/about#structure-organisationnelle">Structure organisationnelle</a></li>
                             <li><a class="dropdown-item" href="/about#missions-objectifs">Missions et Objectifs</a></li>
                             <li><a class="dropdown-item" href="/about#financement">Financements</a></li>
                             <li><a class="dropdown-item" href="/about#equipe-projet">Équipe Projet</a></li>

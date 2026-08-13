@@ -76,15 +76,22 @@ $extraHead = <<<'HTML'
     }
 
     .about-page .about-section {
-        padding: 80px 0;
-        background: #f6f8fb;
+        padding: 72px 0;
         position: relative;
         z-index: 1;
         overflow: visible;
     }
 
+    .about-page .about-section--white {
+        background: #fff;
+    }
+
+    .about-page .about-section--muted {
+        background: #f6f8fb;
+    }
+
     .about-page .about-intro + .about-section {
-        padding-top: 100px;
+        padding-top: 72px;
     }
 
     .about-page .about-section > .container {
@@ -99,11 +106,28 @@ $extraHead = <<<'HTML'
         overflow: hidden;
     }
 
+    .about-page #presentation-projet {
+        position: relative;
+    }
+
+    .about-page #presentation-projet::after {
+        content: '';
+        position: absolute;
+        top: 40px;
+        right: -120px;
+        width: 360px;
+        height: 360px;
+        background: url('/public/images/armoiri.png') center / contain no-repeat;
+        opacity: 0.05;
+        pointer-events: none;
+        z-index: 0;
+    }
+
     .about-page .about-authority {
         display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-        gap: 52px;
-        align-items: start;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 48px;
+        align-items: center;
     }
 
     .about-page .about-authority > div {
@@ -116,16 +140,16 @@ $extraHead = <<<'HTML'
         max-width: 100%;
         z-index: 1;
         overflow: visible;
-        padding-bottom: 110px;
+        padding-bottom: 56px;
     }
 
     .about-page .about-photo img {
         width: 100%;
-        height: 520px;
+        height: 460px;
         object-fit: cover;
-        object-position: center;
-        border-radius: 26px;
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.14);
+        object-position: center top;
+        border-radius: 20px;
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.12);
         display: block;
     }
 
@@ -133,73 +157,92 @@ $extraHead = <<<'HTML'
         position: absolute;
         background: #0d8bdc;
         color: #fff;
-        width: 290px;
-        padding: 24px;
-        border-radius: 18px;
-        box-shadow: 0 18px 40px rgba(13, 139, 220, 0.35);
+        width: min(300px, 78%);
+        padding: 22px 22px 20px;
+        border-radius: 16px;
+        box-shadow: 0 18px 40px rgba(13, 139, 220, 0.32);
         z-index: 2;
-        animation: slideInUp 0.8s ease-out both;
-        animation-delay: 0.3s;
-        transition: all 0.3s ease;
-        left: 34%;
-        bottom: 0;
+        right: -18px;
+        bottom: 28px;
+        left: auto;
         margin-left: 0;
         font-style: italic;
     }
 
     .about-page .quote-badge:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 24px 50px rgba(13, 139, 220, 0.45);
+        transform: none;
+        box-shadow: 0 18px 40px rgba(13, 139, 220, 0.32);
     }
 
     .about-page .section-kicker {
         text-transform: uppercase;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.16em;
         font-size: 0.72rem;
         font-weight: 800;
         color: #0d8bdc;
-        margin-bottom: 12px;
-        animation: slideInLeft 0.6s ease-out both;
+        margin-bottom: 10px;
     }
 
     .about-page .section-title {
-        font-size: 2.4rem;
-        line-height: 1.05;
+        font-size: clamp(1.85rem, 3vw, 2.35rem);
+        line-height: 1.12;
         font-weight: 900;
         color: #101828;
-        margin-bottom: 22px;
-        animation: slideInRight 0.6s ease-out both;
-        animation-delay: 0.1s;
+        margin-bottom: 18px;
+    }
+
+    .about-page .section-title--center {
+        text-align: center;
     }
 
     .about-page .section-copy {
-        color: #4b5563;
-        line-height: 1.9;
-        margin-bottom: 18px;
-        text-align: justify;
+        color: #475467;
+        line-height: 1.75;
+        margin-bottom: 16px;
+        text-align: left;
         overflow-wrap: anywhere;
     }
 
     .about-page .signature-block {
-        margin-top: 26px;
+        margin-top: 22px;
         font-weight: 800;
-        color: #101828;
+        color: #0d8bdc;
+        font-size: 0.95rem;
     }
 
     .about-page .signature-block small {
         display: block;
-        color: #0d8bdc;
-        font-weight: 700;
+        color: #667085;
+        font-weight: 600;
+        margin-top: 4px;
+    }
+
+    .about-page .section-heading {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+
+    .about-page .section-heading .about-divider-tri {
+        margin-top: 16px;
+    }
+
+    .about-page .foundation-grid,
+    .about-page .structure-grid,
+    .about-page .team-grid {
+        margin-top: 8px;
     }
 
     .about-page .foundation-shell {
-        background: #fff;
-        border-radius: 28px;
-        padding: 48px;
-        box-shadow: 0 18px 55px rgba(0, 58, 118, 0.08);
+        background: #f6f8fb;
+        border-radius: 24px;
+        padding: 44px 40px;
         position: relative;
         z-index: 1;
-        animation: softLift 0.8s ease both;
+    }
+
+    .about-page .foundation-shell--white {
+        background: #fff;
+        box-shadow: 0 18px 55px rgba(0, 58, 118, 0.06);
     }
 
     .about-page .foundation-grid {
@@ -209,17 +252,17 @@ $extraHead = <<<'HTML'
     }
 
     .about-page .foundation-card {
-        border-radius: 24px;
-        border: 1px solid rgba(13, 139, 220, 0.08);
-        padding: 30px;
+        border-radius: 18px;
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        padding: 28px;
         background: #fff;
-        min-height: 240px;
-        transition: 0.2s ease-in-out;
+        min-height: 220px;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
     }
     
     .about-page .foundation-card:hover {
-        border-color: #0d8bdc;
-        box-shadow: 0 8px 25px rgba(13, 139, 220, 0.08);
+        border-color: rgba(13, 139, 220, 0.18);
+        box-shadow: 0 10px 28px rgba(13, 139, 220, 0.08);
     }
 
     .about-page .foundation-icon {
@@ -248,23 +291,37 @@ $extraHead = <<<'HTML'
 
     .about-page .structure-card {
         background: #fff;
-        border-radius: 22px;
-        padding: 24px;
-        min-height: 240px;
-        box-shadow: 0 10px 35px rgba(16, 24, 40, 0.08);
-        transition: 0.2s ease-in-out;
-        border: 1px solid transparent;
+        border-radius: 18px;
+        padding: 24px 24px 22px;
+        min-height: 250px;
+        box-shadow: none;
+        border: 1px solid #e4e7ec;
     }
     
     .about-page .structure-card:hover {
         border-color: #0d8bdc;
-        box-shadow: 0 12px 40px rgba(13, 139, 220, 0.1);
+        box-shadow: 0 8px 24px rgba(13, 139, 220, 0.08);
     }
 
     .about-page .structure-card h5 {
         font-weight: 800;
         color: #101828;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
+        font-size: 1rem;
+    }
+
+    .about-page .organigramme-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #0d8bdc;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .about-page .organigramme-link:hover {
+        color: #005b9f;
+        text-decoration: underline;
     }
 
     .about-page .structure-card ul {
@@ -282,35 +339,37 @@ $extraHead = <<<'HTML'
 
     .about-page .team-card {
         background: #fff;
-        border-radius: 22px;
+        border-radius: 18px;
         overflow: hidden;
-        box-shadow: 0 10px 35px rgba(16, 24, 40, 0.08);
+        box-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+        border: 1px solid rgba(15, 23, 42, 0.06);
         text-align: center;
     }
 
     .about-page .team-photo {
-        height: 180px;
-        background: linear-gradient(180deg, #d9d9d9, #ececec);
+        height: 210px;
+        background: linear-gradient(180deg, #eceff3, #f8fafc);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #111827;
-        font-size: 4rem;
+        color: #98a2b3;
+        font-size: 4.5rem;
     }
 
     .about-page .team-body {
-        padding: 18px 18px 24px;
+        padding: 20px 18px 24px;
     }
 
     .about-page .team-name {
         font-weight: 800;
         margin-bottom: 6px;
+        color: #101828;
     }
 
     .about-page .team-role {
-        color: #0d8bdc;
-        font-size: 0.9rem;
-        font-weight: 700;
+        color: #667085;
+        font-size: 0.92rem;
+        font-weight: 600;
     }
 
     /* Styles pour la section Chaîne de la recette */
@@ -429,17 +488,14 @@ $extraHead = <<<'HTML'
         .about-page .quote-badge {
             width: 100%;
             position: relative;
+            right: auto;
             left: 0;
             bottom: 0;
             margin-top: -36px;
         }
 
-        .about-page .about-intro {
-            padding: 44px 0 52px;
-        }
-
         .about-page .about-intro + .about-section {
-            padding-top: 100px;
+            padding-top: 56px;
         }
 
         .about-page .about-intro h1 {
@@ -483,12 +539,11 @@ ob_start();
         <br>
         <p>Découvrez l'historique, le contexte et les objectifs du projet Gouvernance Financière, ainsi que l'organisation de son équipe de pilotage.</p>
           <br>
-        <div class="about-divider-tri"></div>        
-       
+        <div class="about-divider-tri"></div>
     </div>
 </section>
 
-<section id="presentation-projet" class="about-section">
+<section id="presentation-projet" class="about-section about-section--white">
     <div class="container">
         <div class="about-authority">
             <div class="about-photo">
@@ -517,15 +572,13 @@ ob_start();
     </div>
 </section>
 
-<section id="fondements" class="about-section pt-0">
+<section id="fondements" class="about-section about-section--muted">
     <div class="container">
         <div class="foundation-shell">
-            <div class="text-center mb-5">
-                <div class="section-kicker"></div>
-                <h2 class="section-title mb-0">NOS FONDEMENTS</h2>
+            <div class="section-heading">
+                <h2 class="section-title section-title--center mb-0">NOS FONDEMENTS</h2>
+                <div class="about-divider-tri"></div>
             </div>
-            <div class="about-divider-tri"></div>
-            <div style="height:50px;"></div>
             <div class="foundation-grid">
                 <div class="foundation-card">
                     <div class="foundation-icon"><i class="bi bi-file-earmark-text"></i></div>
@@ -542,16 +595,100 @@ ob_start();
     </div>
 </section>
 
-<!-- SECTION: CHAÎNE DE LA RECETTE -->
-<section id="chainerecette" class="about-section pt-0">
+<section id="structure-organisationnelle" class="about-section about-section--white">
     <div class="container">
-        <div class="foundation-shell">
-            <div class="text-center mb-5">
-                <div class="section-kicker"></div>
-                <h2 class="section-title mb-0">LA CHAÎNE DE LA RECETTE</h2>
-            </div>
+        <div class="section-heading">
+            <h2 class="section-title section-title--center mb-0">STRUCTURE ORGANISATIONNELLE</h2>
             <div class="about-divider-tri"></div>
-            <div style="height:50px;"></div>
+        </div>
+        <div class="structure-grid">
+            <div class="structure-card">
+                <h5><i class="bi bi-diagram-3 me-2 text-primary"></i>Cabinet du Ministre</h5>
+                <ul>
+                    <li>Cabinet Politique</li>
+                    <li>Secrétariat Particulier</li>
+                    <li>Conseillers Techniques</li>
+                    <li>Cellule de Communication</li>
+                </ul>
+            </div>
+            <div class="structure-card">
+                <h5><i class="bi bi-diagram-3 me-2 text-primary"></i>Secrétariat Général</h5>
+                <ul>
+                    <li>Directions de l'administration</li>
+                    <li>Services généraux</li>
+                    <li>Études et Planification</li>
+                    <li>Informatique</li>
+                </ul>
+            </div>
+            <div class="structure-card">
+                <h5><i class="bi bi-diagram-3 me-2 text-primary"></i>Régies Financières</h5>
+                <ul>
+                    <li>DGI (Impôts)</li>
+                    <li>DGDA (Douanes)</li>
+                    <li>DGRAD (Recettes domaniales)</li>
+                    <li>CENAREF</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-4 pt-2">
+            <a href="#" class="organigramme-link">
+                <i class="bi bi-file-earmark-pdf"></i>
+                Télécharger l'organigramme complet (Format PDF Haute Résolution)
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="equipe-projet" class="about-section about-section--muted">
+    <div class="container">
+        <div class="section-heading">
+            <h2 class="section-title section-title--center mb-0">ÉQUIPE PROJET</h2>
+            <div class="about-divider-tri"></div>
+        </div>
+        <p style="text-align: center; color: #475467; margin-bottom: 30px;">La chaîne de la recette est mise en place par une équipe d'experts composée de :</p>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-photo"><i class="bi bi-person-circle"></i></div>
+                <div class="team-body">
+                    <div class="team-name">Didier BAZANGIKA</div>
+                    <div class="team-role">Coordonnateur-Chef de Projet</div>
+                </div>
+            </div>
+            <div class="team-card">
+                <div class="team-photo"><i class="bi bi-person-circle"></i></div>
+                <div class="team-body">
+                    <div class="team-name">Papin d'Eve MPENGELE</div>
+                    <div class="team-role">Coordonnateur Adjoint</div>
+                </div>
+            </div>
+            <div class="team-card">
+                <div class="team-photo"><i class="bi bi-person-circle"></i></div>
+                <div class="team-body">
+                    <div class="team-name">Emmanuelle MULANGA</div>
+                    <div class="team-role">Développeuse</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; background: #f8fafc; border-radius: 18px; padding: 24px; border: 1px solid #e2e8f0;">
+            <p style="color: #2d3748; margin-bottom: 0; text-align: center; line-height: 1.8;">
+                <strong>Ces experts sont appuyés par :</strong> un expert en passation des marchés, un expert-comptable, cinq ingénieurs spécialistes en développement et réseaux, une assistante administrative, un archiviste, une réceptionniste, trois chauffeurs et une technicienne de surface.
+            </p>
+            <p style="color: #2d3748; margin-top: 12px; text-align: center; line-height: 1.8;">
+                <strong>Un centre d'appel</strong> de six (6) opérateurs permet d'assurer un support de premier niveau aux utilisateurs et bénéficiaires des différents outils et infrastructures mis en œuvre par le projet.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION: CHAÎNE DE LA RECETTE -->
+<section id="chainerecette" class="about-section about-section--white">
+    <div class="container">
+        <div class="foundation-shell foundation-shell--white">
+            <div class="section-heading">
+                <h2 class="section-title section-title--center mb-0">LA CHAÎNE DE LA RECETTE</h2>
+                <div class="about-divider-tri"></div>
+            </div>
 
             <!-- Introduction -->
             <div class="chain-intro">
@@ -632,15 +769,13 @@ ob_start();
     </div>
 </section>
 
-<section id="financement" class="about-section pt-0">
+<section id="financement" class="about-section about-section--muted">
     <div class="container">
         <div class="foundation-shell">
-            <div class="text-center mb-5">
-                <div class="section-kicker"></div>
-                <h2 class="section-title mb-0">FINANCEMENTS</h2>
+            <div class="section-heading">
+                <h2 class="section-title section-title--center mb-0">FINANCEMENTS</h2>
+                <div class="about-divider-tri"></div>
             </div>
-            <div class="about-divider-tri"></div>
-            <div style="height:50px;"></div>
             <div class="foundation-grid">
                 <div class="foundation-card">
                     <div class="foundation-icon"><i class="bi bi-currency-dollar"></i></div>
@@ -652,56 +787,6 @@ ob_start();
                     <h3 class="h4 fw-bold">Sources de financement</h3>
                     <p class="section-copy mb-0">Les financements comprennent des appuis bilatéraux, des aides techniques, ainsi que des contributions internes destinées à l'informatique, aux infrastructures et à la formation des acteurs du projet.</p>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- SECTION: NOTRE ÉQUIPE -->
-<section id="equipe-projet" class="about-section pt-0">
-    <div class="container">
-        <div class="foundation-shell">
-            <div class="text-center mb-5">
-                <div class="section-kicker"></div>
-                <h2 class="section-title mb-0">ÉQUIPE PROJET</h2>
-            </div>
-            <div class="about-divider-tri"></div>
-            <div style="height:50px;"></div>
-            
-            <p style="text-align: center; color: #475467; margin-bottom: 30px;">La chaîne de la recette est mise en place par une équipe d'experts composée de :</p>
-            
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-photo"><i class="bi bi-person-circle"></i></div>
-                    <div class="team-body">
-                        <div class="team-name">Didier BAZANGIKA</div>
-                        <div class="team-role">Coordonnateur-Chef de Projet</div>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <div class="team-photo"><i class="bi bi-person-circle"></i></div>
-                    <div class="team-body">
-                        <div class="team-name">Papin d'Eve MPENGELE</div>
-                        <div class="team-role">Coordonnateur Adjoint</div>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <div class="team-photo"><i class="bi bi-person-circle"></i></div>
-                    <div class="team-body">
-                        <div class="team-name">Emmanuelle MULANGA</div>
-                        <div class="team-role">Développeuse</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Équipe d'appui -->
-            <div style="margin-top: 30px; background: #f8fafc; border-radius: 18px; padding: 24px; border: 1px solid #e2e8f0;">
-                <p style="color: #2d3748; margin-bottom: 0; text-align: center; line-height: 1.8;">
-                    <strong>Ces experts sont appuyés par :</strong> un expert en passation des marchés, un expert-comptable, cinq ingénieurs spécialistes en développement et réseaux, une assistante administrative, un archiviste, une réceptionniste, trois chauffeurs et une technicienne de surface.
-                </p>
-                <p style="color: #2d3748; margin-top: 12px; text-align: center; line-height: 1.8;">
-                    <strong>Un centre d'appel</strong> de six (6) opérateurs permet d'assurer un support de premier niveau aux utilisateurs et bénéficiaires des différents outils et infrastructures mis en œuvre par le projet.
-                </p>
             </div>
         </div>
     </div>
