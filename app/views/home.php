@@ -198,8 +198,18 @@ a.youtube-link i {
     .hero-content-wrapper { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(16px, 4vw, 48px); width: 100%; margin: 0; z-index: 4; }
     .hero-button-side { flex: 0 0 auto; }
     .hero-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border-radius: 12px; padding: 12px 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; border: none; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); letter-spacing: 0.3px; opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
-    .hero-btn-custom:hover { background: #1565c0; box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); transform: none !important; }
-    .hero-btn-custom:active { transform: none !important; animation: none !important; }
+    .hero-btn-custom:hover,
+    .hero-btn-custom:focus,
+    .hero-btn-custom:focus-visible,
+    .hero-btn-custom:active,
+    .hero-btn-custom:visited {
+        background: var(--rdc-blue) !important;
+        color: #fff !important;
+        box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2) !important;
+        transform: none !important;
+        animation: none !important;
+        text-decoration: none !important;
+    }
     .hero-controls-bottom { display: flex; justify-content: center; gap: 10px; margin-top: 0; width: auto; z-index: 3; position: relative; padding-right: 0; }
     .hero-controls-bottom button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #fff; background: rgba(255,255,255,0.25); backdrop-filter: blur(6px); color: #fff; transition: all 0.3s ease; cursor: pointer; font-size: 1.6rem; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.45); }
     .hero-controls-bottom button:hover { background: rgba(255,255,255,0.45); transform: scale(1.05); border-color: #ffd400; color: #ffd400; }
