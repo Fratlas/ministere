@@ -148,6 +148,13 @@ $extraHead = <<<'HTML'
         .detail-modern-update { font-size: 1.35rem; }
         .detail-modern-floating-icon { width: 96px; height: 96px; }
         .detail-modern-floating-icon i { font-size: 2.8rem; }
+        .detail-modern-cover { min-height: 260px; }
+        .detail-modern-hero { padding: 48px 0 52px; }
+    }
+    @media (max-width: 575.98px) {
+        .detail-modern-cover { min-height: 220px; }
+        .detail-modern-cover h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
+        .funding-partner { flex-wrap: wrap; gap: 20px; justify-content: center; }
     }
     @media (max-width: 991.98px) {
         .funding-row { grid-template-columns: 1fr; row-gap: 20px; }

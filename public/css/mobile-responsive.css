@@ -1,0 +1,349 @@
+/**
+ * Corrections responsive mobile / tablette uniquement.
+ * Toutes les règles sont dans des @media — l'affichage desktop (≥992px) reste inchangé.
+ */
+
+@media (max-width: 991.98px) {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    main {
+        overflow-x: clip;
+    }
+
+    main img,
+    main video,
+    main iframe {
+        max-width: 100%;
+    }
+
+    .watermark-leopard {
+        width: 55%;
+        right: -12%;
+        opacity: 0.025;
+    }
+
+    /* À propos */
+    .about-page #presentation-projet::after {
+        display: none;
+    }
+
+    .about-page .about-section {
+        padding: 56px 0;
+    }
+
+    .about-page .about-photo img {
+        height: min(460px, 55vw);
+    }
+
+    .about-page .section-title {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    .about-page .organigramme-link {
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Réalisations DGI / DGDA / DGRAD */
+    .realisations-page .real-hero,
+    .activities-page .real-hero {
+        padding: 48px 0 52px;
+    }
+
+    .realisations-page .real-hero p,
+    .activities-page .real-hero p {
+        font-size: 0.98rem;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .realisations-page .section-title {
+        margin: 40px 0 28px;
+        padding: 0 8px;
+    }
+
+    .dgi-grid .card-header-title,
+    .real-grid .card-header-title {
+        min-height: 72px;
+        font-size: 0.92rem;
+        padding: 12px 10px;
+    }
+
+    .dgi-grid .card-img-container,
+    .real-grid .card-img-container {
+        height: 210px;
+    }
+
+    /* Pages détail */
+    .detail-modern-hero {
+        padding: 48px 0 52px;
+    }
+
+    .detail-modern-cover {
+        min-height: 300px;
+    }
+
+    .detail-modern-cover h2 {
+        max-width: 100%;
+    }
+
+    /* Contact */
+    .contact-page .contact-card,
+    .contact-page .contact-form-wrap,
+    .contact-page .contact-form label,
+    .contact-page .contact-info,
+    .contact-page .contact-info-subtitle {
+        text-align: left;
+    }
+
+    .contact-page .contact-title {
+        text-align: center;
+    }
+
+    /* Documents */
+    .documents-page .documents-content {
+        padding: 56px 0 64px;
+    }
+
+    .documents-page .documents-sidebar {
+        margin-bottom: 20px;
+    }
+
+    /* Activités */
+    body.projects-page .hero-section {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .activities-page .filter-box {
+        padding: 22px 18px;
+    }
+
+    .activities-page .content-wrapper {
+        padding-top: 36px;
+        padding-bottom: 56px;
+    }
+
+    /* Accueil */
+    .governance-text {
+        text-align: center;
+    }
+
+    .governance-text p {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .governance-card {
+        min-height: 220px;
+    }
+
+    .articles-section .row > [class*="col-"] {
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .detail-modern-cover {
+        min-height: 260px;
+    }
+
+    .detail-modern-hero h1 {
+        font-size: clamp(1.65rem, 6vw, 2.2rem);
+        padding: 0 12px;
+    }
+
+    .funding-section {
+        padding: 40px 0;
+    }
+
+    .funding-partner {
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .funding-logos {
+        gap: 28px;
+        justify-content: center;
+    }
+
+    .funding-label {
+        white-space: normal;
+        text-align: center;
+    }
+
+    .documents-page .document-card {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .documents-page .document-aside {
+        width: 100%;
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        border-top: 1px solid #e7edf5;
+        padding-top: 10px;
+        margin-top: 4px;
+    }
+
+    .documents-page .documents-search {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .documents-page .documents-search input {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    .documents-page .documents-search button {
+        width: 100%;
+    }
+
+    .documents-page .documents-pagination .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .documents-page .documents-toolbar {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .documents-page .toolbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+        margin-bottom: 4px;
+    }
+
+    .activities-page .activities-grid .card-project .card-body {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .realisations-page .real-hero h1,
+    .activities-page .real-hero h1 {
+        font-size: 1.85rem;
+    }
+
+    .dgi-grid .card-overlay-icon,
+    .real-grid .card-overlay-icon {
+        width: 56px;
+        height: 56px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    /* Hero accueil — empilement sur très petit écran */
+    .hero-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .hero-button-side,
+    .hero-controls-bottom {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .hero-title-wrapper {
+        text-align: center;
+        align-self: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .hero-title,
+    .hero-title-wrapper .hero-title {
+        text-align: center;
+    }
+
+    .hero-underline-custom {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-page .foundation-shell {
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+
+    .about-page .about-intro p {
+        font-size: 0.92rem;
+        padding: 0 4px;
+    }
+
+    .contact-page .contact-map {
+        height: 280px;
+    }
+
+    body.projects-page .hero-section h1 {
+        font-size: clamp(1.85rem, 9vw, 2.4rem);
+    }
+
+    body.projects-page .hero-section,
+    body.projects-page .content-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .documents-page .documents-hero {
+        padding: 56px 0 60px;
+    }
+
+    .documents-page .documents-hero h1 {
+        font-size: 1.85rem;
+    }
+
+    .documents-page .year-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .documents-page .documents-pagination .page-link {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 0.85rem;
+    }
+
+    .detail-modern-cover {
+        min-height: 220px;
+    }
+
+    .detail-modern-floating-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .detail-modern-floating-icon i {
+        font-size: 2.4rem;
+    }
+
+    .detail-modern-update {
+        font-size: 1.25rem;
+        word-break: break-word;
+    }
+
+    .activities-page .filter-box {
+        padding: 18px 14px;
+    }
+
+    .annex-toggle {
+        padding: 16px;
+    }
+}

@@ -29,6 +29,7 @@ $isContact = str_starts_with($currentPath, '/contact');
     <link rel="stylesheet" href="/public/css/style.css">
     <?php echo $extraHead ?? ''; ?>
     <link rel="stylesheet" href="/public/css/site-layout.css?v=2">
+    <link rel="stylesheet" href="/public/css/mobile-responsive.css?v=1">
     <style>
         :root {
             --brand-blue: #0a85df;
@@ -702,7 +703,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/activites" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activités</a>
+                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/activites" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nos activités</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/activites">Toutes les activités</a></li>
                             <li><a class="dropdown-item" href="/activites/filter?status=En+cours">En cours</a></li>

@@ -802,13 +802,67 @@
                 font-size: 0.98rem;
             }
 
+            .documents-content {
+                padding: 56px 0 64px;
+            }
+
             .document-card {
+                flex-wrap: wrap;
                 align-items: flex-start;
+                gap: 12px;
+                padding: 16px;
             }
 
             .document-aside {
-                width: auto;
-                flex-basis: auto;
+                width: 100%;
+                flex: 0 0 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+                border-top: 1px solid var(--border);
+                padding-top: 10px;
+                margin-top: 4px;
+            }
+
+            .documents-search {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .documents-search input {
+                flex: 1 1 100%;
+                min-width: 0;
+            }
+
+            .documents-search button {
+                width: 100%;
+            }
+
+            .documents-pagination .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .documents-hero {
+                padding: 56px 0 60px;
+            }
+
+            .documents-hero h1 {
+                font-size: 1.85rem;
+            }
+
+            .year-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .documents-pagination .page-link {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                font-size: 0.85rem;
             }
         }
     </style>

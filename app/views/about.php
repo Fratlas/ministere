@@ -523,6 +523,14 @@ $extraHead = <<<'HTML'
         .about-page .diagnostic-card {
             padding: 18px;
         }
+
+        .about-page .about-section {
+            padding: 48px 0;
+        }
+
+        .about-page .about-photo img {
+            height: min(380px, 62vw);
+        }
     }
 </style>
 HTML;
