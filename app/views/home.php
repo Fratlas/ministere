@@ -220,8 +220,8 @@ a.youtube-link i {
     .article-link { color: #0a7fe4; font-weight: 700; text-decoration: none; transition: color 0.3s ease; }
     .article-link:hover { color: #e31b23; }
     .articles-footer { text-align: center; margin: 40px auto 0; padding: 0 12px; }
-    .btn-articles { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border: none; border-radius: 6px; padding: 12px 30px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.3px; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); }
-    .btn-articles:hover { background: #1565c0; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); }
+    .btn-articles { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-red); color: #fff; border: none; border-radius: 6px; padding: 12px 30px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.3px; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 8px 18px rgba(227, 27, 35, 0.24); }
+    .btn-articles:hover { background: #c91820; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(227, 27, 35, 0.32); }
 
     /* ========== STATS & FUNDING (grille alignée maquette) ========== */
     .home-metrics-panel {
