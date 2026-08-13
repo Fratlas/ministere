@@ -49,6 +49,15 @@ function home_link($item, $type) {
     return 'detail.php?type=' . rawurlencode($type);
 }
 
+function home_timeline_heading(array $item): string {
+    $badge = trim((string) ($item['badge_text'] ?? ''));
+    $title = trim((string) ($item['title'] ?? ''));
+    if ($badge !== '' && $title !== '') {
+        return $badge . ' | ' . $title;
+    }
+    return $badge !== '' ? $badge : $title;
+}
+
 function home_fetch_items($model, $type, array $fallback) {
     if ($model) {
         try {
@@ -68,7 +77,7 @@ $fallbackContent = [
     ],
     'realisation' => [
         ['id' => 201, 'content_type' => 'realisation', 'section_key' => 'Phase 1', 'badge_text' => '2015 – 2018', 'title' => 'Élaboration diagnostique et montage', 'description' => 'Réalisation du diagnostic de l\'existant, montage des projets et déploiement des réseaux d\'interconnexion entre les régies financières.', 'image_url' => '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png', 'link_url' => '#', 'display_order' => 1],
-        ['id' => 202, 'content_type' => 'realisation', 'section_key' => 'Phase 2', 'badge_text' => '2018 – 2024', 'title' => 'Plateformes ISYS-REGIES, LOGIRAD, ERP', 'description' => 'Lancement et déploiement des plateformes ISYS-REGIES, LOGIRAD, du Progiciel de Gestion Intégrée (ERP) et de l\'Entrepôt des données financières de l\'État.', 'image_url' => '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg', 'link_url' => '#', 'display_order' => 2],
+        ['id' => 202, 'content_type' => 'realisation', 'section_key' => 'Phase 2', 'badge_text' => '2018 – 2024', 'title' => 'Plateformes ISYS-REGIES, LOGIRAD, ERP', 'description' => 'Lancement et déploiement des plateformes ISYS-REGIES, LOGIRAD, du Progiciel de Gestion Intégrée (ERP) à la DGI et de l\'Entrepôt des données financières de l\'État.', 'image_url' => '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg', 'link_url' => '#', 'display_order' => 2],
         ['id' => 203, 'content_type' => 'realisation', 'section_key' => 'Phase 3', 'badge_text' => '2018 – 2024', 'title' => 'Plateforme citoyenne', 'description' => 'Mise en œuvre et déploiement de la plateforme citoyenne de téléservices sur l\'étendue de la République pour améliorer l\'accès aux services publics.', 'image_url' => '/public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg', 'link_url' => '#', 'display_order' => 3],
     ],
 ];
@@ -210,7 +219,7 @@ a.youtube-link i {
     .card-body-blue { background-color: var(--rdc-blue); color: white; padding: 18px 25px; }
     .card-body-yellow { background-color: var(--rdc-yellow); color: #333; padding: 18px 25px; }
     .phase-desc { font-size: 0.88rem; line-height: 1.4; margin-bottom: 10px; font-weight: 500; }
-    .phase-years { font-weight: 800; font-size: 1.4rem; margin: 0; }
+    .phase-years { font-weight: 800; font-size: 1.05rem; line-height: 1.3; margin: 0; }
 
     .watermark-seal { text-align: end; opacity: 0.15; margin-bottom: 20px; padding-right: 20px; }
     .watermark-seal img { width: 10px; filter: grayscale(100%); }
@@ -658,8 +667,8 @@ ob_start();
                             <div class="card-custom">
                                 <img src="<?php echo home_h(home_image($item, '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png')); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>">
                                 <div class="<?php echo $bodyClass; ?>">
-                                    <p class="phase-desc"><?php echo home_h(home_excerpt($item['description'] ?? '', 110)); ?></p>
-                                    <h3 class="phase-years"><?php echo home_h($item['badge_text'] ?? ''); ?></h3>
+                                    <p class="phase-desc"><?php echo home_h($item['description'] ?? ''); ?></p>
+                                    <h3 class="phase-years"><?php echo home_h(home_timeline_heading($item)); ?></h3>
                                 </div>
                             </div>
                         </div>
@@ -670,8 +679,8 @@ ob_start();
                             <div class="card-custom">
                                 <img src="<?php echo home_h(home_image($item, '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png')); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>">
                                 <div class="<?php echo $bodyClass; ?>">
-                                    <p class="phase-desc"><?php echo home_h(home_excerpt($item['description'] ?? '', 110)); ?></p>
-                                    <h3 class="phase-years"><?php echo home_h($item['badge_text'] ?? ''); ?></h3>
+                                    <p class="phase-desc"><?php echo home_h($item['description'] ?? ''); ?></p>
+                                    <h3 class="phase-years"><?php echo home_h(home_timeline_heading($item)); ?></h3>
                                 </div>
                             </div>
                         </div>

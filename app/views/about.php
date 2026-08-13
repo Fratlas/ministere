@@ -534,7 +534,7 @@ ob_start();
                 </div>
                 <div id="missions-objectifs" class="foundation-card">
                     <div class="foundation-icon foundation-icon-amber"><i class="bi bi-link-45deg"></i></div>
-                    <h3 class="h4 fw-bold">MISSIONS ET OBJECTIFS</h3>
+                    <h3 class="h4 fw-bold">NOTRE VISION</h3>
                     <p class="section-copy mb-0">Devenir une administration financière moderne, performante et totalement transparente, au service d'une croissance inclusive et de l'émergence irréversible de la République Démocratique du Congo.</p>
                 </div>
             </div>
