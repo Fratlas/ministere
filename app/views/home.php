@@ -403,22 +403,21 @@ a.youtube-link i {
 
     .funding-details {
         width: 100%;
-        margin: clamp(28px, 4vw, 40px) 0 0;
+        max-width: 760px;
+        margin: clamp(28px, 4vw, 40px) auto 0;
         padding-top: 20px;
         border-top: 1px solid rgba(0, 0, 0, 0.08);
-        margin-left: calc(var(--metrics-title-col) + var(--metrics-gap) + 1px + var(--metrics-gap));
-        padding-right: calc(var(--metrics-gap) + 1px);
-        text-align: right;
+        text-align: center;
     }
 
     .funding-details-content {
-        text-align: left;
+        text-align: center;
     }
 
     .funding-toggle {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: center;
         gap: 10px;
         width: 100%;
         background: none;
@@ -441,7 +440,7 @@ a.youtube-link i {
         transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
         opacity: 0;
         margin-top: 0;
-        text-align: left;
+        text-align: center;
         color: #333;
     }
 
@@ -451,8 +450,13 @@ a.youtube-link i {
         margin-top: 16px;
     }
 
-    .funding-details-content p { margin-bottom: 12px; line-height: 1.6; }
-    .funding-details-content ul { margin: 0 0 6px 18px; padding: 0; }
+    .funding-details-content p { margin: 0 auto 12px; line-height: 1.6; max-width: 680px; }
+    .funding-details-content ul {
+        margin: 0 auto 6px;
+        padding: 0 0 0 1.1rem;
+        display: inline-block;
+        text-align: left;
+    }
     .funding-details-content ul li { margin-bottom: 6px; line-height: 1.5; }
 
     .home-metrics-panel::before,
@@ -515,16 +519,6 @@ a.youtube-link i {
         }
 
         .home-funding-content {
-            justify-content: center;
-        }
-
-        .funding-details {
-            margin-left: 0;
-            padding-right: 0;
-            text-align: center;
-        }
-
-        .funding-toggle {
             justify-content: center;
         }
 
@@ -770,7 +764,7 @@ ob_start();
                     <i class="bi bi-chevron-down"></i>
                 </button>
                 <div id="funding-details-content" class="funding-details-content">
-                    <p>L'activité « Gouvernance Financière » est financée depuis 2015 dans le cadre du Contrat de Désendettement et de Développement (C2D), à travers l'Agence Française de Développement (AFD) et le Ministère des Finances de la RDC. Depuis juillet 2021, elle bénéficie d'un appui additionnel de l'Union Européenne.</p>
+                    <p>Le projet « Gouvernance Financière » est financée depuis 2015 dans le cadre du Contrat de Désendettement et de Développement (C2D), à travers l'Agence Française de Développement (AFD) et le Ministère des Finances de la RDC. Depuis juillet 2021, elle bénéficie d'un appui additionnel de l'Union Européenne.</p>
                     <ul>
                         <li>République Française / AFD (Agence Française de Développement)</li>
                         <li>Union Européenne</li>
