@@ -595,54 +595,10 @@ ob_start();
                 </div>
                 <div id="missions-objectifs" class="foundation-card">
                     <div class="foundation-icon foundation-icon-amber"><i class="bi bi-link-45deg"></i></div>
-                    <h3 class="h4 fw-bold">NOTRE VISION</h3>
+                    <h3 class="h4 fw-bold">MISSIONS ET OBJECTIFS</h3>
                     <p class="section-copy mb-0">Devenir une administration financière moderne, performante et totalement transparente, au service d'une croissance inclusive et de l'émergence irréversible de la République Démocratique du Congo.</p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section id="structure-organisationnelle" class="about-section about-section--white">
-    <div class="container">
-        <div class="section-heading">
-            <h2 class="section-title section-title--center mb-0">STRUCTURE ORGANISATIONNELLE</h2>
-            <div class="about-divider-tri"></div>
-        </div>
-        <div class="structure-grid">
-            <div class="structure-card">
-                <h5><i class="bi bi-diagram-3 me-2 text-primary"></i>Cabinet du Ministre</h5>
-                <ul>
-                    <li>Cabinet Politique</li>
-                    <li>Secrétariat Particulier</li>
-                    <li>Conseillers Techniques</li>
-                    <li>Cellule de Communication</li>
-                </ul>
-            </div>
-            <div class="structure-card">
-                <h5><i class="bi bi-diagram-3 me-2 text-primary"></i>Secrétariat Général</h5>
-                <ul>
-                    <li>Directions de l'administration</li>
-                    <li>Services généraux</li>
-                    <li>Études et Planification</li>
-                    <li>Informatique</li>
-                </ul>
-            </div>
-            <div class="structure-card">
-                <h5><i class="bi bi-diagram-3 me-2 text-primary"></i>Régies Financières</h5>
-                <ul>
-                    <li>DGI (Impôts)</li>
-                    <li>DGDA (Douanes)</li>
-                    <li>DGRAD (Recettes domaniales)</li>
-                    <li>CENAREF</li>
-                </ul>
-            </div>
-        </div>
-        <div class="text-center mt-4 pt-2">
-            <a href="#" class="organigramme-link">
-                <i class="bi bi-file-earmark-pdf"></i>
-                Télécharger l'organigramme complet (Format PDF Haute Résolution)
-            </a>
         </div>
     </div>
 </section>
