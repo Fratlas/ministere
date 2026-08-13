@@ -164,6 +164,15 @@ a.youtube-link i {
     .timeline-section { padding: 56px 0 76px; position: relative; background: #fcfcfc; overflow: hidden; margin: 0; border-radius: 0; z-index: 1; }
     .timeline-section .section-header { max-width: 640px; margin: 0 auto 20px; text-align: center; padding: 0; }
     .timeline-section .section-header h2 { font-size: clamp(2rem, 3.2vw, 2.5rem); line-height: 1.2; font-weight: 800; color: #444; letter-spacing: -0.01em; margin-bottom: 0; }
+    .timeline-section .timeline-intro {
+        max-width: 820px;
+        margin: 24px auto 48px;
+        text-align: center;
+        color: #5a6472;
+        font-size: 1rem;
+        line-height: 1.65;
+        font-weight: 400;
+    }
 
     .tri-color-bar { height: 5px; width: 100%; max-width: 600px; margin: 20px auto; display: flex; border-radius: 2px; overflow: hidden; }
     .bar-blue { background-color: var(--rdc-blue); flex: 1; }
@@ -628,6 +637,9 @@ ob_start();
                 <div class="bar-yellow"></div>
                 <div class="bar-red"></div>
             </div>
+            <p class="timeline-intro">
+                Le projet Gouvernance Financière, piloté par le Ministère des Finances, vise à réduire les manipulations humaines, lutter contre la fraude fiscale et maximiser les recettes domestiques grâce à des outils informatiques interconnectés.
+            </p>
         </header>
 
         <div class="timeline-container">
