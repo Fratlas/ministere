@@ -51,8 +51,20 @@ switch ($controller) {
         $controllerObj = new PageController();
         $controllerObj->index();
         break;
-    case 'activites':
     case 'projects':
+        $redirectPath = '/activites';
+        if ($action === 'filter') {
+            $redirectPath .= '/filter';
+        } elseif (is_numeric($action)) {
+            $redirectPath .= '/' . $action;
+        }
+        $queryString = $_SERVER['QUERY_STRING'] ?? '';
+        if ($queryString !== '') {
+            $redirectPath .= '?' . $queryString;
+        }
+        header('Location: ' . $redirectPath, true, 301);
+        exit;
+    case 'activites':
         require_once __DIR__ . '/app/controllers/ProjectController.php';
         $controllerObj = new ProjectController();
         if ($action === 'filter') {

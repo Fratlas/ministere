@@ -1,5 +1,5 @@
 <?php
-header('Location: /projects', true, 301);
+header('Location: /activites', true, 301);
 exit;
 
 require_once __DIR__ . '/config/database.php';

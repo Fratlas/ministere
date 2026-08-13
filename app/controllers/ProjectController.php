@@ -80,7 +80,7 @@ class ProjectController {
             return $value !== null && $value !== '';
         });
 
-        $paginationBase = $isFilter ? '/projects/filter' : '/projects';
+        $paginationBase = $isFilter ? '/activites/filter' : '/activites';
         $paginationUrl = function (int $targetPage) use ($paginationBase, $queryParams): string {
             $params = $queryParams;
             if ($targetPage > 1) {

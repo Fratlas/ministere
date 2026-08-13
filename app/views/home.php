@@ -723,7 +723,7 @@ ob_start();
             <?php endforeach; ?>
         </div>
         <div class="articles-footer" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-            <a href="/projects" class="btn-articles">Voir toutes les activités</a>
+            <a href="/activites" class="btn-articles">Voir toutes les activités</a>
         </div>
     </div>
 </section>

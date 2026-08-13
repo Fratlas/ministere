@@ -175,7 +175,7 @@ ob_start();
 <div class="content-wrapper">
     <div class="container">
         <div class="filter-box">
-            <form method="GET" action="/projects/filter">
+            <form method="GET" action="/activites/filter">
                 <div class="row g-3 align-items-end">
                     <div class="col-lg-7">
                         <div class="filter-label">Rechercher une activité</div>
@@ -235,7 +235,7 @@ ob_start();
                         <p class="project-desc"><?php echo htmlspecialchars(project_excerpt_view($project['description']), ENT_QUOTES, 'UTF-8'); ?></p>
                         <div class="card-footer-custom">
                             <span><?php echo htmlspecialchars($project['update_date'], ENT_QUOTES, 'UTF-8'); ?></span>
-                            <a href="/projects/<?php echo (int) $project['id']; ?>" class="btn-details-link">Voir détails →</a>
+                            <a href="/activites/<?php echo (int) $project['id']; ?>" class="btn-details-link">Voir détails →</a>
                         </div>
                     </div>
                 </div>

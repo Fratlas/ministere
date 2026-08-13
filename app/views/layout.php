@@ -701,12 +701,12 @@ $isContact = str_starts_with($currentPath, '/contact');
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activités</a>
+                        <a class="nav-link dropdown-toggle<?php echo $isProjects ? ' active' : ''; ?>" href="/activites" role="button" data-bs-toggle="dropdown" aria-expanded="false">Activités</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/projects">Toutes les activités</a></li>
-                            <li><a class="dropdown-item" href="/projects?status=en_cours">En cours</a></li>
-                            <li><a class="dropdown-item" href="/projects?status=termine">Terminées</a></li>
-                            <li><a class="dropdown-item" href="/projects?status=planifie">Planifiées</a></li>
+                            <li><a class="dropdown-item" href="/activites">Toutes les activités</a></li>
+                            <li><a class="dropdown-item" href="/activites/filter?status=En+cours">En cours</a></li>
+                            <li><a class="dropdown-item" href="/activites/filter?status=Terminé">Terminées</a></li>
+                            <li><a class="dropdown-item" href="/activites/filter?status=Planifié">Planifiées</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -758,7 +758,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <h5>Accès Rapide</h5>
                     <a href="/" class="footer-link"><i class="bi bi-chevron-right"></i>Accueil</a>
                     <a href="/about" class="footer-link"><i class="bi bi-chevron-right"></i>À propos</a>
-                    <a href="/projects" class="footer-link"><i class="bi bi-chevron-right"></i>Activités</a>
+                    <a href="/activites" class="footer-link"><i class="bi bi-chevron-right"></i>Activités</a>
                     <a href="/realisations" class="footer-link"><i class="bi bi-chevron-right"></i>Réalisations</a>
                 </div>
 
