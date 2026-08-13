@@ -36,6 +36,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             --text-ink: #152238;
             --text-muted: #647189;
             --surface: #ffffff;
+            --btn-radius: 12px;
         }
 
         html {
@@ -227,12 +228,19 @@ $isContact = str_starts_with($currentPath, '/contact');
         .btn-contact {
             background: var(--brand-blue);
             color: white !important;
-            border-radius: 12px;
+            border-radius: var(--btn-radius);
             padding: 12px 20px;
             font-weight: 800;
             font-size: 0.76rem;
             text-transform: uppercase;
             box-shadow: 0 8px 18px rgba(10, 133, 223, 0.22);
+        }
+
+        .hero-btn-custom,
+        .btn-articles,
+        .contact-submit,
+        .activities-page .filter-box .btn-primary {
+            border-radius: var(--btn-radius);
         }
 
         .btn-contact:hover {

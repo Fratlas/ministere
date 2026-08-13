@@ -132,7 +132,7 @@ a.youtube-link i {
     .hero-underline-custom { width: 100px; height: 10px; margin: 0 0 0 auto; border-radius: 0px; background: #ffd400; box-shadow: 0 1px 4px rgba(255,212,0,0.4); }
     .hero-content-wrapper { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(16px, 4vw, 48px); width: 100%; margin: 0; z-index: 4; }
     .hero-button-side { flex: 0 0 auto; }
-    .hero-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border-radius: 6px; padding: 12px 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); letter-spacing: 0.3px; }
+    .hero-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border-radius: 12px; padding: 12px 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.3s ease; border: none; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); letter-spacing: 0.3px; }
     .hero-btn-custom:hover { background: #1565c0; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); }
     .hero-btn-custom i { transition: transform 0.3s ease; font-size: 0.7rem; }
     .hero-btn-custom:hover i { transform: translateX(3px); }
@@ -220,7 +220,7 @@ a.youtube-link i {
     .article-link { color: #0a7fe4; font-weight: 700; text-decoration: none; transition: color 0.3s ease; }
     .article-link:hover { color: #e31b23; }
     .articles-footer { text-align: center; margin: 40px auto 0; padding: 0 12px; }
-    .btn-articles { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-red); color: #fff; border: none; border-radius: 6px; padding: 12px 30px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.3px; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 8px 18px rgba(227, 27, 35, 0.24); }
+    .btn-articles { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-red); color: #fff; border: none; border-radius: 12px; padding: 12px 30px; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.3px; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 8px 18px rgba(227, 27, 35, 0.24); }
     .btn-articles:hover { background: #c91820; transform: translateY(-2px); box-shadow: 0 10px 22px rgba(227, 27, 35, 0.32); }
 
     /* ========== STATS & FUNDING (grille alignée maquette) ========== */
