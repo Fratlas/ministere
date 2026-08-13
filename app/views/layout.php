@@ -11,6 +11,7 @@ $isAbout = str_starts_with($currentPath, '/about');
 $isProjects = str_starts_with($currentPath, '/activite') || str_starts_with($currentPath, '/projects');
 $isRealisations = str_starts_with($currentPath, '/realisations');
 $isRealisationsDGDA = str_starts_with($currentPath, '/realisations-dgda');
+$isRealisationsDGRAD = str_starts_with($currentPath, '/realisations-dgrad');
 $isDocuments = str_starts_with($currentPath, '/documents');
 $isContact = str_starts_with($currentPath, '/contact');
 ?>
@@ -701,7 +702,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle<?php echo ($isRealisations || $isRealisationsDGDA) ? ' active' : ''; ?>" href="/realisations" role="button" data-bs-toggle="dropdown" aria-expanded="false">Réalisations</a>
+                        <a class="nav-link dropdown-toggle<?php echo ($isRealisations || $isRealisationsDGDA || $isRealisationsDGRAD) ? ' active' : ''; ?>" href="/realisations" role="button" data-bs-toggle="dropdown" aria-expanded="false">Réalisations</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/realisations#dgi">Réalisations à la DGI</a></li>
                             <li><a class="dropdown-item" href="/realisations-dgda">Réalisations à la DGDA</a></li>
