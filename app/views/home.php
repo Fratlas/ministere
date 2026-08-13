@@ -320,7 +320,7 @@ a.youtube-link i {
     }
 
     .home-metrics-band--stats {
-        background: #f5f5f5;
+        background: #f6f8fb;
     }
 
     .home-metrics-band--funding {
