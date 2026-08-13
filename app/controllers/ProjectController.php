@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../models/Project.php';
 
 class ProjectController {
-    private const PER_PAGE = 2;
+    private const PER_PAGE = 6;
 
     private $projectModel;
 
