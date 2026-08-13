@@ -18,6 +18,27 @@ function project_excerpt_view($text, $length = 115) {
     return substr($text, 0, $length - 3) . '...';
 }
 
+function project_image_url(array $project, int $index = 0): string {
+    $fallbacks = [
+        '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png',
+        '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg',
+        '/public/images/f5e8488f8c3a13bf3dab164a3be46274ca0f4ef6.jpg',
+        '/public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg',
+        '/public/images/9fe3b95f3d4bbd9a00803da129b576653e10be87.jpg',
+        '/public/images/d6aa7c59153499f8c21f31ede2d928d8e0f9d23a.png',
+    ];
+
+    $raw = trim((string) ($project['image_url'] ?? ''));
+    if ($raw !== '') {
+        if (preg_match('#^https?://#i', $raw)) {
+            return $raw;
+        }
+        return str_starts_with($raw, '/') ? $raw : '/' . ltrim($raw, '/');
+    }
+
+    return $fallbacks[$index % count($fallbacks)];
+}
+
 $extraHead = <<<'HTML'
 <style>
 .activities-page { background: #efefef; padding-bottom: 64px; }
@@ -93,6 +114,21 @@ $extraHead = <<<'HTML'
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
+.activities-page .card-img-wrapper {
+    background-color: #ececec !important;
+}
+.activities-page .card-img-wrapper img {
+    opacity: 1 !important;
+}
+.activities-page .projects-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 54px;
+}
+.activities-page .pagination {
+    gap: 8px;
+    margin-bottom: 0;
+}
 .activities-page .pagination .page-link {
     width: 42px;
     height: 42px;
@@ -100,20 +136,22 @@ $extraHead = <<<'HTML'
     align-items: center;
     justify-content: center;
     border-radius: 50% !important;
-    border: 1px solid #dce3ec;
-    color: #4a5568;
+    border: 1px solid #e7edf5;
+    color: #394b66;
     font-weight: 700;
     padding: 0;
-    box-shadow: none;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 .activities-page .pagination .page-item.active .page-link {
-    background: #0a85df;
-    border-color: #0a85df;
+    background: #1487db;
+    border-color: #1487db;
     color: #fff;
 }
 .activities-page .pagination .page-link:hover {
     background: #eef6fd;
-    color: #0a85df;
+    color: #1487db;
+    border-color: #1487db;
 }
 .activities-page .pagination .page-item.disabled .page-link {
     opacity: 0.45;
@@ -128,7 +166,7 @@ ob_start();
 <div class="activities-page">
 <section class="real-hero">
     <div class="container">
-        <h1>ACTIVITÉS</h1>
+        <h1>NOS ACTIVITÉS</h1>
         <p>Découvrez les étapes clés de la transformation financière de la République Démocratique du Congo.</p>
         <div class="real-divider"></div>
     </div>
@@ -182,14 +220,14 @@ ob_start();
         </div>
 
         <div class="row g-4 activities-grid">
-            <?php foreach ($projectsPage as $project): ?>
+            <?php foreach ($projectsPage as $index => $project): ?>
             <div class="col-lg-4 col-md-6">
                 <div class="card card-project">
                     <div class="card-img-wrapper">
                         <span class="badge-status <?php echo 'status-' . strtolower(str_replace([' ', 'é', 'è'], ['', 'e', 'e'], $project['status'])); ?>">
                             <?php echo htmlspecialchars($project['status'], ENT_QUOTES, 'UTF-8'); ?>
                         </span>
-                        <img src="<?php echo htmlspecialchars($project['image_url'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?>">
+                        <img src="<?php echo htmlspecialchars(project_image_url($project, $index), ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?>">
                     </div>
                     <div class="card-body">
                         <span class="project-category"><?php echo htmlspecialchars($project['category'], ENT_QUOTES, 'UTF-8'); ?></span>
@@ -205,21 +243,21 @@ ob_start();
             <?php endforeach; ?>
         </div>
 
-        <nav class="mt-5" aria-label="Pagination des activités">
+        <nav class="projects-pagination" aria-label="Pagination des activités">
             <?php if (($totalPages ?? 1) > 1): ?>
             <ul class="pagination justify-content-center border-0">
-                <li class="page-item mx-1<?php echo ($page ?? 1) <= 1 ? ' disabled' : ''; ?>">
-                    <a class="page-link rounded-circle" href="<?php echo htmlspecialchars($paginationUrl(max(1, ($page ?? 1) - 1)), ENT_QUOTES, 'UTF-8'); ?>" aria-label="Page précédente">
+                <li class="page-item<?php echo ($page ?? 1) <= 1 ? ' disabled' : ''; ?>">
+                    <a class="page-link" href="<?php echo ($page ?? 1) <= 1 ? '#' : htmlspecialchars($paginationUrl(max(1, ($page ?? 1) - 1)), ENT_QUOTES, 'UTF-8'); ?>" aria-label="Page précédente">
                         <i class="bi bi-chevron-left"></i>
                     </a>
                 </li>
                 <?php for ($i = 1; $i <= ($totalPages ?? 1); $i++): ?>
-                <li class="page-item mx-1<?php echo ($page ?? 1) === $i ? ' active' : ''; ?>">
-                    <a class="page-link rounded-circle" href="<?php echo htmlspecialchars($paginationUrl($i), ENT_QUOTES, 'UTF-8'); ?>"><?php echo $i; ?></a>
+                <li class="page-item<?php echo ($page ?? 1) === $i ? ' active' : ''; ?>">
+                    <a class="page-link" href="<?php echo htmlspecialchars($paginationUrl($i), ENT_QUOTES, 'UTF-8'); ?>"><?php echo $i; ?></a>
                 </li>
                 <?php endfor; ?>
-                <li class="page-item mx-1<?php echo ($page ?? 1) >= ($totalPages ?? 1) ? ' disabled' : ''; ?>">
-                    <a class="page-link rounded-circle" href="<?php echo htmlspecialchars($paginationUrl(min($totalPages ?? 1, ($page ?? 1) + 1)), ENT_QUOTES, 'UTF-8'); ?>" aria-label="Page suivante">
+                <li class="page-item<?php echo ($page ?? 1) >= ($totalPages ?? 1) ? ' disabled' : ''; ?>">
+                    <a class="page-link" href="<?php echo ($page ?? 1) >= ($totalPages ?? 1) ? '#' : htmlspecialchars($paginationUrl(min($totalPages ?? 1, ($page ?? 1) + 1)), ENT_QUOTES, 'UTF-8'); ?>" aria-label="Page suivante">
                         <i class="bi bi-chevron-right"></i>
                     </a>
                 </li>

@@ -2,7 +2,16 @@
 require_once __DIR__ . '/../models/Project.php';
 
 class ProjectController {
-    private const PER_PAGE = 6;
+    private const PER_PAGE = 2;
+
+    private function normalizeStatus(string $status): string {
+        $status = mb_strtolower(trim($status));
+        return str_replace(['é', 'è', 'ê'], 'e', $status);
+    }
+
+    private function projectMatchesStatus(array $project, string $status): bool {
+        return $this->normalizeStatus((string) ($project['status'] ?? '')) === $this->normalizeStatus($status);
+    }
 
     private $projectModel;
 
@@ -33,7 +42,7 @@ class ProjectController {
 
         if ($status) {
             $projects = array_values(array_filter($projects, function ($p) use ($status) {
-                return $p['status'] === $status;
+                return $this->projectMatchesStatus($p, $status);
             }));
         }
 
