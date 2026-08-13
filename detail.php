@@ -33,6 +33,28 @@ $pageLabel = match ($type) {
     default => 'REALISATION DGI',
 };
 
+$listTitle = match ($type) {
+    'article' => 'Tous les articles',
+    'document' => 'Tous les documents',
+    'realisation_dgda' => 'Toutes les réalisations DGDA',
+    'realisation_dgrad' => 'Toutes les réalisations DGRAD',
+    'realisation_autre' => 'Toutes les autres réalisations',
+    default => 'Toutes les réalisations',
+};
+
+$detailIcon = $type === 'article' ? 'bi-newspaper' : 'bi-kanban';
+
+function d_body($item, $type) {
+    $description = trim((string) ($item['description'] ?? ''));
+    $extra = trim((string) ($item['meta_text'] ?? ''));
+
+    if ($type === 'article' && $extra !== '') {
+        return $extra;
+    }
+
+    return $description;
+}
+
 $title = $item ? ($item['title'] . ' - Detail') : 'Detail';
 if (!$item) http_response_code(404);
 
@@ -82,7 +104,7 @@ ob_start();
         <section class="detail-modern-cover" style="background-image: linear-gradient(135deg, rgba(4, 33, 75, 0.45), rgba(2, 126, 189, 0.35)), url('<?php echo d_h(d_image($item)); ?>');">
             <div class="container">
                 <div class="detail-modern-floating-icon">
-                    <i class="bi bi-kanban"></i>
+                    <i class="bi <?php echo d_h($detailIcon); ?>"></i>
                 </div>
                 <h2><?php echo d_h($item['title']); ?></h2>
             </div>
@@ -90,9 +112,11 @@ ob_start();
 
         <section class="detail-modern-content">
             <div class="container">
-                <p><?php echo nl2br(d_h($item['description'])); ?></p>
+                <div class="detail-modern-body"><?php echo nl2br(d_h(d_body($item, $type))); ?></div>
                 <?php if (!empty($item['badge_text'])): ?>
-                    <div class="detail-modern-update">Mise à jour: <?php echo d_h($item['badge_text']); ?></div>
+                    <div class="detail-modern-update">
+                        <?php echo $type === 'article' ? d_h($item['badge_text']) : 'Mise à jour: ' . d_h($item['badge_text']); ?>
+                    </div>
                 <?php endif; ?>
             </div>
         </section>
@@ -100,7 +124,7 @@ ob_start();
         <?php if (!empty($allItems)): ?>
             <section class="detail-modern-list">
                 <div class="container">
-                    <h3>Toutes les réalisations</h3>
+                    <h3><?php echo d_h($listTitle); ?></h3>
                     <div class="row g-4">
                         <?php foreach ($allItems as $entry): ?>
                             <div class="col-md-6 col-lg-4">
@@ -152,7 +176,14 @@ $extraHead = <<<'HTML'
     .detail-modern-floating-icon i { color: #191919; font-size: 4rem; }
     .detail-modern-content { padding: 40px 0 56px; background: #efefef; }
     .detail-modern-content .container { max-width: 980px; }
-    .detail-modern-content p { color: #111; font-size: 1rem; line-height: 1.75; }
+    .detail-modern-content p,
+    .detail-modern-body {
+        color: #111;
+        font-size: 1rem;
+        line-height: 1.75;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
     .detail-modern-update { margin-top: 24px; font-weight: 800; font-size: 1.9rem; color: #111; }
     .detail-modern-list { background: #efefef; padding: 8px 0 56px; }
     .detail-modern-list h3 { font-size: 1.75rem; font-weight: 900; margin: 0 0 18px; color: #1c2c43; }

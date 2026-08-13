@@ -16,7 +16,8 @@ $sections = [
         'title' => 'Gestion des articles',
         'section_label' => 'Categorie',
         'badge_label' => 'Badge',
-        'order_label' => 'Ordre'
+        'order_label' => 'Ordre',
+        'help' => 'Publie sur l accueil et la page detail.php?type=article&id=...',
     ],
     'documents' => [
         'type' => 'document',
@@ -168,15 +169,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         if (($_POST['form_mode'] ?? 'create') === 'edit' && !empty($_POST['id'])) {
+            $itemId = (int) $_POST['id'];
             // Si on édite et qu'aucun nouveau fichier n'a été uploadé, garder l'ancien
             if (!$file_url && !empty($_POST['id'])) {
-                $existing = $contentModel->getById((int) $_POST['id']);
+                $existing = $contentModel->getById($itemId);
                 $payload['file_url'] = $existing['file_url'] ?? null;
             }
-            $contentModel->update((int) $_POST['id'], $payload);
+            if (admin_uses_detail_page($config['type'])) {
+                $payload['link_url'] = 'detail.php?type=' . rawurlencode($config['type']) . '&id=' . $itemId;
+            }
+            $contentModel->update($itemId, $payload);
             $message = 'Contenu mis a jour avec succes.';
         } else {
-            $contentModel->create($payload);
+            $newId = $contentModel->create($payload);
+            if ($newId && admin_uses_detail_page($config['type'])) {
+                $payload['link_url'] = 'detail.php?type=' . rawurlencode($config['type']) . '&id=' . $newId;
+                $contentModel->update($newId, $payload);
+            }
             $message = 'Contenu ajoute avec succes.';
         }
     }
@@ -194,6 +203,14 @@ if (isset($_GET['edit'])) {
 
 function h($value) {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+}
+
+function admin_detail_url($contentType, $itemId) {
+    return '../detail.php?type=' . rawurlencode((string) $contentType) . '&id=' . (int) $itemId;
+}
+
+function admin_uses_detail_page($contentType) {
+    return in_array($contentType, ['article', 'realisation', 'realisation_dgda', 'realisation_dgrad', 'realisation_autre'], true);
 }
 
 $docEdit = [
@@ -368,6 +385,11 @@ $isRealisationSection = str_starts_with($sectionKey, 'realisations');
                                                 </td>
                                                 <td><?php echo h($item['display_order']); ?></td>
                                                 <td class="text-nowrap">
+                                                    <?php if (admin_uses_detail_page($item['content_type'] ?? '')): ?>
+                                                        <a class="btn btn-sm btn-info" href="<?php echo h(admin_detail_url($item['content_type'], (int) $item['id'])); ?>" target="_blank" title="Voir la page detail">
+                                                            <i class="bi bi-box-arrow-up-right"></i>
+                                                        </a>
+                                                    <?php endif; ?>
                                                     <a class="btn btn-sm btn-warning" href="content.php?section=<?php echo h($sectionKey); ?>&edit=<?php echo (int) $item['id']; ?>">
                                                         <i class="bi bi-pencil"></i>
                                                     </a>
@@ -456,8 +478,14 @@ $isRealisationSection = str_starts_with($sectionKey, 'realisations');
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Description</label>
-                                    <textarea name="description" class="form-control" rows="4" required><?php echo h($editItem['description'] ?? ''); ?></textarea>
+                                    <?php if ($sectionKey === 'articles'): ?>
+                                        <label class="form-label">Contenu de l'article</label>
+                                        <textarea name="description" class="form-control" rows="14" required placeholder="Texte complet affiche sur la page detail de l'article..."><?php echo h($editItem['description'] ?? ''); ?></textarea>
+                                        <small class="text-muted d-block mt-1">Ce contenu est affiche sur la page detail. Le titre, la categorie et le badge restent visibles sur l'accueil.</small>
+                                    <?php else: ?>
+                                        <label class="form-label">Description</label>
+                                        <textarea name="description" class="form-control" rows="4" required><?php echo h($editItem['description'] ?? ''); ?></textarea>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="mb-3">
@@ -468,10 +496,26 @@ $isRealisationSection = str_starts_with($sectionKey, 'realisations');
                                     <?php endif; ?>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Lien URL</label>
-                                    <input type="text" name="link_url" class="form-control" value="<?php echo h($editItem['link_url'] ?? ''); ?>" placeholder="Optionnel">
-                                </div>
+                                <?php if (admin_uses_detail_page($config['type'])): ?>
+                                    <?php if (!empty($editItem['id'])): ?>
+                                        <div class="mb-3">
+                                            <label class="form-label">Page publique</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" readonly value="<?php echo h(admin_detail_url($config['type'], (int) $editItem['id'])); ?>">
+                                                <a class="btn btn-outline-primary" href="<?php echo h(admin_detail_url($config['type'], (int) $editItem['id'])); ?>" target="_blank">Voir</a>
+                                            </div>
+                                            <small class="text-muted d-block mt-1">Lien genere automatiquement vers detail.php.</small>
+                                        </div>
+                                    <?php else: ?>
+                                        <p class="small text-muted">La page detail sera creee automatiquement apres l'enregistrement.</p>
+                                    <?php endif; ?>
+                                    <input type="hidden" name="link_url" value="<?php echo h($editItem['link_url'] ?? ''); ?>">
+                                <?php else: ?>
+                                    <div class="mb-3">
+                                        <label class="form-label">Lien URL</label>
+                                        <input type="text" name="link_url" class="form-control" value="<?php echo h($editItem['link_url'] ?? ''); ?>" placeholder="Optionnel">
+                                    </div>
+                                <?php endif; ?>
 
                                 <?php if ($sectionKey === 'documents'): ?>
                                     <div class="mb-3">

@@ -58,7 +58,7 @@ class ContentItem {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
 
-        return $stmt->execute([
+        $ok = $stmt->execute([
             $data['content_type'],
             $data['section_key'] ?? null,
             $data['badge_text'] ?? null,
@@ -72,6 +72,8 @@ class ContentItem {
             $data['display_order'] ?? 0,
             $data['is_active'] ?? 1
         ]);
+
+        return $ok ? (int) $this->db->lastInsertId() : false;
     }
 
     public function update($id, $data) {
