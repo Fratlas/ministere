@@ -788,7 +788,7 @@ $isContact = str_starts_with($currentPath, '/contact');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/split-type"></script>
-    <script src="/public/js/script.js?v=3"></script>
+    <script src="/public/js/script.js?v=4"></script>
     <?php endif; ?>
     <script>
         // Script pour gérer l'ouverture/fermeture des dropdowns en mobile

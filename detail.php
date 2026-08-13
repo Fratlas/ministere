@@ -41,10 +41,21 @@ function d_h($value) {
 
 function d_image($item) {
     $img = trim((string) ($item['image_url'] ?? ''));
+    $brokenNames = [
+        '0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png',
+        '0a0ab46ab0741BVTrB47erypG3tevi1U9Fv6BbNUBEiuiX.png',
+    ];
+    $defaultImage = '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png';
+
     if ($img !== '') {
-        return $img;
+        foreach ($brokenNames as $brokenName) {
+            if (str_contains($img, $brokenName)) {
+                return $defaultImage;
+            }
+        }
+        return str_starts_with($img, '/') ? $img : '/' . ltrim($img, '/');
     }
-    return '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png';
+    return $defaultImage;
 }
 
 function d_link($item, $type) {

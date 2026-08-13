@@ -17,7 +17,14 @@ function disablePageAnimations() {
     const navbar = document.querySelector('.navbar');
     if (navbar) {
         navbar.style.transform = 'none';
+        navbar.style.opacity = '1';
     }
+}
+
+function shouldSkipPageTransition(link) {
+    return link.classList.contains('hero-btn-custom')
+        || link.dataset.noTransition === 'true'
+        || link.closest('.hero-btn-custom');
 }
 
 function shouldDisableAnimations() {
@@ -39,6 +46,12 @@ function shouldDisableAnimations() {
 
 document.addEventListener("DOMContentLoaded", () => {
     if (shouldDisableAnimations()) {
+        disablePageAnimations();
+        return;
+    }
+
+    if (sessionStorage.getItem('skipPageTransition') === '1') {
+        sessionStorage.removeItem('skipPageTransition');
         disablePageAnimations();
         return;
     }
@@ -361,10 +374,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 11. PAGE TRANSITION (OUT)
-    const internalLinks = document.querySelectorAll('a[href^="/"]:not([href^="#"])');
+    const internalLinks = document.querySelectorAll('a[href^="/"]:not([href^="#"]), a[href*="detail.php"]');
     internalLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             if (e.ctrlKey || e.metaKey || e.shiftKey || link.target === "_blank") return;
+
+            if (shouldSkipPageTransition(link)) {
+                sessionStorage.setItem('skipPageTransition', '1');
+                return;
+            }
 
             const destinationUrl = new URL(link.href, window.location.origin);
             const currentUrl = new URL(window.location.href);

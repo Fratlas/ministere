@@ -28,8 +28,41 @@ function home_excerpt($value, $length = 120) {
     return substr($text, 0, $length - 3) . '...';
 }
 
-function home_image($item, $fallback) {
-    return !empty($item['image_url']) ? $item['image_url'] : $fallback;
+function home_image($item, $fallback = '', $index = 0) {
+    $fallbacks = [
+        '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png',
+        '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg',
+        '/public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg',
+    ];
+    $brokenNames = [
+        '0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png',
+        '0a0ab46ab0741BVTrB47erypG3tevi1U9Fv6BbNUBEiuiX.png',
+    ];
+    $defaultImage = $fallbacks[0];
+
+    $normalize = static function (string $raw) use ($brokenNames, $defaultImage): string {
+        foreach ($brokenNames as $brokenName) {
+            if (str_contains($raw, $brokenName)) {
+                return $defaultImage;
+            }
+        }
+        if (preg_match('#^https?://#i', $raw)) {
+            return $raw;
+        }
+        return str_starts_with($raw, '/') ? $raw : '/' . ltrim($raw, '/');
+    };
+
+    $raw = trim((string) ($item['image_url'] ?? ''));
+    if ($raw !== '') {
+        return $normalize($raw);
+    }
+
+    $fallback = trim((string) $fallback);
+    if ($fallback !== '') {
+        return $normalize($fallback);
+    }
+
+    return $fallbacks[$index % count($fallbacks)];
 }
 
 function home_link($item, $type) {
@@ -76,7 +109,7 @@ $fallbackContent = [
         ['id' => 104, 'content_type' => 'article', 'section_key' => 'Communiqué', 'badge_text' => '03.02.2025', 'title' => 'Point de presse sur les services numériques', 'description' => 'Présentation des améliorations apportées aux services digitaux pour les usagers.', 'image_url' => '/public/images/f5e8488f8c3a13bf3dab164a3be46274ca0f4ef6.jpg', 'link_url' => '#', 'display_order' => 4],
     ],
     'realisation' => [
-        ['id' => 201, 'content_type' => 'realisation', 'section_key' => 'Phase 1', 'badge_text' => '2015 – 2018', 'title' => 'Élaboration diagnostique et montage', 'description' => 'Réalisation du diagnostic de l\'existant, montage des projets et déploiement des réseaux d\'interconnexion entre les régies financières.', 'image_url' => '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png', 'link_url' => '#', 'display_order' => 1],
+        ['id' => 201, 'content_type' => 'realisation', 'section_key' => 'Phase 1', 'badge_text' => '2015 – 2018', 'title' => 'Élaboration diagnostique et montage', 'description' => 'Réalisation du diagnostic de l\'existant, montage des projets et déploiement des réseaux d\'interconnexion entre les régies financières.', 'image_url' => '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png', 'link_url' => '#', 'display_order' => 1],
         ['id' => 202, 'content_type' => 'realisation', 'section_key' => 'Phase 2', 'badge_text' => '2018 – 2024', 'title' => 'Plateformes ISYS-REGIES, LOGIRAD, ERP', 'description' => 'Lancement et déploiement des plateformes ISYS-REGIES, LOGIRAD, du Progiciel de Gestion Intégrée (ERP) à la DGI et de l\'Entrepôt des données financières de l\'État.', 'image_url' => '/public/images/c9e30edbc22dfe5104a5bb070369bd34457a9fb6.jpg', 'link_url' => '#', 'display_order' => 2],
         ['id' => 203, 'content_type' => 'realisation', 'section_key' => 'Phase 3', 'badge_text' => '2018 – 2024', 'title' => 'Plateforme citoyenne', 'description' => 'Mise en œuvre et déploiement de la plateforme citoyenne de téléservices sur l\'étendue de la République pour améliorer l\'accès aux services publics.', 'image_url' => '/public/images/a262919e89729dbd75cfdb9e248fa2d40e2ca169.jpg', 'link_url' => '#', 'display_order' => 3],
     ],
@@ -164,10 +197,9 @@ a.youtube-link i {
     .hero-underline-custom { width: 100px; height: 10px; margin: 0 0 0 auto; border-radius: 0px; background: #ffd400; box-shadow: 0 1px 4px rgba(255,212,0,0.4); }
     .hero-content-wrapper { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(16px, 4vw, 48px); width: 100%; margin: 0; z-index: 4; }
     .hero-button-side { flex: 0 0 auto; }
-    .hero-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border-radius: 12px; padding: 12px 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: background 0.3s ease, box-shadow 0.3s ease; border: none; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); letter-spacing: 0.3px; opacity: 1 !important; transform: none !important; animation: none !important; }
-    .hero-btn-custom:hover { background: #1565c0; box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); }
-    .hero-btn-custom i { transition: transform 0.3s ease; font-size: 0.7rem; }
-    .hero-btn-custom:hover i { transform: translateX(3px); }
+    .hero-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--rdc-blue); color: #fff; border-radius: 12px; padding: 12px 30px; font-weight: 700; text-decoration: none; font-size: 0.95rem; border: none; cursor: pointer; box-shadow: 0 8px 18px rgba(0, 145, 213, 0.2); letter-spacing: 0.3px; opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+    .hero-btn-custom:hover { background: #1565c0; box-shadow: 0 10px 22px rgba(0, 145, 213, 0.28); transform: none !important; }
+    .hero-btn-custom:active { transform: none !important; animation: none !important; }
     .hero-controls-bottom { display: flex; justify-content: center; gap: 10px; margin-top: 0; width: auto; z-index: 3; position: relative; padding-right: 0; }
     .hero-controls-bottom button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #fff; background: rgba(255,255,255,0.25); backdrop-filter: blur(6px); color: #fff; transition: all 0.3s ease; cursor: pointer; font-size: 1.6rem; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.45); }
     .hero-controls-bottom button:hover { background: rgba(255,255,255,0.45); transform: scale(1.05); border-color: #ffd400; color: #ffd400; }
@@ -674,7 +706,7 @@ ob_start();
         </div>
         <div class="hero-content-wrapper">
             <div class="hero-button-side">
-                <a href="<?php echo home_h(home_link($heroItem ?? [], 'realisation')); ?>" class="hero-btn-custom" data-aos="none">
+                <a href="<?php echo home_h(home_link($heroItem ?? [], 'realisation')); ?>" class="hero-btn-custom" data-no-transition="true">
                     <span>En savoir plus</span>
                 </a>
             </div>
@@ -737,7 +769,7 @@ ob_start();
                     <?php if (!$isRight): ?>
                         <div class="timeline-content <?php echo $sideClass; ?>">
                             <div class="card-custom">
-                                <img src="<?php echo home_h(home_image($item, '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png')); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>">
+                                <img src="<?php echo home_h(home_image($item, '', $index)); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>" onerror="this.onerror=null;this.src='/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png';">
                                 <div class="<?php echo $bodyClass; ?>">
                                     <p class="phase-desc"><?php echo home_h($item['description'] ?? ''); ?></p>
                                     <h3 class="phase-years"><?php echo home_h(home_timeline_heading($item)); ?></h3>
@@ -749,7 +781,7 @@ ob_start();
                         <div class="timeline-icon <?php echo $iconClass; ?>"><i class="bi bi-calendar3"></i></div>
                         <div class="timeline-content <?php echo $sideClass; ?>">
                             <div class="card-custom">
-                                <img src="<?php echo home_h(home_image($item, '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png')); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>">
+                                <img src="<?php echo home_h(home_image($item, '', $index)); ?>" alt="<?php echo home_h($item['title'] ?? 'Réalisation'); ?>" onerror="this.onerror=null;this.src='/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png';">
                                 <div class="<?php echo $bodyClass; ?>">
                                     <p class="phase-desc"><?php echo home_h($item['description'] ?? ''); ?></p>
                                     <h3 class="phase-years"><?php echo home_h(home_timeline_heading($item)); ?></h3>

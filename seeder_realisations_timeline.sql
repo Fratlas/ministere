@@ -16,7 +16,7 @@ VALUES
     '2015 – 2018',
     'Élaboration diagnostique et montage',
     'Réalisation du diagnostic de l''existant, montage des projets et déploiement des réseaux d''interconnexion entre les régies financières.',
-    '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png',
+    '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png',
     '#',
     NULL,
     NULL,
@@ -49,6 +49,11 @@ VALUES
     3,
     1
 );
+
+-- Corriger une eventuelle image deja en base avec un ancien nom de fichier invalide
+UPDATE content_items
+SET image_url = '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png'
+WHERE image_url LIKE '%0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png%';
 
 SELECT id, badge_text, title, display_order
 FROM content_items

@@ -150,7 +150,7 @@ class ContentItem {
                 'badge_text' => '2015 – 2018',
                 'title' => 'Élaboration diagnostique et montage',
                 'description' => 'Réalisation du diagnostic de l\'existant, montage des projets et déploiement des réseaux d\'interconnexion entre les régies financières.',
-                'image_url' => '/public/images/0a0ab46ab0741BSN7gxmPWYCAKJgA9aH4yNuERpTvs4uiX.png',
+                'image_url' => '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png',
                 'link_url' => '#',
                 'meta_text' => null,
                 'icon_class' => null,
