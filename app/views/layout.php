@@ -665,9 +665,9 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
     </style>
 </head>
-<body>
+<body<?php echo $isContact ? ' class="page-no-animations"' : ''; ?>>
     <!-- Overlay de transition de page -->
-    <div class="page-transition">
+    <div class="page-transition"<?php echo $isContact ? ' style="display:none!important"' : ''; ?>>
         <div class="transition-spinner"></div>
     </div>
 
@@ -776,10 +776,12 @@ $isContact = str_starts_with($currentPath, '/contact');
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <?php if (!$isContact): ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/split-type"></script>
-    <script src="/public/js/script.js"></script>
+    <script src="/public/js/script.js?v=3"></script>
+    <?php endif; ?>
     <script>
         // Script pour gérer l'ouverture/fermeture des dropdowns en mobile
         document.addEventListener('DOMContentLoaded', function() {

@@ -16,6 +16,32 @@ $extraHead = <<<'HTML'
         overflow: hidden;
     }
 
+    .page-no-animations .contact-page,
+    .page-no-animations .contact-page *,
+    .page-no-animations .navbar,
+    .page-no-animations .main-footer,
+    .page-no-animations .main-footer * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .page-no-animations .contact-title,
+    .page-no-animations .contact-title .word,
+    .page-no-animations .contact-title .char,
+    .page-no-animations .contact-title .line {
+        display: inline !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .page-no-animations .contact-title {
+        display: block !important;
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
+        white-space: normal;
+    }
+
     .contact-title {
         margin: 0 0 30px;
         text-align: center;
