@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../models/Project.php';
 
 class ProjectController {
-    private const PER_PAGE = 2;
+    private const PER_PAGE = 3;
 
     private function normalizeStatus(string $status): string {
         $status = mb_strtolower(trim($status));
