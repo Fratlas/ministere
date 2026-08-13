@@ -288,6 +288,8 @@ $isContact = str_starts_with($currentPath, '/contact');
             grid-row: 1 / -1;
             align-self: stretch;
             min-height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .footer-grid > .footer-column {
@@ -552,17 +554,24 @@ $isContact = str_starts_with($currentPath, '/contact');
             }
 
             .footer-grid {
+                display: grid;
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: auto;
                 column-gap: 24px;
+                row-gap: 0;
             }
 
             .footer-brand-col {
-                grid-row: auto;
+                order: 10;
                 grid-column: 1 / -1;
+                grid-row: auto;
+                margin-top: 28px;
+                padding-top: 28px;
+                border-top: 1px solid rgba(255, 255, 255, 0.18);
             }
 
             .footer-grid > .footer-column {
+                order: 1;
                 grid-row: auto;
             }
 
@@ -570,12 +579,35 @@ $isContact = str_starts_with($currentPath, '/contact');
                 margin-top: 8px;
             }
 
-            .main-footer {
-                padding-top: 60px;
+            .footer-brand-col .footer-address {
+                order: 1;
+                text-align: center;
+                margin-bottom: 0;
             }
 
-            .footer-contact-row {
-                margin-top: 36px;
+            .footer-brand-col .footer-brand-box {
+                order: 2;
+                justify-content: center;
+                margin-top: 20px;
+                margin-bottom: 18px;
+            }
+
+            .footer-brand-col .footer-contact-row {
+                order: 3;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 0;
+                padding-top: 0;
+                gap: 18px;
+            }
+
+            .footer-brand-col .call-center-text {
+                text-align: center;
+            }
+
+            .main-footer {
+                padding-top: 60px;
             }
         }
 
@@ -624,24 +656,24 @@ $isContact = str_starts_with($currentPath, '/contact');
 
             .footer-grid {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto;
-                row-gap: 8px;
+                row-gap: 4px;
             }
 
             .footer-brand-col {
-                grid-column: auto;
-                grid-row: auto;
+                margin-top: 32px;
+                padding-top: 32px;
             }
 
-            .footer-grid > .footer-column {
-                grid-row: auto;
+            .footer-brand-col .footer-brand-box img {
+                height: 56px;
             }
 
-            .footer-contact-row {
-                justify-content: flex-start;
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 24px;
+            .footer-brand-col .footer-contact-row {
+                gap: 20px;
+            }
+
+            .footer-column h5 {
+                margin-bottom: 18px;
             }
         }
 
