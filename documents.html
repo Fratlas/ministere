@@ -580,35 +580,119 @@
         }
 
         .document-icon {
-            width: 52px;
-            height: 52px;
+            width: 56px;
+            height: 56px;
             border-radius: 12px;
-            flex: 0 0 52px;
+            flex: 0 0 56px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #eff5fd;
+            background: #eef2f7;
             color: var(--blue-3);
             font-size: 1.35rem;
         }
 
-        .document-icon.pdf {
-            background: rgba(14, 140, 228, 0.12);
-            color: var(--blue-2);
+        .document-icon.pdf,
+        .document-icon.excel,
+        .document-icon.word,
+        .document-icon.file {
+            background: #eef2f7;
+            color: inherit;
+        }
+
+        .file-pdf-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 40px;
+        }
+
+        .file-pdf-mark__sheet {
+            position: relative;
+            width: 30px;
+            height: 38px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(15, 35, 70, 0.18);
+        }
+
+        .file-pdf-mark--red .file-pdf-mark__sheet {
+            background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .file-pdf-mark--blue .file-pdf-mark__sheet {
+            background: linear-gradient(180deg, #2b8fe8 0%, #1678d4 100%);
+        }
+
+        .file-pdf-mark__sheet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 11px;
+            height: 11px;
+            background: linear-gradient(225deg, rgba(255, 255, 255, 0.92) 0 50%, rgba(255, 255, 255, 0.18) 50% 100%);
+            border-bottom-left-radius: 2px;
+        }
+
+        .file-pdf-mark__lines {
+            position: absolute;
+            top: 10px;
+            left: 6px;
+            right: 6px;
+            height: 12px;
+        }
+
+        .file-pdf-mark__lines::before,
+        .file-pdf-mark__lines::after,
+        .file-pdf-mark__lines span {
+            content: '';
+            display: block;
+            height: 2px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        .file-pdf-mark__lines::before {
+            width: 100%;
+            margin-bottom: 3px;
+        }
+
+        .file-pdf-mark__lines span {
+            width: 72%;
+            margin-bottom: 3px;
+        }
+
+        .file-pdf-mark__lines::after {
+            width: 86%;
+        }
+
+        .file-pdf-mark__text {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.58rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
         }
 
         .document-icon.excel {
-            background: rgba(24, 160, 112, 0.12);
             color: #169a6c;
         }
 
         .document-icon.word {
-            background: rgba(47, 103, 234, 0.12);
             color: #3067e9;
         }
 
         .document-icon.file {
-            background: rgba(214, 52, 80, 0.12);
             color: #d63450;
         }
 
@@ -1262,8 +1346,37 @@
             }
         }
 
-        function renderDocument(item) {
+        function getPdfIconVariant(item) {
+            const fields = [item.badge_text, item.section_key, item.title].map((value) => normalizeLabel(value || ''));
+            const redKeys = ['loi-de-finance', 'projet-de-loi', 'decret', 'decrets'];
+            return fields.some((field) => redKeys.some((key) => field === key || field.includes(key))) ? 'red' : 'blue';
+        }
+
+        function renderFileIcon(item) {
             const iconType = getIconType(item);
+
+            if (iconType === 'pdf') {
+                const variant = getPdfIconVariant(item);
+                return `
+                    <div class="document-icon pdf">
+                        <span class="file-pdf-mark file-pdf-mark--${variant}" aria-hidden="true">
+                            <span class="file-pdf-mark__sheet">
+                                <span class="file-pdf-mark__lines"><span></span></span>
+                                <span class="file-pdf-mark__text">PDF</span>
+                            </span>
+                        </span>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="document-icon ${escapeHtml(iconType)}">
+                    <i class="bi ${getIconClass(iconType)}"></i>
+                </div>
+            `;
+        }
+
+        function renderDocument(item) {
             const badge = item.badge_text || item.section_key || 'Document';
             const badgeClass = getBadgeColorClass(badge);
             const date = formatDate(item);
@@ -1276,9 +1389,7 @@
 
             return `
                 <article class="document-card">
-                    <div class="document-icon ${escapeHtml(iconType)}">
-                        <i class="bi ${getIconClass(iconType)}"></i>
-                    </div>
+                    ${renderFileIcon(item)}
                     <div class="document-meta">
                         <div class="document-badges">
                             <span class="doc-badge ${badgeClass}">${escapeHtml(badge)}</span>
