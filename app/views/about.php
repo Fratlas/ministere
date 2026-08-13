@@ -140,7 +140,7 @@ $extraHead = <<<'HTML'
         max-width: 100%;
         z-index: 1;
         overflow: visible;
-        padding-bottom: 56px;
+        padding-bottom: 110px;
     }
 
     .about-page .about-photo img {
@@ -157,13 +157,13 @@ $extraHead = <<<'HTML'
         position: absolute;
         background: #0d8bdc;
         color: #fff;
-        width: min(300px, 78%);
-        padding: 22px 22px 20px;
+        width: min(280px, 72%);
+        padding: 20px 20px 18px;
         border-radius: 16px;
         box-shadow: 0 18px 40px rgba(13, 139, 220, 0.32);
         z-index: 2;
-        right: -18px;
-        bottom: 28px;
+        right: 12px;
+        bottom: -78px;
         left: auto;
         margin-left: 0;
         font-style: italic;
