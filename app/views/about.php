@@ -479,10 +479,12 @@ ob_start();
     <div class="about-intro-blob about-intro-blob-2"></div>
     <div class="container" style="position: relative; z-index: 2;">
         <h1>A PROPOS</h1>
-        <br>
-        <div class="about-divider-tri"></div>
+
         <br>
         <p>Découvrez l'historique, le contexte et les objectifs du projet Gouvernance Financière, ainsi que l'organisation de son équipe de pilotage.</p>
+          <br>
+        <div class="about-divider-tri"></div>        
+       
     </div>
 </section>
 
