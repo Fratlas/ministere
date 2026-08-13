@@ -38,6 +38,8 @@ $extraHead = <<<'HTML'
 </style>
 HTML;
 
+$realisationsAutres = $realisationsAutres ?? [];
+
 ob_start();
 ?>
 
@@ -83,6 +85,39 @@ ob_start();
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
+
+        <?php if (!empty($realisationsAutres)): ?>
+        <h2 class="section-title" id="autres">Autres réalisations</h2>
+        <div class="row g-4 dgi-grid">
+            <?php foreach ($realisationsAutres as $item): ?>
+                <?php
+                $meta = [];
+                if (!empty($item['meta_text'])) {
+                    $meta = json_decode($item['meta_text'], true) ?? [];
+                }
+                $imageUrl = trim((string) ($item['image_url'] ?? ''));
+                if ($imageUrl === '') {
+                    $imageUrl = '/public/images/0a0ab46ab0741a4e546c25da9cf4ee67782151e3.png';
+                }
+                $iconUrl = !empty($meta['icon_url']) ? (string) $meta['icon_url'] : '/public/images/logo_Arm blanc.png';
+                $itemId = (int) ($item['id'] ?? 0);
+                $detailUrl = 'detail.php?type=realisation_autre' . ($itemId > 0 ? '&id=' . $itemId : '');
+                ?>
+                <div class="col-md-6 col-lg-4">
+                    <a href="<?php echo htmlspecialchars($detailUrl); ?>" class="realisation-card">
+                        <div class="card-header-title"><?php echo htmlspecialchars($item['title']); ?></div>
+                        <div class="card-img-container">
+                            <img src="<?php echo htmlspecialchars($imageUrl); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
+                            <img src="<?php echo htmlspecialchars($iconUrl); ?>" class="card-overlay-icon" alt="Icone">
+                        </div>
+                        <?php if (!empty($item['badge_text'])): ?>
+                            <div class="card-meta"><?php echo htmlspecialchars($item['badge_text']); ?></div>
+                        <?php endif; ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
     </main>
 </div>
 

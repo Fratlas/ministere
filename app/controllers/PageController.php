@@ -32,6 +32,7 @@ class PageController {
         
         $contentModel = new ContentItem();
         $realisations = $contentModel->getAllByType('realisation');
+        $realisationsAutres = $contentModel->getAllByType('realisation_autre');
         
         require_once __DIR__ . '/../views/realisations.php';
     }

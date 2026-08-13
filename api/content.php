@@ -5,7 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 $type = $_GET['type'] ?? '';
 
-$allowedTypes = ['article', 'document', 'realisation', 'realisation_dgda', 'realisation_dgrad'];
+$allowedTypes = ['article', 'document', 'realisation', 'realisation_dgda', 'realisation_dgrad', 'realisation_autre'];
 if (!in_array($type, $allowedTypes, true)) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid content type']);

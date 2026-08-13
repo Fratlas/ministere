@@ -4,7 +4,7 @@ require_once __DIR__ . '/app/models/ContentItem.php';
 $type = strtolower((string) ($_GET['type'] ?? 'realisation'));
 $itemId = (int) ($_GET['id'] ?? 0);
 
-$allowedTypes = ['realisation', 'article', 'document', 'realisation_dgda', 'realisation_dgrad'];
+$allowedTypes = ['realisation', 'article', 'document', 'realisation_dgda', 'realisation_dgrad', 'realisation_autre'];
 if (!in_array($type, $allowedTypes, true)) {
     $type = 'realisation';
 }
@@ -29,6 +29,7 @@ $pageLabel = match ($type) {
     'document' => 'DOCUMENT',
     'realisation_dgda' => 'REALISATION DGDA',
     'realisation_dgrad' => 'REALISATION DGRAD',
+    'realisation_autre' => 'AUTRE REALISATION',
     default => 'REALISATION DGI',
 };
 

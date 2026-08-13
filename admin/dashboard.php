@@ -415,6 +415,7 @@ $displayProjects = $projects;
                 <a href="content.php?section=realisations"><i class="bi bi-stars"></i> Realisations DGI</a>
                 <a href="content.php?section=realisations_dgda"><i class="bi bi-building"></i> Realisations DGDA</a>
                 <a href="content.php?section=realisations_dgrad"><i class="bi bi-bank"></i> Realisations DGRAD</a>
+                <a href="content.php?section=realisations_autres"><i class="bi bi-collection"></i> Autres realisations</a>
                 <hr class="border-light opacity-25 my-4">
                 <a href="index.php?logout"><i class="bi bi-box-arrow-right"></i> Deconnexion</a>
             </div>
