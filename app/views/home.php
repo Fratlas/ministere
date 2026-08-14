@@ -463,55 +463,71 @@ a.youtube-link i {
     }
 
     .funding-sponsors {
-        gap: 8px;
+        gap: clamp(14px, 2vw, 20px);
         width: fit-content;
+        min-width: clamp(300px, 42vw, 520px);
+    }
+
+    .funding-sponsors-header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
 
     .funding-sponsors-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        line-height: 1.2;
+        position: relative;
+        z-index: 1;
+        padding: 0 18px;
+        font-size: clamp(1.05rem, 2vw, 1.45rem);
+        font-weight: 800;
+        color: #333;
+        line-height: 1;
         text-align: center;
-        text-transform: lowercase;
-        letter-spacing: 0.01em;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: #fff;
     }
 
     .funding-sponsors-divider {
-        width: 100%;
-        height: 2px;
-        background: #1a1a1a;
-        border-radius: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: #c8ccd2;
+        transform: translateY(-50%);
     }
 
     .funding-sponsors-logos {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: clamp(18px, 3vw, 36px);
-        padding-top: 6px;
+        gap: clamp(20px, 3.5vw, 44px);
+        flex-wrap: wrap;
+        padding-top: 2px;
     }
 
-    .funding-sponsor-circle {
-        width: clamp(88px, 10vw, 112px);
-        height: clamp(88px, 10vw, 112px);
-        border-radius: 50%;
-        border: 2.5px solid #1a1a1a;
-        overflow: hidden;
+    .funding-sponsor-logo {
+        height: 58px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #fff;
-        padding: 10px;
         flex-shrink: 0;
-        transition: transform 0.35s ease;
+        transition: transform 0.35s ease, filter 0.35s ease;
     }
 
-    .funding-sponsor-circle img {
-        width: 100%;
-        height: 100%;
+    .funding-sponsor-logo img {
+        height: 58px;
+        max-width: clamp(90px, 12vw, 150px);
         object-fit: contain;
         display: block;
+    }
+
+    .funding-sponsors:hover .funding-sponsor-logo {
+        filter: saturate(1.08);
+        transform: scale(1.03);
     }
 
     .funding-logo-block.is-visible,
@@ -520,8 +536,7 @@ a.youtube-link i {
     }
 
     .home-funding-content > .funding-logo-block:nth-child(1).is-visible { animation-delay: 0.05s; }
-    .home-funding-content > .funding-logo-block:nth-child(2).is-visible { animation-delay: 0.18s; }
-    .home-funding-content > .funding-sponsors.is-visible { animation-delay: 0.31s; }
+    .home-funding-content > .funding-sponsors.is-visible { animation-delay: 0.18s; }
 
     @keyframes fundingLogoIn {
         from { opacity: 0; transform: translateY(18px) scale(0.96); }
@@ -531,10 +546,6 @@ a.youtube-link i {
     .funding-logo-block:hover,
     .funding-sponsors:hover {
         transform: translateY(-5px) scale(1.04);
-    }
-
-    .funding-sponsors:hover .funding-sponsor-circle {
-        transform: scale(1.05);
     }
 
     .logo-img-wrap {
@@ -698,11 +709,17 @@ a.youtube-link i {
 
         .funding-sponsors {
             margin-inline: auto;
+            min-width: 0;
+            width: 100%;
         }
 
-        .funding-sponsor-circle {
-            width: clamp(76px, 22vw, 96px);
-            height: clamp(76px, 22vw, 96px);
+        .funding-sponsors-logos {
+            gap: clamp(16px, 5vw, 28px);
+        }
+
+        .funding-sponsor-logo img {
+            height: 48px;
+            max-width: clamp(72px, 24vw, 120px);
         }
 
         .governance-grid { grid-template-columns: 1fr; }
@@ -927,18 +944,19 @@ ob_start();
                     <div class="funding-logo-block">
                         <div class="logo-img-wrap"><img src="/public/images/logo.webp" alt="Ministère des Finances"></div>
                     </div>
-                    <div class="funding-logo-block">
-                        <div class="logo-img-wrap"><img src="/public/images/eu_flag.jpg" alt="Union européenne"></div>
-                        <span class="eu-note">Financé par<br>l'Union européenne</span>
-                    </div>
                     <div class="funding-sponsors">
-                        <span class="funding-sponsors-title">nos sponsor</span>
-                        <div class="funding-sponsors-divider" aria-hidden="true"></div>
+                        <div class="funding-sponsors-header">
+                            <div class="funding-sponsors-divider" aria-hidden="true"></div>
+                            <span class="funding-sponsors-title">NOS SPONSORS</span>
+                        </div>
                         <div class="funding-sponsors-logos">
-                            <div class="funding-sponsor-circle">
+                            <div class="funding-sponsor-logo">
+                                <img src="/public/images/eu_flag.jpg" alt="Union européenne">
+                            </div>
+                            <div class="funding-sponsor-logo">
                                 <img src="/public/images/republique_francaise_rvb.png" alt="République française">
                             </div>
-                            <div class="funding-sponsor-circle">
+                            <div class="funding-sponsor-logo">
                                 <img src="/public/images/afd_logo.webp" alt="AFD">
                             </div>
                         </div>
