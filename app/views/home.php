@@ -450,7 +450,7 @@ a.youtube-link i {
     }
 
     .funding-logo-block,
-    .funding-partner {
+    .funding-sponsors {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -462,20 +462,66 @@ a.youtube-link i {
         transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .funding-partner {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: clamp(14px, 2vw, 24px);
+    .funding-sponsors {
+        gap: 8px;
+        width: fit-content;
+    }
+
+    .funding-sponsors-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        line-height: 1.2;
+        text-align: center;
+        text-transform: lowercase;
+        letter-spacing: 0.01em;
+    }
+
+    .funding-sponsors-divider {
+        width: 100%;
+        height: 2px;
+        background: #1a1a1a;
+        border-radius: 0;
+    }
+
+    .funding-sponsors-logos {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(18px, 3vw, 36px);
+        padding-top: 6px;
+    }
+
+    .funding-sponsor-circle {
+        width: clamp(88px, 10vw, 112px);
+        height: clamp(88px, 10vw, 112px);
+        border-radius: 50%;
+        border: 2.5px solid #1a1a1a;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        padding: 10px;
+        flex-shrink: 0;
+        transition: transform 0.35s ease;
+    }
+
+    .funding-sponsor-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
     }
 
     .funding-logo-block.is-visible,
-    .funding-partner.is-visible {
+    .funding-sponsors.is-visible {
         animation: fundingLogoIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .home-funding-content > .funding-logo-block:nth-child(1).is-visible { animation-delay: 0.05s; }
     .home-funding-content > .funding-logo-block:nth-child(2).is-visible { animation-delay: 0.18s; }
-    .home-funding-content > .funding-partner.is-visible { animation-delay: 0.31s; }
+    .home-funding-content > .funding-sponsors.is-visible { animation-delay: 0.31s; }
 
     @keyframes fundingLogoIn {
         from { opacity: 0; transform: translateY(18px) scale(0.96); }
@@ -483,8 +529,12 @@ a.youtube-link i {
     }
 
     .funding-logo-block:hover,
-    .funding-partner:hover {
+    .funding-sponsors:hover {
         transform: translateY(-5px) scale(1.04);
+    }
+
+    .funding-sponsors:hover .funding-sponsor-circle {
+        transform: scale(1.05);
     }
 
     .logo-img-wrap {
@@ -495,13 +545,11 @@ a.youtube-link i {
         transition: transform 0.35s ease, filter 0.35s ease;
     }
 
-    .funding-logo-block:hover .logo-img-wrap,
-    .funding-partner:hover .logo-img-wrap {
+    .funding-logo-block:hover .logo-img-wrap {
         filter: saturate(1.1);
     }
 
-    .funding-logo-block img,
-    .funding-partner img {
+    .funding-logo-block img {
         height: 58px;
         object-fit: contain;
         display: block;
@@ -518,8 +566,6 @@ a.youtube-link i {
         line-height: 1.05;
         text-align: center;
     }
-
-    .funding-partner .logo-img-wrap { height: 58px; }
 
     .home-stat-number {
         transition: color 0.3s ease, transform 0.3s ease;
@@ -648,6 +694,15 @@ a.youtube-link i {
 
         .home-funding-content {
             justify-content: center;
+        }
+
+        .funding-sponsors {
+            margin-inline: auto;
+        }
+
+        .funding-sponsor-circle {
+            width: clamp(76px, 22vw, 96px);
+            height: clamp(76px, 22vw, 96px);
         }
 
         .governance-grid { grid-template-columns: 1fr; }
@@ -876,9 +931,17 @@ ob_start();
                         <div class="logo-img-wrap"><img src="/public/images/eu_flag.jpg" alt="Union européenne"></div>
                         <span class="eu-note">Financé par<br>l'Union européenne</span>
                     </div>
-                    <div class="funding-partner">
-                        <div class="logo-img-wrap"><img src="/public/images/republique_francaise_rvb.png" alt="République française"></div>
-                        <div class="logo-img-wrap"><img src="/public/images/afd_logo.webp" alt="AFD"></div>
+                    <div class="funding-sponsors">
+                        <span class="funding-sponsors-title">nos sponsor</span>
+                        <div class="funding-sponsors-divider" aria-hidden="true"></div>
+                        <div class="funding-sponsors-logos">
+                            <div class="funding-sponsor-circle">
+                                <img src="/public/images/republique_francaise_rvb.png" alt="République française">
+                            </div>
+                            <div class="funding-sponsor-circle">
+                                <img src="/public/images/afd_logo.webp" alt="AFD">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="home-metrics-divider home-metrics-divider--end" aria-hidden="true"></div>
@@ -958,7 +1021,7 @@ $extraFooter = <<<'HTML'
     };
 
     const animateFundingLogos = () => {
-        document.querySelectorAll('.home-funding-content > .funding-logo-block, .home-funding-content > .funding-partner').forEach(item => {
+        document.querySelectorAll('.home-funding-content > .funding-logo-block, .home-funding-content > .funding-sponsors').forEach(item => {
             item.classList.add('is-visible');
         });
     };
