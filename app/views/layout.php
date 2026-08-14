@@ -249,6 +249,16 @@ $isContact = str_starts_with($currentPath, '/contact');
             color: white !important;
         }
 
+        .btn-contact.active,
+        .btn-contact.active:hover,
+        .btn-contact.active:focus,
+        .btn-contact.active:focus-visible {
+            background: var(--brand-blue-deep) !important;
+            color: #fff !important;
+            border-color: var(--brand-blue-deep) !important;
+            box-shadow: 0 8px 18px rgba(10, 133, 223, 0.22);
+        }
+
         .main-footer {
             background: linear-gradient(105deg, #078ed8 0%, #006eb6 48%, #00558e 100%);
             color: white;
