@@ -442,9 +442,9 @@ a.youtube-link i {
 
     .home-funding-content {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-end;
-        gap: clamp(20px, 3vw, 44px);
+        gap: clamp(28px, 4.5vw, 56px);
         flex-wrap: wrap;
         width: 100%;
     }
@@ -454,7 +454,7 @@ a.youtube-link i {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         margin: 0;
         min-width: 0;
         flex: 0 0 auto;
@@ -463,9 +463,11 @@ a.youtube-link i {
     }
 
     .funding-sponsors {
-        gap: clamp(14px, 2vw, 20px);
+        gap: clamp(8px, 1.2vw, 12px);
         width: fit-content;
-        min-width: clamp(300px, 42vw, 520px);
+        min-width: clamp(240px, 34vw, 420px);
+        align-self: flex-start;
+        margin-top: -4px;
     }
 
     .funding-sponsors-header {
@@ -479,8 +481,8 @@ a.youtube-link i {
     .funding-sponsors-title {
         position: relative;
         z-index: 1;
-        padding: 0 18px;
-        font-size: clamp(1.05rem, 2vw, 1.45rem);
+        padding: 0 14px;
+        font-size: clamp(0.88rem, 1.45vw, 1.1rem);
         font-weight: 800;
         color: #333;
         line-height: 1;
@@ -504,13 +506,13 @@ a.youtube-link i {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: clamp(20px, 3.5vw, 44px);
+        gap: clamp(14px, 2.2vw, 26px);
         flex-wrap: wrap;
-        padding-top: 2px;
+        padding-top: 0;
     }
 
     .funding-sponsor-logo {
-        height: 58px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -519,8 +521,8 @@ a.youtube-link i {
     }
 
     .funding-sponsor-logo img {
-        height: 58px;
-        max-width: clamp(90px, 12vw, 150px);
+        height: 38px;
+        max-width: clamp(64px, 8vw, 92px);
         object-fit: contain;
         display: block;
     }
@@ -549,7 +551,7 @@ a.youtube-link i {
     }
 
     .logo-img-wrap {
-        height: 58px;
+        height: clamp(80px, 9vw, 108px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -561,10 +563,10 @@ a.youtube-link i {
     }
 
     .funding-logo-block img {
-        height: 58px;
+        height: clamp(80px, 9vw, 108px);
         object-fit: contain;
         display: block;
-        max-width: clamp(100px, 12vw, 150px);
+        max-width: clamp(200px, 24vw, 300px);
         transition: transform 0.35s ease;
     }
 
@@ -705,21 +707,35 @@ a.youtube-link i {
 
         .home-funding-content {
             justify-content: center;
+            align-items: center;
+        }
+
+        .funding-logo-block {
+            width: 100%;
         }
 
         .funding-sponsors {
             margin-inline: auto;
+            margin-top: 0;
             min-width: 0;
             width: 100%;
+            align-self: center;
         }
 
         .funding-sponsors-logos {
-            gap: clamp(16px, 5vw, 28px);
+            gap: clamp(12px, 4vw, 22px);
         }
 
+        .funding-sponsor-logo,
         .funding-sponsor-logo img {
-            height: 48px;
-            max-width: clamp(72px, 24vw, 120px);
+            height: 34px;
+            max-width: clamp(56px, 20vw, 84px);
+        }
+
+        .funding-logo-block .logo-img-wrap,
+        .funding-logo-block img {
+            height: clamp(64px, 18vw, 84px);
+            max-width: min(100%, 260px);
         }
 
         .governance-grid { grid-template-columns: 1fr; }
