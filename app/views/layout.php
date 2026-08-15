@@ -273,14 +273,14 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .footer-upper {
-            padding-bottom: 16px;
+            padding-bottom: 28px;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
-            grid-template-rows: auto;
-            column-gap: clamp(24px, 3.5vw, 56px);
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            column-gap: clamp(32px, 5vw, 78px);
             row-gap: 18px;
             align-items: start;
         }
@@ -295,7 +295,9 @@ $isContact = str_starts_with($currentPath, '/contact');
 
         .footer-brand-col {
             grid-column: 1;
-            align-self: start;
+            grid-row: 1 / -1;
+            align-self: stretch;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
         }
@@ -341,7 +343,8 @@ $isContact = str_starts_with($currentPath, '/contact');
             gap: clamp(24px, 4vw, 48px);
             flex-wrap: wrap;
             padding: 0;
-            margin-top: 28px;
+            margin-top: auto;
+            padding-top: 74px;
             overflow: visible;
         }
 
@@ -425,7 +428,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             display: block;
             width: 100%;
             height: 6px;
-            margin-top: 24px;
+            margin-top: 60px;
             flex-shrink: 0;
             background: linear-gradient(90deg, #00a5e7 0 32%, #ffd100 32% 64%, #ce1126 64% 100%);
         }
@@ -775,6 +778,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             <div class="footer-grid">
                 <div class="footer-col footer-brand-col">
                     <div class="footer-brand-box">
+                        <img src="/public/images/logo_Arm blanc.png" alt="Armoiries de la RDC">
                         <img src="/public/images/Logo blanc_Min Finance-8.png" alt="Ministère des Finances">
                     </div>
                     <p class="footer-address">
@@ -797,16 +801,8 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <h5>Accès Rapide</h5>
                     <a href="/" class="footer-link"><i class="bi bi-chevron-right"></i>Accueil</a>
                     <a href="/about" class="footer-link"><i class="bi bi-chevron-right"></i>À propos</a>
-                    <a href="/activites" class="footer-link"><i class="bi bi-chevron-right"></i>Nos activités</a>
+                    <a href="/activites" class="footer-link"><i class="bi bi-chevron-right"></i>Activités</a>
                     <a href="/realisations" class="footer-link"><i class="bi bi-chevron-right"></i>Réalisations</a>
-                </div>
-
-                <div class="footer-col footer-column">
-                    <h5>Nos activités</h5>
-                    <a href="/activites" class="footer-link"><i class="bi bi-chevron-right"></i>Toutes les activités</a>
-                    <a href="/activites/filter?status=En+cours" class="footer-link"><i class="bi bi-chevron-right"></i>En cours</a>
-                    <a href="/activites/filter?status=Terminé" class="footer-link"><i class="bi bi-chevron-right"></i>Terminées</a>
-                    <a href="/activites/filter?status=Planifié" class="footer-link"><i class="bi bi-chevron-right"></i>Planifiées</a>
                 </div>
 
                 <div class="footer-col footer-column">
