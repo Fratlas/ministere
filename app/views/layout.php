@@ -315,7 +315,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .footer-brand-box img {
-            height: 64px;
+            height: clamp(84px, 8vw, 104px);
             width: auto;
             object-fit: contain;
             display: block;
@@ -675,7 +675,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             }
 
             .footer-brand-col .footer-brand-box img {
-                height: 56px;
+                height: clamp(72px, 16vw, 88px);
             }
 
             .footer-brand-col .footer-contact-row {
@@ -778,7 +778,6 @@ $isContact = str_starts_with($currentPath, '/contact');
             <div class="footer-grid">
                 <div class="footer-col footer-brand-col">
                     <div class="footer-brand-box">
-                        <img src="/public/images/logo_Arm blanc.png" alt="Armoiries de la RDC">
                         <img src="/public/images/Logo blanc_Min Finance-8.png" alt="Ministère des Finances">
                     </div>
                     <p class="footer-address">
@@ -801,7 +800,7 @@ $isContact = str_starts_with($currentPath, '/contact');
                     <h5>Accès Rapide</h5>
                     <a href="/" class="footer-link"><i class="bi bi-chevron-right"></i>Accueil</a>
                     <a href="/about" class="footer-link"><i class="bi bi-chevron-right"></i>À propos</a>
-                    <a href="/activites" class="footer-link"><i class="bi bi-chevron-right"></i>Activités</a>
+                    <a href="/activites" class="footer-link"><i class="bi bi-chevron-right"></i>Nos Activités</a>
                     <a href="/realisations" class="footer-link"><i class="bi bi-chevron-right"></i>Réalisations</a>
                 </div>
 
