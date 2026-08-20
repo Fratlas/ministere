@@ -262,7 +262,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         .main-footer {
             background: linear-gradient(105deg, #078ed8 0%, #006eb6 48%, #00558e 100%);
             color: white;
-            padding: 52px 0 0;
+            padding: 92px 0 0;
             margin-top: auto;
             flex-shrink: 0;
             position: relative;
@@ -273,7 +273,7 @@ $isContact = str_starts_with($currentPath, '/contact');
         }
 
         .footer-upper {
-            padding-bottom: 12px;
+            padding-bottom: 28px;
         }
 
         .footer-grid {
@@ -295,7 +295,9 @@ $isContact = str_starts_with($currentPath, '/contact');
 
         .footer-brand-col {
             grid-column: 1;
-            align-self: start;
+            grid-row: 1 / -1;
+            align-self: stretch;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
         }
@@ -309,11 +311,11 @@ $isContact = str_starts_with($currentPath, '/contact');
             display: flex;
             align-items: center;
             gap: 20px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .footer-brand-box img {
-            height: clamp(102px, 10vw, 132px);
+            height: clamp(84px, 8vw, 104px);
             width: auto;
             object-fit: contain;
             display: block;
@@ -341,7 +343,8 @@ $isContact = str_starts_with($currentPath, '/contact');
             gap: clamp(24px, 4vw, 48px);
             flex-wrap: wrap;
             padding: 0;
-            margin-top: 24px;
+            margin-top: auto;
+            padding-top: 74px;
             overflow: visible;
         }
 
@@ -398,7 +401,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             font-size: 1.05rem;
             font-weight: 800;
             text-transform: uppercase;
-            margin: 0 0 18px;
+            margin: 6px 0 26px;
             letter-spacing: 0.02em;
         }
 
@@ -408,7 +411,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             color: rgba(255, 255, 255, 0.88);
             text-decoration: none;
             gap: 11px;
-            margin-bottom: 14px;
+            margin-bottom: 18px;
             font-size: 0.95rem;
         }
 
@@ -425,7 +428,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             display: block;
             width: 100%;
             height: 6px;
-            margin-top: 20px;
+            margin-top: 60px;
             flex-shrink: 0;
             background: linear-gradient(90deg, #00a5e7 0 32%, #ffd100 32% 64%, #ce1126 64% 100%);
         }
@@ -614,7 +617,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             }
 
             .main-footer {
-                padding-top: 40px;
+                padding-top: 60px;
             }
         }
 
@@ -672,7 +675,7 @@ $isContact = str_starts_with($currentPath, '/contact');
             }
 
             .footer-brand-col .footer-brand-box img {
-                height: clamp(88px, 18vw, 108px);
+                height: clamp(72px, 16vw, 88px);
             }
 
             .footer-brand-col .footer-contact-row {
